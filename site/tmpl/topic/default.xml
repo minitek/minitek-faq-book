@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_FAQBOOKPRO_VIEW_TOPIC_TITLE">
+		<message>
+			<![CDATA[COM_FAQBOOKPRO_VIEW_TOPIC_TITLE_DESC]]>
+		</message>
+	</layout>
+
+	<state>
+
+		<fields name="request" addfieldprefix="Joomla\Component\FAQBookPro\Administrator\Field">
+
+			<fieldset name="request">
+
+				<field
+					name="id"
+					type="topicid"
+					label="COM_FAQBOOKPRO_CONFIG_TOPIC_ID_LABEL"
+					description="COM_FAQBOOKPRO_CONFIG_TOPIC_ID_DESC"
+					required="true"
+				>
+				</field>
+
+			</fieldset>
+
+		</fields>
+
+	</state>
+
+</metadata>

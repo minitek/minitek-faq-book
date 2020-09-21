@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter" addfieldprefix="Joomla\Component\FAQBookPro\Administrator\Field">
+
+		<field
+			name="search"
+			type="text"
+			description="COM_FAQBOOKPRO_FILTER_SEARCH_DESC"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field
+			name="published"
+			type="status"
+			onchange="this.form.submit();"
+		>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+
+		<field
+			name="access"
+			type="accesslevel"
+			multiple="true"
+			layout="joomla.form.field.list-fancy-select"
+			hint="JOPTION_SELECT_ACCESS"
+			onchange="this.form.submit();"
+		/>
+
+		<field
+			name="language"
+			type="contentlanguage"
+			onchange="this.form.submit();"
+		>
+			<option value="">JOPTION_SELECT_LANGUAGE</option>
+			<option value="*">JALL</option>
+		</field>
+
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			onchange="this.form.submit();"
+			default="a.id DESC"
+		>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.state ASC">JSTATUS_ASC</option>
+			<option value="a.state DESC">JSTATUS_DESC</option>
+			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="topics_count ASC">COM_FAQBOOKPRO_FILTER_OPTION_TOPICS_COUNT_ASC</option>
+			<option value="topics_count DESC">COM_FAQBOOKPRO_FILTER_OPTION_TOPICS_COUNT_DESC</option>
+			<option value="a.access ASC">JGRID_HEADING_ACCESS_ASC</option>
+			<option value="a.access DESC">JGRID_HEADING_ACCESS_DESC</option>
+			<option value="a.language ASC">JGRID_HEADING_LANGUAGE_ASC</option>
+			<option value="a.language DESC">JGRID_HEADING_LANGUAGE_DESC</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			default="25"
+			label="COM_CONTENT_LIST_LIMIT"
+			onchange="this.form.submit();"
+		/>
+
+	</fields>
+
+</form>

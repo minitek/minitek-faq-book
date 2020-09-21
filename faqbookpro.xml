@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="4.0.0" method="upgrade">
+	<name>FAQ Book Pro</name>
+	<creationDate>January 2012</creationDate>
+	<author>Minitek.gr</author>
+	<authorUrl>https://www.minitek.gr/</authorUrl>
+	<copyright>Copyright (c) 2011-2020 Minitek. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>4.0.6</version>
+	<namespace path="src">Joomla\Component\FAQBookPro</namespace>
+	<description>
+	<![CDATA[
+		A powerful Q&A and discussion forum for Joomla.
+	]]>
+	</description>
+
+	<scriptfile>install.faqbookpro.php</scriptfile>
+
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+
+	<!-- Site Main File Copy Section -->
+	<files folder="site">
+		<folder>assets</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+		<filename>index.html</filename>
+	</files>
+
+	<languages folder="site">
+    <language tag="en-GB">language/en-GB/com_faqbookpro.ini</language>
+  </languages>
+
+	<administration>
+
+		<!-- Administration Menu Section -->
+		<menu>COM_FAQBOOKPRO_ADMIN_MENU</menu>
+		<submenu>
+			<menu link="option=com_faqbookpro" view="dashboard">
+				COM_FAQBOOKPRO_SUBMENU_DASHBOARD
+			</menu>
+			<menu link="option=com_faqbookpro&amp;view=sections" view="sections">
+				COM_FAQBOOKPRO_SUBMENU_SECTIONS
+			</menu>
+			<menu link="option=com_faqbookpro&amp;view=topics" view="topics">
+				COM_FAQBOOKPRO_SUBMENU_TOPICS
+			</menu>
+			<menu link="option=com_faqbookpro&amp;view=questions" view="questions">
+				COM_FAQBOOKPRO_SUBMENU_QUESTIONS
+			</menu>
+		</submenu>
+
+		<!-- Administration Main File Copy Section -->
+		<files folder="admin">
+			<!-- Admin Main File Copy Section -->
+			<folder>assets</folder>
+			<folder>forms</folder>
+			<folder>services</folder>
+			<folder>sql</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+		</files>
+
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/com_faqbookpro.ini</language>
+			<language tag="en-GB">language/en-GB/com_faqbookpro.sys.ini</language>
+		</languages>
+
+	</administration>
+
+	<!-- Update servers -->
+  <updateservers>
+    <server type="extension" priority="1" name="FAQ Book Pro">http://update.minitek.gr/joomla-extensions/minitek_faqbook.xml</server>
+  </updateservers>
+
+</extension>
