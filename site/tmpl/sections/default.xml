@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_FAQBOOKPRO_VIEW_SECTIONS_TITLE">
+		<message>
+			<![CDATA[COM_FAQBOOKPRO_VIEW_SECTIONS_TITLE_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="params" addfieldprefix="Joomla\Component\FAQBookPro\Administrator\Field">
+
+		<fieldset name="basic">
+
+			<field
+				name="fb_sections"
+				type="fbsections"
+				default=""
+				label="COM_FAQBOOKPRO_CONFIG_INCLUDE_SECTIONS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_INCLUDE_SECTIONS_DESC"
+			/>
+
+			<field
+				name="sections_top_navigation"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOP_NAVIGATION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOP_NAVIGATION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_page_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_PAGE_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_PAGE_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_layout"
+				type="list"
+				default="columns"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAYOUT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAYOUT_DESC"
+			>
+				<option value="columns">COM_FAQBOOKPRO_CONFIG_OPTION_COLUMNS</option>
+				<option value="forum">COM_FAQBOOKPRO_CONFIG_OPTION_FORUM</option>
+			</field>
+
+			<field type="separator" text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR" />
+
+			<field
+				name="sections_cols"
+				type="integer"
+				default="3"
+				first="1"
+				last="6"
+				step="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLS_DESC"
+			/>
+
+			<field
+				name="sections_image"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_title"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_section_count"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_topics"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_topics_count"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_custom"
+				type="editor"
+				class="inputbox"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CUSTOM_CONTENT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CUSTOM_CONTENT_DESC"
+				filter="JComponentHelper::filterText"
+				buttons="false"
+			/>
+
+			<field type="separator" text="COM_FAQBOOKPRO_CONFIG_SECTIONS_FORUM_LAYOUT_SEPARATOR" />
+
+			<field
+				name="sections_forum_section_count"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_section_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topic_text"
+				type="text"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPIC_TEXT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPIC_TEXT_DESC"
+				default="Topic"
+			/>
+
+			<field
+				name="sections_forum_topics_count"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics_icon"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics_image"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics_children"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_topics_children_count"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_last_question"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_question_text"
+				type="text"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_TEXT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_TEXT_DESC"
+				default="Latest question"
+			/>
+
+			<field
+				name="sections_forum_no_questions_text"
+				type="text"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_NO_QUESTIONS_TEXT_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_NO_QUESTIONS_TEXT_DESC"
+				default="No questions"
+			/>
+
+			<field
+				name="sections_forum_question_date"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="sections_forum_question_author"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+		</fieldset>
+
+	</fields>
+
+</metadata>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_FAQBOOKPRO_VIEW_SECTION_TITLE">
+		<message>
+			<![CDATA[COM_FAQBOOKPRO_VIEW_SECTION_TITLE_DESC]]>
+		</message>
+	</layout>
+
+	<state>
+
+		<fields name="request" addfieldprefix="Joomla\Component\FAQBookPro\Administrator\Field">
+
+			<fieldset name="request">
+
+				<field
+					name="id"
+					type="sql"
+					default=""
+					label="COM_FAQBOOKPRO_CONFIG_SECTION_ID_LABEL"
+					description="COM_FAQBOOKPRO_CONFIG_SECTION_ID_DESC"
+					query="SELECT id, title FROM #__minitek_faqbook_sections WHERE state=1"
+					key_field="id"
+					value_field="title"
+					required="true"
+				/>
+
+			</fieldset>
+
+		</fields>
+
+	</state>
+
+</metadata>

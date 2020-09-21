@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldprefix="Joomla\Component\FAQBookPro\Administrator\Field">
+
+		<field
+			name="id"
+			type="text"
+			class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC"
+			size="10"
+			default="0"
+			readonly="true"
+		/>
+
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field
+			name="title"
+			type="text"
+			label="JGLOBAL_TITLE"
+			description="JFIELD_TITLE_DESC"
+			class="input-xxlarge input-large-text"
+			size="40"
+			required="true"
+		/>
+
+		<field
+			name="alias"
+			type="text"
+			label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			class="inputbox"
+			size="45"
+		/>
+
+		<field
+			name="description"
+			type="editor"
+			class="inputbox"
+			label="JGLOBAL_DESCRIPTION"
+			filter="JComponentHelper::filterText"
+			buttons="true"
+		/>
+
+		<field
+			name="state"
+			type="list"
+			label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC"
+			filter="intval"
+			size="1"
+			default="1"
+			class="custom-select-color-state"
+		>
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field
+			name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC"
+			size="1"
+		/>
+
+		<field
+			name="created_time"
+			type="calendar"
+			label="JGLOBAL_CREATED_DATE"
+			class="inputbox"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc"
+		/>
+
+		<field
+			name="created_user_id"
+			type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+		/>
+
+		<field
+			name="checked_out"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field
+			name="checked_out_time"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field
+			name="ordering"
+			type="text"
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC"
+			class="inputbox"
+			size="6"
+			default="0"
+		/>
+
+		<field
+			name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			description="JFIELD_META_KEYWORDS_DESC"
+			class="inputbox"
+			rows="3"
+			cols="30"
+		/>
+
+		<field
+			name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			description="JFIELD_META_DESCRIPTION_DESC"
+			class="inputbox"
+			rows="3"
+			cols="30"
+		/>
+
+		<field
+			name="hits"
+			type="text"
+			label="JGLOBAL_HITS"
+			class="readonly"
+			size="6"
+			readonly="true"
+			filter="unset"
+		/>
+
+		<field
+			name="language"
+			type="contentlanguage"
+			label="JFIELD_LANGUAGE_LABEL"
+			description="COM_FAQBOOKPRO_FIELD_LANGUAGE_DESC"
+		>
+			<option value="*">JALL</option>
+		</field>
+
+		<field
+			id="rules"
+			name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			component="com_faqbookpro"
+			section="section"
+		/>
+
+	</fieldset>
+
+	<fields name="metadata">
+
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+
+			<field
+				name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+
+			<field
+				name="author"
+				type="text"
+				label="JAUTHOR"
+				description="JFIELD_METADATA_AUTHOR_DESC"
+				size="20"
+			/>
+
+		</fieldset>
+
+	</fields>
+
+	<fields name="attribs">
+
+		<fieldset name="navigation">
+
+			<field
+				name="topnav"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_TOPNAV_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPNAV_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="topnav_sections"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_TOPNAV_SECTIONS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPNAV_SECTIONS_DESC"
+				default="0"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="topnav_root"
+				type="menuitem"
+				default=""
+				label="COM_FAQBOOKPRO_FIELD_TOPNAV_ROOT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPNAV_ROOT_DESC"
+				published="1"
+			/>
+
+			<field
+				name="leftnav"
+				type="list"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_LEFTNAV_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_LEFTNAV_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+				<option value="2">COM_FAQBOOKPRO_FIELD_OPTION_SHOW_MINIMIZED</option>
+			</field>
+
+			<field
+				name="load_all_topics"
+				type="list"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_DESC"
+			>
+				<option value="0">COM_FAQBOOKPRO_FIELD_OPTION_ONLY_ENDPOINTS</option>
+				<option value="1">COM_FAQBOOKPRO_FIELD_OPTION_ALL_TOPICS</option>
+			</field>
+
+			<field
+				name="browse_topics"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LINK_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LINK_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+		</fieldset>
+
+		<fieldset name="options">
+
+			<field
+				name="section_class"
+				type="text"
+				default=""
+				label="COM_FAQBOOKPRO_FIELD_SECTION_CLASS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SECTION_CLASS_DESC"
+			/>
+
+			<field
+				name="section_title"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SECTION_TITLE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SECTION_TITLE_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="section_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SECTION_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SECTION_DESCRIPTION_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="section_image"
+				type="media"
+				label="COM_FAQBOOKPRO_FIELD_SECTION_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SECTION_IMAGE_DESC"
+			/>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_TOPICS_TREE_SEPARATOR" />
+
+			<field
+				name="show_topics_tree"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SHOW_TOPICS_TREE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SHOW_TOPICS_TREE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="browse_topics_header"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="browse_topics_icons"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="browse_topics_images"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="browse_topics_levels"
+				type="integer"
+				default="4"
+				first="1"
+				last="10"
+				step="1"
+				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_DESC"
+			/>
+
+			<field
+				name="browse_topics_cols"
+				type="integer"
+				default="3"
+				first="1"
+				last="4"
+				step="1"
+				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_DESC"
+			/>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_SEPARATOR" />
+
+			<field
+				name="show_section_questions"
+				type="list"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="active">COM_FAQBOOKPRO_FIELD_OPTION_ACTIVE_TOPIC</option>
+				<option value="all">COM_FAQBOOKPRO_FIELD_OPTION_ALL_TOPICS</option>
+			</field>
+
+			<field
+				name="topicid"
+				type="topicid"
+				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TOPIC_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_ACTIVE_TOPIC_DESC"
+			>
+			</field>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_SEPARATOR" />
+
+			<field
+				name="show_popular_topics"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SHOW_POPULAR_TOPICS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SHOW_POPULAR_TOPICS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_topics_header"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_HEADER_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_HEADER_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_topics_count"
+				type="text"
+				default="5"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_DESC"
+			/>
+
+			<field
+				name="popular_topics_cols"
+				type="integer"
+				default="3"
+				first="1"
+				last="4"
+				step="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COLS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COLS_DESC"
+			/>
+
+			<field
+				name="popular_topics_title"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_TITLE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_TITLE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_topics_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_topics_description_limit"
+				type="text"
+				default="15"
+				size="4"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_DESC"
+			/>
+
+			<field
+				name="popular_topics_image"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_IMAGE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_SEPARATOR" />
+
+			<field
+				name="show_popular_questions"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_SHOW_POPULAR_QUESTIONS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SHOW_POPULAR_QUESTIONS_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_questions_header"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_HEADER_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_HEADER_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_questions_count"
+				type="text"
+				default="5"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_DESC"
+			/>
+
+			<field
+				name="popular_questions_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="popular_questions_description_limit"
+				type="text"
+				default="15"
+				size="4"
+				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_DESC"
+			/>
+
+		</fieldset>
+
+		<fieldset name="section_topics">
+
+			<field
+	      name="topic_title"
+	      type="radio"
+				layout="joomla.form.field.radio.switcher"
+	      label="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_LABEL"
+	      description="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_DESC"
+	      default="1"
+	    >
+	      <option value="0">JHIDE</option>
+	      <option value="1">JSHOW</option>
+	    </field>
+
+	  	<field
+				name="topic_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_TOPIC_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPIC_DESCRIPTION_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+	      <option value="1">JSHOW</option>
+	    </field>
+
+	  	<field
+	  		name="topic_image"
+	  		type="radio"
+				layout="joomla.form.field.radio.switcher"
+	  		label="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_LABEL"
+	  		description="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_DESC"
+	  		default="0"
+			>
+		  	<option value="0">JHIDE</option>
+	  		<option value="1">JSHOW</option>
+	  	</field>
+
+			<field
+				name="questions_group_method"
+				type="profeature"
+				class="info"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_TITLE"
+			/>
+
+		</fieldset>
+
+		<fieldset name="separate_topic">
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_SEPARATE_TOPIC_AND_SUBTOPICS_SEPARATOR" />
+
+			<field
+				name="show_subtopics"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="subtopics_title"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_TITLE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_TITLE_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="subtopics_description"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESCRIPTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESCRIPTION_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="subtopics_image"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_IMAGE_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="subtopics_questions"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_FAQ_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_FAQ_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+		</fieldset>
+
+		<fieldset name="topic_ordering">
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_SEPARATOR" />
+
+			<field
+				name="questions_ordering_type"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_TITLE"
+				default="static"
+			/>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_STATIC_ORDERING_SEPARATOR" />
+
+			<field
+				name="questions_ordering"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DESC"
+				default="created"
+			>
+		  	<option value="id">COM_FAQBOOKPRO_FIELD_OPTION_ID</option>
+				<option value="title">COM_FAQBOOKPRO_FIELD_OPTION_TITLE</option>
+				<option value="created">COM_FAQBOOKPRO_FIELD_OPTION_CREATED</option>
+				<option value="modified">COM_FAQBOOKPRO_FIELD_OPTION_MODIFIED</option>
+				<option value="ordering">COM_FAQBOOKPRO_FIELD_OPTION_ORDERING</option>
+				<option value="hits">COM_FAQBOOKPRO_FIELD_OPTION_HITS</option>
+			</field>
+
+			<field
+				name="questions_ordering_dir"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_DESC"
+				default="DESC"
+			>
+		  	<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
+				<option value="DESC">COM_FAQBOOKPRO_FIELD_OPTION_DESC</option>
+			</field>
+
+			<field type="separator" text="COM_FAQBOOKPRO_FIELD_DYNAMIC_ORDERING_SEPARATOR" />
+
+			<field
+				name="active_tab"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_DESC"
+				default="recent"
+			/>
+
+			<field
+				name="recent_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="top_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="featured_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="unanswered_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="resolved_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="unresolved_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="open_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_DESC"
+			/>
+
+			<field
+				name="pending_questions_tab"
+				type="profeature"
+				class="info"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_DESC"
+			/>
+
+		</fieldset>
+
+		<fieldset name="section_questions">
+
+			<field
+				name="questions_theme"
+				type="profeature"
+				class="info"
+				default="faq"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_TITLE"
+			/>
+
+			<field
+				name="section_questions_opened"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_DESC"
+				default="0"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field
+				name="questions_votes"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_TITLE"
+				default="1"
+			/>
+
+			<field
+				name="questions_link"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_TITLE"
+				default="1"
+			/>
+
+			<field
+				name="questions_answers"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_TITLE"
+				default="1"
+			/>
+
+			<field
+				name="questions_state_labels"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_TITLE"
+				default="1"
+			/>
+
+			<field
+				name="questions_image"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_IMAGE_DESC"
+				default="0"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="questions_introtext"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="questions_introtext_limit"
+				type="text"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_DESC"
+				default="20"
+				filter="integer"
+			/>
+
+			<field
+				name="questions_views"
+				type="profeature"
+				class="info"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_DESC"
+				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_TITLE"
+				default="1"
+			/>
+
+			<field
+				name="questions_date"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_DATE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_DATE_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="questions_author"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_DESC"
+				default="1"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="questions_author_name"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_DESC"
+				default="username"
+			>
+		  	<option value="username">COM_FAQBOOKPRO_FIELD_OPTION_USERNAME</option>
+				<option value="name">COM_FAQBOOKPRO_FIELD_OPTION_REALNAME</option>
+			</field>
+
+			<field
+				name="questions_topic"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_TOPIC_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_TOPIC_DESC"
+				default="2"
+			>
+		  	<option value="0">JHIDE</option>
+				<option value="1">COM_FAQBOOKPRO_FIELD_OPTION_FIRST_PARENT</option>
+				<option value="2">COM_FAQBOOKPRO_FIELD_OPTION_ALL_PARENTS</option>
+			</field>
+
+		</fieldset>
+
+	</fields>
+
+</form>
