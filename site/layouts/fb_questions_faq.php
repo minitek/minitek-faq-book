@@ -14,8 +14,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
 $app = Factory::getApplication();
 $user = Factory::getUser();
@@ -36,7 +36,7 @@ if (isset($this->topic->questions) && $this->topic->questions)
 
 	foreach ($this->topic->questions as $key => $question)
 	{
-		$canDo = UtilitiesHelper::getActions('com_faqbookpro', 'topic', $question->topicid);
+		$canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $question->topicid);
 
 		?><div class="fbContent_qListItem <?php echo $question->qListItem_class; ?>"><?php
 			$nowDate = Factory::getDate()->toSql();

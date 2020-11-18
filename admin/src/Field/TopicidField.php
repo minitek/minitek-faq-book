@@ -12,7 +12,7 @@ namespace Joomla\Component\FAQBookPro\Administrator\Field;
 defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
-use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
 \JFormHelper::loadFieldClass('list');
 
@@ -53,7 +53,7 @@ class TopicIdField extends \JFormFieldList
 		// Get permissions
 		if (\JFactory::getApplication()->isClient('site'))
 		{
-			$canDo = UtilitiesHelper::getActions('com_faqbookpro', 'question', $jinput->get('id', '0'));
+			$canDo = ContentHelper::getActions('com_faqbookpro', 'question', $jinput->get('id', '0'));
 		}
 
 		// Let's get the id for the current topic.

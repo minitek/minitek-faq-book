@@ -16,7 +16,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
-use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
 /**
  * Sections view class for FAQ Book.
@@ -103,7 +103,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		$canDo = FAQBookProHelper::getActions('com_faqbookpro', 'section', $this->state->get('filter.section_id'));
+		$canDo = ContentHelper::getActions('com_faqbookpro', 'section', $this->state->get('filter.section_id'));
 
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');

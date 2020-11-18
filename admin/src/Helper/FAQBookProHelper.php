@@ -18,43 +18,6 @@ class FAQBookProHelper
 	public static $extension = 'com_faqbookpro';
 
 	/**
-	* Gets a list of the actions that can be performed.
-	*
-	* @param   string   $component  The component name.
-	* @param   string   $section    The access section name.
-	* @param   integer  $id         The item ID.
-	*
-	* @return  JObject
-	*
-	* @since   3.2
-	*/
-	public static function getActions($component = '', $section = '', $id = 0)
-	{
-		$user = \JFactory::getUser();
-		$result = new \JObject;
-
-		$path = JPATH_ADMINISTRATOR . '/components/' . $component . '/access.xml';
-
-		if ($section && $id)
-		{
-			$assetName = $component . '.' . $section . '.' . (int) $id;
-		}
-		else
-		{
-			$assetName = $component;
-		}
-
-		$actions = \JAccess::getActionsFromFile($path, "/access/section[@name='component']/");
-
-		foreach ($actions as $action)
-		{
-			$result->set($action->name, $user->authorise($action->name, $assetName));
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Get authorised topics.
 	 *
 	 * @return  Version number
