@@ -103,32 +103,6 @@ abstract class UtilitiesHelper
 		return $print;
 	}
 
-	public static function getActions($component = '', $section = '', $id = 0)
-	{
-		$user = Factory::getUser();
-		$result = new \JObject;
-
-		$path = JPATH_ADMINISTRATOR . '/components/' . $component . '/access.xml';
-
-		if ($section && $id)
-		{
-			$assetName = $component . '.' . $section . '.' . (int) $id;
-		}
-		else
-		{
-			$assetName = $component;
-		}
-
-		$actions = \JAccess::getActionsFromFile($path, "/access/section[@name='component']/");
-
-		foreach ($actions as $action)
-		{
-			$result->set($action->name, $user->authorise($action->name, $assetName));
-		}
-
-		return $result;
-	}
-
 	public static function getAuthorisedTopics($action)
 	{
 		// Brute force method: get all published topic rows for the component and check each one

@@ -16,6 +16,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
 /**
  * View to edit a topic.
@@ -42,7 +43,7 @@ class HtmlView extends BaseHtmlView
 		$this->form = $this->get('Form');
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
-		$this->canDo = FAQBookProHelper::getActions('com_faqbookpro', 'topic', $this->item->id);
+		$this->canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->item->id);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))

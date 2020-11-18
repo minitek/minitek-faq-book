@@ -11,9 +11,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
-$canDo = UtilitiesHelper::getActions('com_faqbookpro');
+$canDo = ContentHelper::getActions('com_faqbookpro');
 
 // Topics tree
 if ($this->tab != 'topics' && isset($this->show_topics_tree) && $this->show_topics_tree)

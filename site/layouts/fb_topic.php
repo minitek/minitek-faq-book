@@ -17,6 +17,7 @@ use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\ContentHelper;
 
 $app = Factory::getApplication();
 $user = Factory::getUser();
@@ -25,7 +26,7 @@ $this->sectionId = $displayData['sectionId'];
 $this->topic = $displayData['topic'];
 $this->topic_params = $displayData['topic_params'];
 $this->questions_params = $displayData['questions_params'];
-$canDo = UtilitiesHelper::getActions('com_faqbookpro', 'topic', $this->topic->id);
+$canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->topic->id);
 
 ?><div class="fbTopic" id="fbTopic_<?php echo $this->topic->id; ?>"><?php
 	if ($this->topic_params->show_section_questions == 'active' && $this->topic_params->topicid)
