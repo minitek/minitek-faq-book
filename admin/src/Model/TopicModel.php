@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
@@ -560,6 +560,7 @@ class TopicModel extends AdminModel
 		{
 			$query .= " WHERE published=1 AND level>0 ";
 			$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).")";
+			
 			if ($app->getLanguageFilter())
 			{
 				$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";

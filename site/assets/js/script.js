@@ -11,13 +11,16 @@
 		var myid = window.fbvars.myid;
 		var active_tab = window.fbvars.active_tab;
 		var guestsvote = window.fbvars.guestsvote;
-		if (typeof window.fbvars.hash !== 'undefined') {
+
+		if (typeof window.fbvars.hash !== 'undefined') 
+		{
 		  var hash = window.fbvars.hash;
 		}
 		else
 		{
 			var hash = false;
 		}
+
 		var ajax_request;
 		var duration = 300; // animate duration
 		var breakpoint = 768; // mobile screen breakpoint
@@ -65,7 +68,7 @@
 			url = url || site_path+"index.php?option=com_faqbookpro&task=section.getContent&sectionId=" + sectionId + "&tab=" + tab;
 
 			// Check if there is a pending ajax request
-			if(typeof ajax_request !== "undefined")
+			if (typeof ajax_request !== "undefined")
 				ajax_request.abort();
 
 			$('.fbContent_root').hide();
@@ -282,7 +285,7 @@
 				$('.fb_loader').show();
 
 				// Check if there is a pending ajax request
-				if(typeof ajax_request !== "undefined")
+				if (typeof ajax_request !== "undefined")
 					ajax_request.abort();
 
 				ajax_request = $.ajax({
@@ -354,6 +357,7 @@
 				{
 					$('#'+this_liid).find('ul:first').addClass('NavLeftUL_expanded');
 					var lefty = $('.fbLeftNavigation_wrap');
+
 					lefty.animate(
 						{left:"-=100%"},
 						{queue: true, duration: duration, complete: function()
@@ -437,6 +441,7 @@
 				{
 					window.location.href = $(this).find('a').attr('href');
 				}
+
 				return;
 			}
 
@@ -551,8 +556,7 @@
 					$('.fbLeftNavigation_wrap:animated').length == 0
 					&& !$('.NavLeftUL_parent').hasClass('ul_loading')
 					&& !$('.fbTopNavigation_wrap').hasClass('NavTopULloading')
-					&& !$('.fbContent_paging_button').hasClass('page_loading')
-				)
+					&& !$('.fbContent_paging_button').hasClass('page_loading'))
 				{
 					$(this).addClass('page_loading');
 					$(this).find('.fbContent_paging_text').hide();
@@ -573,11 +577,12 @@
 					var topicId = $(this).attr('data-topic');
 
 					// Check if there is a pending ajax request
-					if(typeof ajax_request !== "undefined")
+					if (typeof ajax_request !== "undefined")
 						ajax_request.abort();
 
 					// Get url
 					var url;
+
 					if ($(this).hasClass('fbContent_section_paging'))
 					{
 						url = site_path+"index.php?option=com_faqbookpro&task=section.getContent&sectionId=" + sectionId + "&topicId=" + topicId + "&tab=" + tab + "&page=" + page;
@@ -662,7 +667,7 @@
 			$('.fbLeftNavigation_core').toggleClass('fb-minimized');
 
 			// Check if there is a pending ajax request
-			if(typeof ajax_request !== "undefined")
+			if (typeof ajax_request !== "undefined")
 				ajax_request.abort();
 
 			if ($('.fbLeftNavigation_core').hasClass('fb-minimized'))

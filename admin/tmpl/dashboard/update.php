@@ -12,18 +12,18 @@ use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 
 defined('_JEXEC') or die;
 
-$local_version = FAQBookProHelper::localVersion();
-$latest_version = FAQBookProHelper::latestVersion();
+$localVersion = FAQBookProHelper::localVersion();
+$latestVersion = FAQBookProHelper::latestVersion();
 $message = FAQBookProHelper::updateMessage();
 $message_version = FAQBookProHelper::updateMessageVersion();
 $type = \JFactory::getApplication()->input->get('type', 'auto');
 
-if ($latest_version && version_compare($latest_version, $local_version, '>')) { ?>
+if ($latestVersion && version_compare($latestVersion, $localVersion, '>')) { ?>
   <div class="alert alert-success text-center mt-0" id="update-box">
     <div class="update-info">
       <div>
         <span><?php echo \JText::_('COM_FAQBOOKPRO_DASHBOARD_A_NEW_VERSION_IS_AVAILABLE'); ?></span>
-        <span class="badge badge-success"><?php echo $latest_version; ?></span> <span class="badge badge-success">Free</span>
+        <span class="badge badge-success"><?php echo $latestVersion; ?></span> <span class="badge badge-success">Free</span>
       </div>
       <div class="mt-10">
         <a class="button-success btn btn-sm btn-success" href="<?php echo \JRoute::_('index.php?option=com_installer&view=update'); ?>">
@@ -31,7 +31,7 @@ if ($latest_version && version_compare($latest_version, $local_version, '>')) { 
           <?php echo \JText::_('COM_FAQBOOKPRO_DASHBOARD_UPDATE_NOW'); ?>
         </a>
       </div>
-      <?php if ($message && version_compare($local_version, $message_version, '<')) { ?>
+      <?php if ($message && version_compare($localVersion, $message_version, '<')) { ?>
         <div class="alert alert-danger text-center mt-10">
           <div class="update-info">
             <div>
@@ -45,16 +45,16 @@ if ($latest_version && version_compare($latest_version, $local_version, '>')) { 
     </div>
   </div>
 <?php } else if ($type == 'check') { ?>
-  <?php if ($latest_version) { ?>
+  <?php if ($latestVersion) { ?>
   <div class="alert alert-success text-center mt-0" id="update-box">
     <div class="update-info">
       <div>
-        <?php if ($latest_version == $local_version) { ?>
+        <?php if ($latestVersion == $localVersion) { ?>
           <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_THE_LATEST_VERSION'); ?></span>
         <?php } else { ?>
           <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_A_DEVELOPMENT_VERSION'); ?></span>
         <?php } ?>
-        <span class="badge badge-success"><?php echo $latest_version; ?></span> <span class="badge badge-success">Free</span>
+        <span class="badge badge-success"><?php echo $latestVersion; ?></span> <span class="badge badge-success">Free</span>
       </div>
     </div>
   </div>

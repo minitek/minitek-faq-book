@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Controller;
@@ -106,6 +106,7 @@ class QuestionController extends FormController
 		{
 			// Now test the owner is the user.
 			$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
+			
 			if (empty($ownerId) && $recordId)
 			{
 				// Need to do a lookup from the model.

@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\View\Questions;
@@ -135,7 +135,6 @@ class HtmlView extends BaseHtmlView
 				->listCheck(true);
 
 			$childBar = $dropdown->getChildToolbar();
-
 			$childBar->publish('questions.publish')->listCheck(true);
 			$childBar->unpublish('questions.unpublish')->listCheck(true);
 			$childBar->archive('questions.archive')->listCheck(true);

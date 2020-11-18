@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Field;
@@ -154,9 +154,11 @@ class TopicIdField extends \JFormFieldList
 
 		// Filter by sections - Questions menu item
 		$app = \JFactory::getApplication();
+
 		if ($app->isClient('site'))
 		{
 			$params = $app->getParams('com_faqbookpro');
+
 			if ($sections = $params->get('filter_sections', []))
 			{
 				ArrayHelper::toInteger($sections);
@@ -209,9 +211,9 @@ class TopicIdField extends \JFormFieldList
 			if ($options[$i]->published == 1)
 			{
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . $options[$i]->text;
+
 				if ($options[$i]->section_title
-				&& (\JFactory::getApplication()->isClient('administrator') || (\JFactory::getApplication()->isClient('site') && $canDo->get('core.edit.state')))
-				)
+					&& (\JFactory::getApplication()->isClient('administrator') || (\JFactory::getApplication()->isClient('site') && $canDo->get('core.edit.state'))))
 				{
 					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
 				}
@@ -219,9 +221,9 @@ class TopicIdField extends \JFormFieldList
 			else
 			{
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text;
+				
 				if ($options[$i]->section_title
-				&& (\JFactory::getApplication()->isClient('administrator') || (\JFactory::getApplication()->isClient('site') && $canDo->get('core.edit.state')))
-				)
+					&& (\JFactory::getApplication()->isClient('administrator') || (\JFactory::getApplication()->isClient('site') && $canDo->get('core.edit.state'))))
 				{
 					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
 				}

@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
@@ -47,7 +47,9 @@ class SectionModel extends AdminModel
 			{
 				return;
 			}
+
 			$user = Factory::getUser();
+
 			return $user->authorise('core.delete', 'com_faqbookpro.section.' . (int) $record->id);
 		}
 	}
@@ -132,10 +134,12 @@ class SectionModel extends AdminModel
 	{
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.section', 'section', array('control' => 'jform', 'load_data' => $loadData));
+		
 		if (empty($form))
 		{
 			return false;
 		}
+
 		$jinput = Factory::getApplication()->input;
 
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
@@ -148,6 +152,7 @@ class SectionModel extends AdminModel
 		{
 			$id = $jinput->get('id', 0);
 		}
+
 		// Determine correct permissions to check.
 		if ($this->getState('section.id'))
 		{
@@ -159,8 +164,7 @@ class SectionModel extends AdminModel
 		// Check for existing section.
 		// Modify the form based on Edit State access controls.
 		if ($id != 0 && (!$user->authorise('core.edit.state', 'com_faqbookpro.section.' . (int) $id))
-			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro'))
-		)
+			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro')))
 		{
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');

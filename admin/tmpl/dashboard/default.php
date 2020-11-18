@@ -1,17 +1,17 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 defined('_JEXEC') or die;
 
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 
-$local_version = FAQBookProHelper::localVersion();
+$localVersion = FAQBookProHelper::localVersion();
 ?>
 
 <div class="minitek-dashboard mt-3">
@@ -145,7 +145,7 @@ $local_version = FAQBookProHelper::localVersion();
 							<li class="list-group-item">
 								<div><?php echo \JText::_('COM_FAQBOOKPRO_DASHBOARD_SIDEBAR_VERSION'); ?></div>
 								<div>
-									<span class="badge badge-success"><?php echo $local_version; ?></span> <span class="badge badge-success">Free</span>
+									<span class="badge badge-success"><?php echo $localVersion; ?></span> <span class="badge badge-success">Free</span>
 									<a id="check-version" href="#" class="btn btn-info btn-sm float-right">
 										<i class="fas fa-sync-alt"></i>&nbsp;&nbsp;<?php echo \JText::_('COM_FAQBOOKPRO_DASHBOARD_SIDEBAR_CHECK_VERSION'); ?>
 									</a>

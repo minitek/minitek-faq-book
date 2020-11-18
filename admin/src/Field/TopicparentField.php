@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Field;
@@ -106,6 +106,7 @@ class TopicParentField extends \JFormFieldList
 			if ($options[$i]->published == 1)
 			{
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . $options[$i]->text;
+
 				if ($options[$i]->section_title && \JFactory::getApplication()->isClient('administrator'))
 				{
 					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
@@ -114,10 +115,12 @@ class TopicParentField extends \JFormFieldList
 			else
 			{
 				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text . ']';
+
 				if ($options[$i]->section_title && \JFactory::getApplication()->isClient('administrator'))
 				{
 					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
 				}
+				
 				$options[$i]->text .= ']';
 			}
 		}
