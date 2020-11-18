@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Helper;
@@ -34,6 +34,7 @@ class FeaturedButton extends ActionButton
 		$this->addState(0, 'questions.featured', 'color-unfeatured far fa-star',
 			Text::_('COM_FAQBOOKPRO_UNFEATURED'), ['tip_title' => Text::_('JGLOBAL_TOGGLE_FEATURED')]
 		);
+		
 		$this->addState(1, 'questions.unfeatured', 'color-featured fas fa-star',
 			Text::_('COM_FAQBOOKPRO_FEATURED'), ['tip_title' => Text::_('JGLOBAL_TOGGLE_FEATURED')]
 		);

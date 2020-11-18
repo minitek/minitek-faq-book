@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
@@ -100,6 +100,7 @@ class SectionsModel extends ListModel
 
 		// force a language
 		$forcedLanguage = $app->input->get('forcedLanguage');
+
 		if (!empty($forcedLanguage))
 		{
 			$this->setState('filter.language', $forcedLanguage);
@@ -262,10 +263,12 @@ class SectionsModel extends ListModel
 		{
 			$orderCol = 'l.title';
 		}
+
 		if ($orderCol == 'access_level')
 		{
 			$orderCol = 'ag.title';
 		}
+		
 		$query->order($db->escape($orderCol . ' ' . $orderDirn));
 
 		return $query;

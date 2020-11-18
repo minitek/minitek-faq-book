@@ -2,7 +2,7 @@
 
 .com_faqbookpro.view- a[target="_blank"]::before,
 .com_faqbookpro.view-dashboard a[target="_blank"]::before {
-  content: none;
+	content: none;
 }
 
 /* Dashboard */
@@ -16,7 +16,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 
 .minitek-dashboard .media {
 	border: 1px solid #b4e1ea;
-  border-radius: .25rem;
+	border-radius: .25rem;
 	margin: 5px 0 10px;
 	padding: 15px;
 	background: #d9edf7;
@@ -57,7 +57,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 	text-align: center;
 	background: #fff;
 	margin: 0 5px 10px;
-  min-width: inherit;
+	min-width: inherit;
 }
 
 .dashboard-thumbnails .thumbnail a {
@@ -73,7 +73,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 }
 
 .dashboard-thumbnails .thumbnail:last-child .small {
-  font-size: 11px;
+	font-size: 11px;
 }
 
 .dashboard-thumbnails .thumbnail .icon {
@@ -97,7 +97,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 /* Sidebar */
 
 .dashboard-module .card {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 /* Alert boxes */
@@ -105,7 +105,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 .com_faqbookpro.view-section .alert,
 .com_faqbookpro.view-topic .alert,
 .com_faqbookpro.view-question .alert {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 /* Separators */
@@ -139,21 +139,21 @@ label[id^="jform_attribs_separator_"] {
 /* Topic section_id_duplicate */
 
 .control-group .controls.section_id_duplicate {
-  margin: 0;
+	margin: 0;
 }
 
 /* Question */
 
 .question-title .badge {
-  margin: 0 0 0 5px;
+	margin: 0 0 0 5px;
 }
 
 .question-title .question-icon {
-  margin: 0 5px 0 0;
+	margin: 0 5px 0 0;
 }
 
 /* Custom fields */
 
 .fbForm_customfields_wrap {
-  padding: 0 0 20px;
+	padding: 0 0 20px;
 }

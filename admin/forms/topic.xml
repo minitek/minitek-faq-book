@@ -316,7 +316,7 @@
 				description="COM_FAQBOOKPRO_FIELD_ENABLE_QUESTIONS_DESC"
 				default="1"
 			>
-		  	<option value="0">JNO</option>
+				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
 

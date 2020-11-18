@@ -1,22 +1,22 @@
 /* General */
 
 #fbExtended {
-  padding: 0 0 20px;
+	padding: 0 0 20px;
 }
 
 #fbExtended .clearfix::after {
-  clear: both;
+	clear: both;
 }
 
 #fbExtended .clearfix::before,
 #fbExtended .clearfix::after {
-  display: table;
-  content: "";
-  line-height: 0;
+	display: table;
+	content: "";
+	line-height: 0;
 }
 
 #fbExtended a:focus {
-  outline: none;
+	outline: none;
 }
 
 /* Top Navigation */
@@ -26,25 +26,25 @@
 }
 
 .fbTopNavigation_core {
-  background: none repeat scroll 0 0 #f0f2f7;
-  float: left;
+	background: none repeat scroll 0 0 #f0f2f7;
+	float: left;
 	width: 100%;
-  line-height: 22px;
+	line-height: 22px;
 	min-height: 18px;
-  margin: 0;
-  padding: 15px 15px 15px 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 15px 15px 15px 0;
+	box-sizing: border-box;
 }
 
 .fbTopNavigation_wrap {
 	margin: 2px 0;
-  padding: 0 15px;
+	padding: 0 15px;
 	display: inline-block;
 	position: relative;
 }
 
 ul.fbTopNavigation_root {
-  white-space: nowrap;
+	white-space: nowrap;
 	list-style-type: none;
 	margin: 0 !important;
 	padding: 0 !important;
@@ -57,24 +57,24 @@ ul.fbTopNavigation_root {
 
 .NavTopUL_item,
 .NavTopUL_home {
-  display: inline;
-  margin-right: 8px;
-  padding: 0;
-  position: relative;
+	display: inline;
+	margin-right: 8px;
+	padding: 0;
+	position: relative;
 	background: none !important;
 }
 
 .NavTopUL_firstChild {
-  padding-left: 0;
+	padding-left: 0;
 }
 
 .NavTopUL_lastChild a {
-  color: #444;
+	color: #444;
 }
 
 .NavTopUL_link {
-  font-weight: bold;
-  white-space: normal;
+	font-weight: bold;
+	white-space: normal;
 	outline: none;
 	text-decoration: none;
 	background: none;
@@ -92,7 +92,7 @@ span.NavTopUL_link {
 }
 
 .NavTopUL_loading {
-  background: url("../images/loader.gif") no-repeat scroll center center transparent;
+	background: url("../images/loader.gif") no-repeat scroll center center transparent;
 	display: none;
 	height: 14px;
 	line-height: 34px;
@@ -102,7 +102,7 @@ span.NavTopUL_link {
 }
 
 .fbTopNavigation_wrap.NavTopULloading span.NavTopUL_loading {
-  display: inline-block;
+	display: inline-block;
 }
 
 .NavTopUL_buttons {
@@ -122,12 +122,12 @@ span.NavTopUL_link {
 .NavTopUL_buttons .show_menu a,
 .NavTopUL_buttons .show_menu a:focus {
 	margin: 0 0 0 10px;
-  line-height: 20px;
-  padding: 6px 10px;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
-  color: #333;
+	line-height: 20px;
+	padding: 6px 10px;
+	border: 1px solid #e5e5e5;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	background: #fff;
+	color: #333;
 }
 
 .NavTopUL_buttons .show_menu a:hover,
@@ -152,14 +152,14 @@ span.NavTopUL_link {
 /* Left Navigation */
 
 .leftnav-hidden {
-  display: none !important;
+	display: none !important;
 }
 
 .fbLeftNavigation_core {
-  float: left;
-  margin-right: 30px;
-  position: relative;
-  width: 260px;
+	float: left;
+	margin-right: 30px;
+	position: relative;
+	width: 260px;
 	overflow: hidden;
 	transition: width 0.3s ease 0s;
 	border-right: 1px solid #e5e5e5;
@@ -218,9 +218,9 @@ span.NavTopUL_link {
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn {
 	float: right;
 	padding: 1px 5px;
-  font-size: 12px;
-  line-height: 1.5;
-  border-radius: 3px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
 	margin: 0;
 	position: relative;
 	top: -3px;
@@ -237,7 +237,7 @@ span.NavTopUL_link {
 	outline: none;
 	text-decoration: none;
 	background: #e6e6e6;
-  border: 1px solid #adadad;
+	border: 1px solid #adadad;
 }
 
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:active {
@@ -246,8 +246,8 @@ span.NavTopUL_link {
 
 .fbLeftNavigation_toggle {
 	font-size: 12px;
-  overflow: hidden;
-  position: relative;
+	overflow: hidden;
+	position: relative;
 	line-height: 1.4;
 	float: right;
 	width: 34px;
@@ -268,17 +268,17 @@ span.NavTopUL_link {
 
 .fbLeftNavigation_topics,
 .fbLeftNavigation_user {
-  font-size: 12px;
-  overflow: hidden;
-  position: relative;
-  width: 260px;
+	font-size: 12px;
+	overflow: hidden;
+	position: relative;
+	width: 260px;
 	line-height: 1.4;
 }
 
 .fbLeftNavigation_topics ul,
 .fbLeftNavigation_user ul {
-  position: relative;
-  width: 260px;
+	position: relative;
+	width: 260px;
 	margin: 0 !important;
 	padding: 0 !important;
 	list-style-type: none;
@@ -286,27 +286,27 @@ span.NavTopUL_link {
 
 .fbLeftNavigation_topics li,
 .fbLeftNavigation_user li {
-  list-style: none outside none;
-  width: 260px;
+	list-style: none outside none;
+	width: 260px;
 	padding: 0;
 	background: none !important;
 }
 
 ul.NavLeftUL_sublist {
-  display: none;
-  position: absolute;
+	display: none;
+	position: absolute;
 	left: 100%;
 	top: 0;
 }
 
 ul.NavLeftUL_expanded {
-  display: block;
+	display: block;
 }
 
 .fbLeftNavigation_wrap {
-  left: 0;
-  position: relative;
-  top: 0;
+	left: 0;
+	position: relative;
+	top: 0;
 }
 
 .fbLeftNavigation_toggle a.NavLeftUL_anchor {
@@ -322,18 +322,18 @@ ul.NavLeftUL_expanded {
 
 a.NavLeftUL_anchor,
 span.NavLeftUL_anchor {
-  box-sizing: border-box;
-  border-top: 1px solid #e5e5e5;
-  display: block;
-  outline: 0 none;
-  padding: 9px 30px 9px 8px;
-  position: relative;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-sizing: border-box;
+	border-top: 1px solid #e5e5e5;
+	display: block;
+	outline: 0 none;
+	padding: 9px 30px 9px 8px;
+	position: relative;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	text-decoration: none;
 	outline: none;
 	width: 100%;
-  font-size: 13px;
-  line-height: 1.4;
+	font-size: 13px;
+	line-height: 1.4;
 }
 
 span.NavLeftUL_anchor {
@@ -371,7 +371,7 @@ span.NavLeftUL_title .fb-link i {
 
 a.NavLeftUL_anchor:hover,
 a.NavLeftUL_anchor:focus {
-  background-color: #f0f2f7;
+	background-color: #f0f2f7;
 	position: relative;
 	text-decoration: none;
 	outline: none;
@@ -385,7 +385,7 @@ a.NavLeftUL_anchor i {
 }
 
 .NavLeftUL_navIcon.fas {
-  position: absolute;
+	position: absolute;
 	right: 10px;
 	top: 10px;
 	height: 15px;
@@ -396,7 +396,7 @@ a.NavLeftUL_anchor i {
 }
 
 .NavLeftUL_navBackIcon.fas {
-  position: absolute;
+	position: absolute;
 	right: 9px;
 	top: 11px;
 	height: 16px;
@@ -407,7 +407,7 @@ a.NavLeftUL_anchor i {
 }
 
 .li_loading span.NavLeftUL_endpointIcon {
-  background: url("../images/loader.gif") no-repeat scroll right 0 transparent;
+	background: url("../images/loader.gif") no-repeat scroll right 0 transparent;
 	position: absolute;
 	right: 9px;
 	top: 12px;
@@ -422,7 +422,7 @@ a.NavLeftUL_anchor i {
 .fbLeftNavigation_core .li_selected > a,
 .fbLeftNavigation_core .li_selected > a:hover,
 .fbLeftNavigation_core .li_selected > a:focus {
-  background: #3b5998;
+	background: #3b5998;
 	border-top: 1px solid #3b5998;
 	color: #fff;
 	text-shadow: none;
@@ -434,7 +434,7 @@ a.NavLeftUL_anchor i {
 .topic_loader,
 .myanswers_loader,
 .answers_loader {
-  text-align: center;
+	text-align: center;
 	display: none;
 }
 
@@ -460,72 +460,72 @@ a.NavLeftUL_anchor i {
 }
 
 @keyframes placeHolderShimmer{
-  0%{
-    background-position: -468px 0
-  }
-  100%{
-    background-position: 468px 0
-  }
+	0%{
+		background-position: -468px 0
+	}
+	100%{
+		background-position: 468px 0
+	}
 }
 
 .animated-background {
-  animation-duration: 1.2s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: #f6f7f8;
-  background: linear-gradient(to right, #f0f2f7 8%, #eee 18%, #f0f2f7 33%);
-  background-size: 900px 42px;
-  height: 42px;
-  position: relative;
+	animation-duration: 1.2s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+	animation-name: placeHolderShimmer;
+	animation-timing-function: linear;
+	background: #f6f7f8;
+	background: linear-gradient(to right, #f0f2f7 8%, #eee 18%, #f0f2f7 33%);
+	background-size: 900px 42px;
+	height: 42px;
+	position: relative;
 }
 
 .background-masker {
-  background: #fff;
-  position: absolute;
+	background: #fff;
+	position: absolute;
 }
 
 .background-masker.title-top {
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 25px;
+	top: 0;
+	right: 0;
+	width: 50%;
+	height: 25px;
 }
 
 .background-masker.title-bottom {
-  top: 25px;
-  left: 0;
-  right: 0;
-  height: 17px;
+	top: 25px;
+	left: 0;
+	right: 0;
+	height: 17px;
 }
 
 .background-masker.top-left {
-  top: 0;
-  left: 50px;
-  height: 20px;
-  width: 10px;
+	top: 0;
+	left: 50px;
+	height: 20px;
+	width: 10px;
 }
 
 .background-masker.top-bottom {
-  top: 20px;
-  left: 50px;
-  right: 0;
-  height: 10px;
+	top: 20px;
+	left: 50px;
+	right: 0;
+	height: 10px;
 }
 
 .background-masker.middle-left {
-  top: 30px;
-  left: 50px;
-  height: 12px;
-  width: 10px;
+	top: 30px;
+	left: 50px;
+	height: 12px;
+	width: 10px;
 }
 
 .background-masker.middle-bottom {
-  top: 42px;
-  left: 50px;
-  right: 0;
-  height: 8px;
+	top: 42px;
+	left: 50px;
+	right: 0;
+	height: 8px;
 }
 
 /* Main */
@@ -533,7 +533,7 @@ a.NavLeftUL_anchor i {
 .fbContent_core {
 	overflow: hidden;
 	padding-top: 20px;
-  position: relative;
+	position: relative;
 }
 
 .fbContent_root {
@@ -557,8 +557,8 @@ h2.fbContent_title a:focus {
 }
 
 h2.fbContent_title .btn {
-  font-size: 13px;
-  font-weight: normal;
+	font-size: 13px;
+	font-weight: normal;
 }
 
 h2.fbContent_title small {
@@ -574,7 +574,7 @@ h2.fbContent_title small {
 	border-bottom: 1px solid #e5e5e5;
 	height: 37px;
 	clear: both;
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /* State headers */
@@ -588,15 +588,15 @@ h2.fbContent_title small {
 	margin: 0 5px 10px 0;
 	padding: 5px 10px;
 	font-size: 11px;
-  font-weight: bold;
-  line-height: 14px;
-  display: inline-block;
-  border-radius: 4px;
+	font-weight: bold;
+	line-height: 14px;
+	display: inline-block;
+	border-radius: 4px;
 }
 
 .fbContent_core .private-header,
 .fbContent_core .scheduled-header {
-  cursor: help;
+	cursor: help;
 }
 
 .fbContent_core .unpublished-header {
@@ -652,7 +652,7 @@ h2.fbContent_title small {
 	vertical-align: top;
 	margin: 0;
 	padding: 0 10px;
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .fbContent_topics > li > a {
@@ -665,8 +665,8 @@ h2.fbContent_title small {
 }
 
 .fbContent_topics > li > a img {
-  margin: 0 15px 0 0;
-  max-width: 120px;
+	margin: 0 15px 0 0;
+	max-width: 120px;
 }
 
 .fbContent_topics li a {
@@ -681,7 +681,7 @@ h2.fbContent_title small {
 }
 
 .fbContent_topics .level1 {
-  margin: 0 0 20px 10px;
+	margin: 0 0 20px 10px;
 }
 
 .fbContent_topics .level1 ul {
@@ -700,14 +700,14 @@ h2.fbContent_title small {
 
 .fbSection_description {
 	padding: 10px 0;
-  margin: 0 0 20px;
+	margin: 0 0 20px;
 }
 
 /* Topic */
 
 .fbTopic {
-  position: relative;
-  padding: 0 0 20px;
+	position: relative;
+	padding: 0 0 20px;
 }
 
 .fbTopic_permalink {
@@ -719,26 +719,26 @@ h2.fbContent_title small {
 }
 
 .fbTopic_image {
-  text-align: left;
+	text-align: left;
 	padding: 20px 0;
 }
 
 .fbTopic_image img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .fbTopic_content {
 	clear: both;
-  margin: 0 0 30px;
+	margin: 0 0 30px;
 }
 
 /* Questions List */
 
 .fbContent_empty {
 	margin: 20px 0 0;
-  padding: 20px 0;
-  line-height: 23px;
-  text-align: center;
+	padding: 20px 0;
+	line-height: 23px;
+	text-align: center;
 }
 
 .fbContent_qList {
@@ -770,13 +770,13 @@ h2.fbContent_title small {
 	margin: 0 10px 10px 0;
 	text-align: center;
 	font-size: 11px;
-  min-width: 58px;
+	min-width: 58px;
 	max-width: 100px;
 }
 
 .qListItem_votes {
 	margin: 0 0 8px;
-  padding: 5px;
+	padding: 5px;
 }
 
 .qListItem_votes strong {
@@ -793,13 +793,13 @@ h2.fbContent_title small {
 .qListItem_answers a,
 .qListItem_answers a:hover,
 .qListItem_answers a:focus {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
 }
 
 .qListItem_answers span {
-  display: block;
+	display: block;
 }
 
 .qListItem_answers.resolved {
@@ -808,7 +808,7 @@ h2.fbContent_title small {
 }
 
 .qListItem_answers.resolved a {
-  color: #fff;
+	color: #fff;
 }
 
 .qListItem_answers strong {
@@ -828,7 +828,7 @@ h2.fbContent_title small {
 
 .qListItem_preview h3 i {
 	font-size: 14px;
-  margin: 0 3px 0 0;
+	margin: 0 3px 0 0;
 }
 
 .qListItem_preview h3 .label {
@@ -836,11 +836,11 @@ h2.fbContent_title small {
 	vertical-align: top;
 	display: inline-block;
 	margin: 0 0 0 5px;
-  color: #fff;
-  text-shadow: none;
-  padding: .2em .6em .3em;
-  border-radius: 0.25em;
-  line-height: 18px;
+	color: #fff;
+	text-shadow: none;
+	padding: .2em .6em .3em;
+	border-radius: 0.25em;
+	line-height: 18px;
 }
 
 .qListItem_preview .label.label-pending {
@@ -852,7 +852,7 @@ h2.fbContent_title small {
 }
 
 .qListItem_preview img {
-  margin: 0 0 15px;
+	margin: 0 0 15px;
 }
 
 h3.qListItem_header a,
@@ -881,7 +881,7 @@ h3.qListItem_header a:focus {
 .qListItem_link {
 	line-height: 23px;
 	font-size: 16px;
-  font-weight: 500;
+	font-weight: 500;
 }
 
 .qListItem_introtext {
@@ -895,19 +895,19 @@ h3.qListItem_header a:focus {
 }
 
 .qListItem_info > span:after {
-  content: "\00b7";
-  font-size: 26px;
-  line-height: 16px;
-  vertical-align: middle;
-  padding: 0 4px;
+	content: "\00b7";
+	font-size: 26px;
+	line-height: 16px;
+	vertical-align: middle;
+	padding: 0 4px;
 }
 
 .qListItem_info > span:last-child:after {
-  content: none;
+	content: none;
 }
 
 .qListItem_date {
-  cursor: help;
+	cursor: help;
 }
 
 .qListItem_edit_link {
@@ -917,12 +917,12 @@ h3.qListItem_header a:focus {
 }
 
 .qListItem_topic {
-  padding: 3px 0 0;
+	padding: 3px 0 0;
 }
 
 .qListItem_topic a {
 	background: #ecf0f4;
-  border-radius: 3px;
+	border-radius: 3px;
 	padding: 3px 6px;
 	margin: 0 2px 2px;
 	display: inline-block;
@@ -937,29 +937,29 @@ h3.qListItem_header a:focus {
 /* Theme: FAQ */
 
 .fbContent_qFaqItemInner {
-  padding: 0 0 0 22px;
-  position: relative;
+	padding: 0 0 0 22px;
+	position: relative;
 }
 
 .fbContent_qFaqItemInner .qListItem_preview {
-  padding: 0;
+	padding: 0;
 }
 
 .fbContent_qFaqItemInner .qListItem_preview h3 {
-  margin: 0;
-  line-height: 22px;
+	margin: 0;
+	line-height: 22px;
 }
 
 .qFaqItem_link {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 	text-decoration: none;
-  display: block;
+	display: block;
 }
 
 .qFaqItem_link:focus,
 .qFaqItem_link:hover {
-  text-decoration: none;
+	text-decoration: none;
 	background: none;
 }
 
@@ -968,35 +968,35 @@ h3.qListItem_header a:focus {
 }
 
 .qFaqItem_triangle {
-  width: 22px;
-  height: 22px;
-  left: 0;
-  top: 0;
-  position: absolute;
+	width: 22px;
+	height: 22px;
+	left: 0;
+	top: 0;
+	position: absolute;
 }
 
 .qFaqItem_triangle .fas {
-  line-height: 23px;
-  vertical-align: top;
-  text-align: center;
-  height: 22px;
-  width: 20px;
-  font-size: 15px;
-  color: #777;
+	line-height: 23px;
+	vertical-align: top;
+	text-align: center;
+	height: 22px;
+	width: 20px;
+	font-size: 15px;
+	color: #777;
 }
 
 .qFaqItem_introtext {
 	padding: 8px 0 0;
-  color: #999;
+	color: #999;
 }
 
 .faq_open .qFaqItem_introtext {
-  display: none;
+	display: none;
 }
 
 .qFaqItem_answer {
 	display: none;
-  padding: 8px 0 0;
+	padding: 8px 0 0;
 }
 
 .faq_open .qFaqItem_answer {
@@ -1009,50 +1009,50 @@ h3.qListItem_header a:focus {
 }
 
 .qFaqItem_tools {
-  background: none repeat scroll 0 0 #f9f9f9;
-  border-top: 1px solid #E3E8F3;
+	background: none repeat scroll 0 0 #f9f9f9;
+	border-top: 1px solid #E3E8F3;
 	margin: 1em 0 0.8em;
 	position: relative;
-  padding: 0 5px 0 0;
+	padding: 0 5px 0 0;
 }
 
 .qFaqItem_links {
-  float: right;
+	float: right;
 }
 
 .qFaqItem_links a {
 	margin: 0 3px;
 	font-size: 12px;
-  display: inline-block;
-  vertical-align: top;
-  line-height: 30px;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 30px;
 }
 
 .qFaqItem_voting {
-  float: left;
+	float: left;
 }
 
 .qFaqItem_voting .voting-text {
-  display: inline-block;
-  vertical-align: top;
-  line-height: 30px;
-  font-size: 11px;
-  color: #777;
-  padding: 0 8px;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 30px;
+	font-size: 11px;
+	color: #777;
+	padding: 0 8px;
 }
 
 .qFaqItem_votes {
 	text-align: center;
-  display: inline-block;
-  vertical-align: top;
-  border-left: 1px solid #d5d5d5;
-  border-right: 1px solid #d5d5d5;
+	display: inline-block;
+	vertical-align: top;
+	border-left: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
 }
 
 .qFaqItem_votes .fas {
 	font-size: 20px;
-  height: 30px;
-  vertical-align: top;
+	height: 30px;
+	vertical-align: top;
 }
 
 .qFaqItem_votes .vote-up,
@@ -1063,19 +1063,19 @@ h3.qListItem_header a:focus {
 }
 
 .qFaqItem_votes .vote-up {
-  border-right: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
 }
 
 .qFaqItem_votes .vote-up .fas {
-  line-height: 26px;
+	line-height: 26px;
 }
 
 .qFaqItem_votes .vote-down {
-  border-left: 1px solid #d5d5d5;
+	border-left: 1px solid #d5d5d5;
 }
 
 .qFaqItem_votes .vote-down .fas {
-  line-height: 28px;
+	line-height: 28px;
 }
 
 .qFaqItem_votes .has_voted,
@@ -1100,11 +1100,11 @@ h3.qListItem_header a:focus {
 	position: relative;
 	color: #777;
 	font-size: 14px;
-  min-width: 35px;
+	min-width: 35px;
 	height: 30px;
-  line-height: 30px;
-  padding: 0 10px;
-  box-sizing: border-box;
+	line-height: 30px;
+	padding: 0 10px;
+	box-sizing: border-box;
 }
 
 /* Ajax pagination */
@@ -1157,7 +1157,7 @@ a.fbContent_paging_button:active {
 }
 
 .fbContent_paging .fbContent_paging_loader {
-  background: url("../images/loader.gif") no-repeat scroll center center transparent;
+	background: url("../images/loader.gif") no-repeat scroll center center transparent;
 	display: none;
 	width: 24px;
 	height: 24px;
@@ -1178,9 +1178,9 @@ a.fbContent_paging_button:active {
 }
 
 .fbQuestion .qItem_header h3 {
-  padding: 0;
-  margin: 0;
-  font-size: 18px;
+	padding: 0;
+	margin: 0;
+	font-size: 18px;
 }
 
 .qItem_header h3 span {
@@ -1196,39 +1196,39 @@ a.fbContent_paging_button:active {
 .qItem_assign .label,
 .qItem_message .label {
 	font-size: 11px;
-  display: inline-block;
+	display: inline-block;
 	vertical-align: top;
 	line-height: 18px;
-  padding: .2em .6em .3em;
+	padding: .2em .6em .3em;
 	margin: 0 0 0 5px;
 	color: #fff;
 	border-radius: 0.25em;
 	font-weight: bold;
 	background-color: #999;
-  text-shadow: none;
+	text-shadow: none;
 }
 
 .qItem_subscriptions {
-  margin: 0 0 10px;
+	margin: 0 0 10px;
 }
 
 .qItem_subscriptions .label {
-  display: inline-block;
-  padding: 3px 5px;
-  font-size: 11px;
-  font-weight: bold;
-  line-height: 14px;
-  color: #fff;
-  vertical-align: baseline;
-  white-space: nowrap;
-  text-shadow: none;
-  background-color: #999;
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 14px;
+	color: #fff;
+	vertical-align: baseline;
+	white-space: nowrap;
+	text-shadow: none;
+	background-color: #999;
 }
 
 .fbQuestion .label {
-  color: #fff;
-  padding: .2em .6em .3em;
-  border-radius: 0.25em;
+	color: #fff;
+	padding: .2em .6em .3em;
+	border-radius: 0.25em;
 }
 
 .fbQuestion .label.label-pinned {
@@ -1260,8 +1260,8 @@ a.fbContent_paging_button:active {
 	float: left;
 	margin: 0 10px 20px 0;
 	text-align: center;
-  font-size: 11px;
-  width: 52px;
+	font-size: 11px;
+	width: 52px;
 }
 
 .qItem_votes .vote-up,
@@ -1302,7 +1302,7 @@ a.fbContent_paging_button:active {
 	margin: 4px 0;
 	font-size: 20px;
 	height: 30px;
-  line-height: 30px;
+	line-height: 30px;
 }
 
 .qItem_content {
@@ -1319,8 +1319,8 @@ a.fbContent_paging_button:active {
 }
 
 .qItem_topic a {
-  background: #ecf0f4;
-  border-radius: 3px;
+	background: #ecf0f4;
+	border-radius: 3px;
 	padding: 3px 6px;
 	margin: 0 2px 2px;
 	display: inline-block;
@@ -1343,23 +1343,23 @@ a.fbContent_paging_button:active {
 
 .qItem_info span:after,
 .qItem_actions > span:after {
-  content: "\00b7";
-  font-size: 26px;
-  line-height: 16px;
-  vertical-align: middle;
-  padding: 0 4px;
+	content: "\00b7";
+	font-size: 26px;
+	line-height: 16px;
+	vertical-align: middle;
+	padding: 0 4px;
 }
 
 .qItem_info span:last-child:after,
 .qItem_info span.qItem_edited:after,
 .qItem_actions > span:last-child:after {
-  content: none;
+	content: none;
 }
 
 .qItem_id,
 .qItem_date,
 .qItem_edited {
-  cursor: help;
+	cursor: help;
 }
 
 .qItem_edited {
@@ -1367,12 +1367,12 @@ a.fbContent_paging_button:active {
 }
 
 .qItem_actions {
-  padding: 6px 10px;
-  margin: 15px 0 0;
-  font-size: 13px;
-  border: 1px solid #e5e5e5;
-  background: #f8f8f8;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	padding: 6px 10px;
+	margin: 15px 0 0;
+	font-size: 13px;
+	border: 1px solid #e5e5e5;
+	background: #f8f8f8;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .qItem_actions .publish-action-div span.publish-spinner,
@@ -1390,11 +1390,11 @@ a.fbContent_paging_button:active {
 }
 
 .fbFormExtended .cf-spinner {
-  position: relative;
+	position: relative;
 	height: 18px;
-  width: 100%;
-  display: block;
-  vertical-align: top;
+	width: 100%;
+	display: block;
+	vertical-align: top;
 }
 
 .pin-action-div .pin-action {
@@ -1421,30 +1421,30 @@ a.fbContent_paging_button:active {
 
 .qItem_assign span.assign-spinner,
 .qItem_assign span.state-spinner {
-  position: absolute;
-  top: 5px;
-  right: 12px;
+	position: absolute;
+	top: 5px;
+	right: 12px;
 }
 
 .qItem_assign {
 	margin: 10px 0 0;
 	padding: 10px 0 0;
 	line-height: 22px;
-  font-size: 12px;
-  color: #777;
+	font-size: 12px;
+	color: #777;
 }
 
 .qItem_assign > div {
-  margin: 0 0 5px;
-  padding: 0 30px 0 0;
-  display: inline-block;
-  position: relative;
+	margin: 0 0 5px;
+	padding: 0 30px 0 0;
+	display: inline-block;
+	position: relative;
 }
 
 .qItem_assign select {
 	display: inline-block;
 	height: 30px;
-  width: auto;
+	width: auto;
 	line-height: 30px;
 	margin: 0 10px 0 5px;
 	padding: 5px;
@@ -1456,43 +1456,43 @@ a.fbContent_paging_button:active {
 }
 
 .qItem_message {
-  display: none;
-  padding: 15px;
-  margin: 15px 0 0;
-  color: #468847;
+	display: none;
+	padding: 15px;
+	margin: 15px 0 0;
+	color: #468847;
 	background: #dff0d8;
 	border: 1px solid #d6e9c6;
-  vertical-align: middle;
-  line-height: 28px;
+	vertical-align: middle;
+	line-height: 28px;
 }
 
 /* Popular topics */
 
 .fbContent_grid {
 	width: 100%;
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 	margin-left: 0 !important;
 	padding: 0;
 	list-style: none !important;
 }
 
 .fbContent_gridItem {
-  float: left;
+	float: left;
 	margin: 0 0 20px;
 }
 
 .fbContent_gridItem.onecolgrid {
-  margin: 0 0 10px;
+	margin: 0 0 10px;
 	padding: 0 0 10px;
 	border-bottom: 1px solid #eee;
 }
 
 .onecolgrid .fbContent_gridItemContainer {
-  text-align: left;
+	text-align: left;
 }
 
 .onecolgrid .fbContent_gridItemContainer img {
-  float: left;
+	float: left;
 	margin: 0;
 }
 
@@ -1505,22 +1505,23 @@ a.fbContent_paging_button:active {
 }
 
 .fbContent_gridItemContainer {
-  margin: 0 10px;
+	margin: 0 10px;
 	padding: 0;
 	text-align: center;
 	opacity: 0.85;
 }
+
 .fbContent_gridItemContainer:hover {
 	opacity: 1;
 }
 
 .fbContent_gridItemContainer h4 {
-  margin: 0;
+	margin: 0;
 	padding: 0;
 }
 
 .fbContent_gridItemContainer h4 a {
-  font-size: 14px;
+	font-size: 14px;
 	text-decoration: none;
 	font-weight: normal;
 	background: none;
@@ -1542,7 +1543,7 @@ a.fbContent_paging_button:active {
 	background: none !important;
 	display: inline-block;
 	width: 100%;
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .fbContent_gridItemContainer .pop-item-img:hover,
@@ -1551,7 +1552,7 @@ a.fbContent_paging_button:active {
 }
 
 .fbContent_gridItemContainer img {
-  margin: 0;
+	margin: 0;
 	max-width: 100%;
 	width: 100%;
 	float: left;
@@ -1561,7 +1562,7 @@ a.fbContent_paging_button:active {
 
 .fbContent_popQuestions {
 	width: 100%;
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 	margin-left: 0;
 	padding: 0;
 	list-style-type: none;
@@ -1590,7 +1591,7 @@ a.fbContent_paging_button:active {
 }
 
 #myquestions_public_msg .control-group {
-  margin: 0 0 15px;
+	margin: 0 0 15px;
 }
 
 .myquestion_private_selector .control-label .private-locked {
@@ -1666,13 +1667,13 @@ a.fbContent_paging_button:active {
 
 .fb_table_row {
 	display: table;
-  width: 100%;
-  table-layout: fixed;
+	width: 100%;
+	table-layout: fixed;
 }
 
 .fb_table_cell {
 	display: table-cell;
-  vertical-align: top;
+	vertical-align: top;
 }
 
 .fb_table_cell_padding {
@@ -1702,8 +1703,8 @@ a.fbContent_paging_button:active {
 }
 
 .fb_forum_topic_image a {
-  display: inline-block;
-  max-width: 120px;
+	display: inline-block;
+	max-width: 120px;
 }
 
 .fb_forum_topic_icon i {
@@ -1719,7 +1720,7 @@ a.fbContent_paging_button:active {
 
 .fb_forum_topic_title {
 	margin: 12px 0 10px;
-  font-size: 18px;
+	font-size: 18px;
 }
 
 h3.fb_forum_topic_title a,
@@ -1760,15 +1761,15 @@ h3.fb_forum_topic_title a:focus {
 }
 
 .fb_forum_question_meta > span:after {
-  content: "\00b7";
-  font-size: 26px;
-  line-height: 16px;
-  vertical-align: middle;
-  padding: 0 4px;
+	content: "\00b7";
+	font-size: 26px;
+	line-height: 16px;
+	vertical-align: middle;
+	padding: 0 4px;
 }
 
 .fb_forum_question_meta > span:last-child:after {
-  content: none;
+	content: none;
 }
 
 /* Columns layout (sections) */
@@ -1779,7 +1780,7 @@ h3.fb_forum_topic_title a:focus {
 }
 
 .fb_column {
-  float: left;
+	float: left;
 	margin: 0 0 20px;
 	text-align: left;
 }
@@ -1789,20 +1790,20 @@ h3.fb_forum_topic_title a:focus {
 }
 
 .fb_column_inner {
-  margin: 0 10px;
+	margin: 0 10px;
 	padding: 15px;
 	border: 1px solid #e5e5e5;
 	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
+	background: #fff;
 }
 
 .fb_column_inner .fb_column_image {
-  display: block;
-  margin: 0 0 15px;
+	display: block;
+	margin: 0 0 15px;
 }
 
 .fb_column_inner img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .fb_column_inner small {
@@ -1812,7 +1813,7 @@ h3.fb_forum_topic_title a:focus {
 h3.fb_column_header {
 	margin: 0;
 	padding: 10px 0 20px;
-  font-size: 18px;
+	font-size: 18px;
 }
 
 h3.fb_column_header a,

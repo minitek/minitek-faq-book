@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
@@ -185,6 +185,7 @@ class QuestionModel extends AdminModel
 		if (!$done)
 		{
 			$this->setError(Text::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
+
 			return false;
 		}
 
@@ -290,6 +291,7 @@ class QuestionModel extends AdminModel
 				{
 					// Not fatal error
 					$this->setError(Text::sprintf('COM_FAQBOOKPRO_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+
 					continue;
 				}
 			}
@@ -321,6 +323,7 @@ class QuestionModel extends AdminModel
 			if (!$this->table->check())
 			{
 				$this->setError($this->table->getError());
+
 				return false;
 			}
 
@@ -328,6 +331,7 @@ class QuestionModel extends AdminModel
 			if (!$this->table->store())
 			{
 				$this->setError($this->table->getError());
+
 				return false;
 			}
 
@@ -450,6 +454,7 @@ class QuestionModel extends AdminModel
 				{
 					// Not fatal error
 					$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					
 					continue;
 				}
 			}
@@ -622,10 +627,12 @@ class QuestionModel extends AdminModel
 	{
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.question', 'question', array('control' => 'jform', 'load_data' => $loadData));
+		
 		if (empty($form))
 		{
 			return false;
 		}
+
 		$jinput = Factory::getApplication()->input;
 
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.

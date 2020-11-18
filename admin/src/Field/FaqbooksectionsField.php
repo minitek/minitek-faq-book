@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Field;
@@ -17,8 +17,8 @@ class FAQBookSectionsField extends \JFormFieldList
 {
 	protected $type = 'FAQBookSections';
 
-  protected function getOptions()
-  {
+	protected function getOptions()
+	{
 		$options = array();
 		$topicLevel = $this->form->getValue('level');
 
@@ -48,9 +48,11 @@ class FAQBookSectionsField extends \JFormFieldList
 
 		// Filter by sections - Questions menu item
 		$app = \JFactory::getApplication();
+
 		if ($app->isClient('site'))
 		{
 			$params = $app->getParams('com_faqbookpro');
+
 			if ($sections = $params->get('filter_sections', []))
 			{
 				\JArrayHelper::toInteger($sections);
@@ -72,5 +74,5 @@ class FAQBookSectionsField extends \JFormFieldList
 		$options = array_merge(parent::getOptions(), $options);
 
 		return $options;
-  }
+  	}
 }

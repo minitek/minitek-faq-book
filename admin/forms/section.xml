@@ -216,7 +216,7 @@
 				description="COM_FAQBOOKPRO_FIELD_TOPNAV_SECTIONS_DESC"
 				default="0"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -551,18 +551,18 @@
 		<fieldset name="section_topics">
 
 			<field
-	      name="topic_title"
-	      type="radio"
+				name="topic_title"
+				type="radio"
 				layout="joomla.form.field.radio.switcher"
-	      label="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_LABEL"
-	      description="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_DESC"
-	      default="1"
-	    >
-	      <option value="0">JHIDE</option>
-	      <option value="1">JSHOW</option>
-	    </field>
+				label="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPIC_TITLE_DESC"
+				default="1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 
-	  	<field
+			<field
 				name="topic_description"
 				type="radio"
 				layout="joomla.form.field.radio.switcher"
@@ -570,21 +570,21 @@
 				description="COM_FAQBOOKPRO_FIELD_TOPIC_DESCRIPTION_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
-	      <option value="1">JSHOW</option>
-	    </field>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 
-	  	<field
-	  		name="topic_image"
-	  		type="radio"
+			<field
+				name="topic_image"
+				type="radio"
 				layout="joomla.form.field.radio.switcher"
-	  		label="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_LABEL"
-	  		description="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_DESC"
-	  		default="0"
+				label="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPIC_SHOW_IMAGE_DESC"
+				default="0"
 			>
-		  	<option value="0">JHIDE</option>
-	  		<option value="1">JSHOW</option>
-	  	</field>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 
 			<field
 				name="questions_group_method"
@@ -610,7 +610,7 @@
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -622,7 +622,7 @@
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_TITLE_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -634,7 +634,7 @@
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESCRIPTION_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -646,7 +646,7 @@
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_IMAGE_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -658,7 +658,7 @@
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_FAQ_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -687,7 +687,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DESC"
 				default="created"
 			>
-		  	<option value="id">COM_FAQBOOKPRO_FIELD_OPTION_ID</option>
+				<option value="id">COM_FAQBOOKPRO_FIELD_OPTION_ID</option>
 				<option value="title">COM_FAQBOOKPRO_FIELD_OPTION_TITLE</option>
 				<option value="created">COM_FAQBOOKPRO_FIELD_OPTION_CREATED</option>
 				<option value="modified">COM_FAQBOOKPRO_FIELD_OPTION_MODIFIED</option>
@@ -702,7 +702,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_DESC"
 				default="DESC"
 			>
-		  	<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
+				<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
 				<option value="DESC">COM_FAQBOOKPRO_FIELD_OPTION_DESC</option>
 			</field>
 
@@ -863,7 +863,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_IMAGE_DESC"
 				default="0"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -875,7 +875,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -906,7 +906,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_DATE_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -918,7 +918,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_DESC"
 				default="1"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
@@ -929,7 +929,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_DESC"
 				default="username"
 			>
-		  	<option value="username">COM_FAQBOOKPRO_FIELD_OPTION_USERNAME</option>
+				<option value="username">COM_FAQBOOKPRO_FIELD_OPTION_USERNAME</option>
 				<option value="name">COM_FAQBOOKPRO_FIELD_OPTION_REALNAME</option>
 			</field>
 
@@ -940,7 +940,7 @@
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_TOPIC_DESC"
 				default="2"
 			>
-		  	<option value="0">JHIDE</option>
+				<option value="0">JHIDE</option>
 				<option value="1">COM_FAQBOOKPRO_FIELD_OPTION_FIRST_PARENT</option>
 				<option value="2">COM_FAQBOOKPRO_FIELD_OPTION_ALL_PARENTS</option>
 			</field>

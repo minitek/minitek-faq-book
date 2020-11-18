@@ -1,10 +1,10 @@
 <?php
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
+* @title		Minitek FAQ Book
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @license		GNU General Public License version 3 or later.
+* @author url	https://www.minitek.gr/
+* @developers	Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Field;
@@ -17,8 +17,8 @@ class FBSectionsField extends \JFormFieldList
 {
 	protected $type = 'FBSections';
 
-  protected function getInput()
-  {
+	protected function getInput()
+	{
 		$db = \JFactory::getDbo();
 
 		// Build the query.
@@ -33,5 +33,5 @@ class FBSectionsField extends \JFormFieldList
 		$output = \JHTML::_('select.genericlist', $options, $this->name.'[]', 'class="inputbox" multiple="multiple" size="10"', 'id', 'title', $this->value, $this->id);
 
 		return $output;
-  }
+	}
 }
