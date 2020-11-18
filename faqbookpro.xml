@@ -6,7 +6,7 @@
 	<authorUrl>https://www.minitek.gr/</authorUrl>
 	<copyright>Copyright (c) 2011-2020 Minitek. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>4.0.6</version>
+	<version>4.0.7</version>
 	<namespace path="src">Joomla\Component\FAQBookPro</namespace>
 	<description>
 	<![CDATA[
@@ -39,8 +39,8 @@
 	</files>
 
 	<languages folder="site">
-    <language tag="en-GB">language/en-GB/com_faqbookpro.ini</language>
-  </languages>
+		<language tag="en-GB">language/en-GB/com_faqbookpro.ini</language>
+	</languages>
 
 	<administration>
 
@@ -82,9 +82,8 @@
 
 	</administration>
 
-	<!-- Update servers -->
-  <updateservers>
-    <server type="extension" priority="1" name="FAQ Book Pro">http://update.minitek.gr/joomla-extensions/minitek_faqbook.xml</server>
-  </updateservers>
+	<updateservers>
+		<server type="extension" priority="1" name="FAQ Book Pro">https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml</server>
+	</updateservers>
 
 </extension>
