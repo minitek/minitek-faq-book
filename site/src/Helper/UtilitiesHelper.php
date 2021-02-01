@@ -620,23 +620,4 @@ abstract class UtilitiesHelper
 
 		return false;
 	}
-
-	public static function getAkeebaSubs($userid)
-	{
-		$db = Factory::getDBO();
-
-		$query = $db->getQuery(true);
-		$query
-			->select(array('b.title'))
-			->from($db->quoteName('#__akeebasubs_subscriptions', 'a'))
-			->join('INNER', $db->quoteName('#__akeebasubs_levels', 'b') . ' ON ' . $db->quoteName('a.akeebasubs_level_id') . ' = ' . $db->quoteName('b.akeebasubs_level_id'))
-			->where($db->quoteName('a.user_id') . ' = ' . $db->quote($userid))
-			->where($db->quoteName('a.enabled') . ' = ' . $db->quote(1))
-			->where($db->quoteName('a.state') . ' = ' . $db->quote('C'));
-
-		$db->setQuery($query);
-		$subs = $db->loadObjectlist();
-
-		return $subs;
-	}
 }
