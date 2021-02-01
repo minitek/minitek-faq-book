@@ -339,6 +339,7 @@ span.NavLeftUL_anchor {
 span.NavLeftUL_anchor {
 	font-weight: 600;
 	color: #656565;
+	border-top: 0;
 }
 
 span.NavLeftUL_anchor small {
@@ -347,7 +348,6 @@ span.NavLeftUL_anchor small {
 
 span.NavLeftUL_title {
 	padding: 9px 8px;
-	background: #fafafa;
 }
 
 span.NavLeftUL_title i {
@@ -431,9 +431,7 @@ a.NavLeftUL_anchor i {
 /* Loaders */
 
 .fb_loader,
-.topic_loader,
-.myanswers_loader,
-.answers_loader {
+.topic_loader {
 	text-align: center;
 	display: none;
 }
@@ -443,9 +441,7 @@ a.NavLeftUL_anchor i {
   padding: 8px 0 10px;
 }
 
-.topic_loader,
-.myanswers_loader,
-.answers_loader {
+.topic_loader {
   margin: 10px 0 0;
   padding: 10px;
 }
@@ -581,9 +577,7 @@ h2.fbContent_title small {
 
 .fbContent_core .unpublished-header,
 .fbContent_core .archived-header,
-.fbContent_core .private-header,
-.fbContent_core .scheduled-header,
-.fbContent_core .selected-header {
+.fbContent_core .scheduled-header {
 	text-transform: uppercase;
 	margin: 0 5px 10px 0;
 	padding: 5px 10px;
@@ -594,7 +588,6 @@ h2.fbContent_title small {
 	border-radius: 4px;
 }
 
-.fbContent_core .private-header,
 .fbContent_core .scheduled-header {
 	cursor: help;
 }
@@ -611,17 +604,6 @@ h2.fbContent_title small {
 	border: 1px solid #ddd;
 }
 
-.fbContent_core .private-header {
-	color: #b94a48;
-	background: #f2dede;
-	border: 1px solid #ebccd1;
-}
-
-.fbContent_core .private-header small {
-	font-size: 10px;
-	color: #D88F8D;
-}
-
 .fbContent_core .scheduled-header {
 	color: #468847;
 	background: #dff0d8;
@@ -631,12 +613,6 @@ h2.fbContent_title small {
 .fbContent_core .scheduled-header small {
 	font-size: 10px;
 	color: #468847;
-}
-
-.fbContent_core .selected-header {
-	color: #468847;
-	background: #dff0d8;
-	border: 1px solid #d6e9c6;
 }
 
 /* Browse Topics (Topics tree) */
@@ -765,57 +741,6 @@ h2.fbContent_title small {
 	padding: 5px 0;
 }
 
-.qListItem_stats {
-	float: left;
-	margin: 0 10px 10px 0;
-	text-align: center;
-	font-size: 11px;
-	min-width: 58px;
-	max-width: 100px;
-}
-
-.qListItem_votes {
-	margin: 0 0 8px;
-	padding: 5px;
-}
-
-.qListItem_votes strong {
-	font-size: 18px;
-	font-weight: 500;
-}
-
-.qListItem_answers {
-	margin: 0;
-	padding: 5px;
-	background: #f7f7f7;
-}
-
-.qListItem_answers a,
-.qListItem_answers a:hover,
-.qListItem_answers a:focus {
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-}
-
-.qListItem_answers span {
-	display: block;
-}
-
-.qListItem_answers.resolved {
-	background: #6f9136;
-	color: #fff;
-}
-
-.qListItem_answers.resolved a {
-	color: #fff;
-}
-
-.qListItem_answers strong {
-	font-size: 18px;
-	font-weight: 500;
-}
-
 .qListItem_preview {
 	overflow: hidden;
 	padding: 0 10px;
@@ -866,18 +791,6 @@ h3.qListItem_header a:focus {
 	color: #bb7bb4;
 }
 
-.fas.qListItem_resolved {
-	color: #5cb85c;
-}
-
-.fas.qListItem_feat_star {
-	color: #ffa500;
-}
-
-.fas.qListItem_locked_icon {
-	color: #d9534f;
-}
-
 .qListItem_link {
 	line-height: 23px;
 	font-size: 16px;
@@ -906,6 +819,10 @@ h3.qListItem_header a:focus {
 	content: none;
 }
 
+.qListItem_info a {
+	text-decoration: none;
+}
+
 .qListItem_date {
 	cursor: help;
 }
@@ -926,6 +843,7 @@ h3.qListItem_header a:focus {
 	padding: 3px 6px;
 	margin: 0 2px 2px;
 	display: inline-block;
+	text-decoration: none;
 }
 
 .qListItem_topic a:hover,
@@ -1026,85 +944,7 @@ h3.qListItem_header a:focus {
 	display: inline-block;
 	vertical-align: top;
 	line-height: 30px;
-}
-
-.qFaqItem_voting {
-	float: left;
-}
-
-.qFaqItem_voting .voting-text {
-	display: inline-block;
-	vertical-align: top;
-	line-height: 30px;
-	font-size: 11px;
-	color: #777;
-	padding: 0 8px;
-}
-
-.qFaqItem_votes {
-	text-align: center;
-	display: inline-block;
-	vertical-align: top;
-	border-left: 1px solid #d5d5d5;
-	border-right: 1px solid #d5d5d5;
-}
-
-.qFaqItem_votes .fas {
-	font-size: 20px;
-	height: 30px;
-	vertical-align: top;
-}
-
-.qFaqItem_votes .vote-up,
-.qFaqItem_votes .vote-down {
-	float: left;
-	width: 30px;
-	height: 30px;
-}
-
-.qFaqItem_votes .vote-up {
-	border-right: 1px solid #d5d5d5;
-}
-
-.qFaqItem_votes .vote-up .fas {
-	line-height: 26px;
-}
-
-.qFaqItem_votes .vote-down {
-	border-left: 1px solid #d5d5d5;
-}
-
-.qFaqItem_votes .vote-down .fas {
-	line-height: 28px;
-}
-
-.qFaqItem_votes .has_voted,
-.qFaqItem_votes .has_voted:hover,
-.qFaqItem_votes .has_voted:focus,
-.qFaqItem_votes .has_voted:active {
-	color: #4cae4c;
-}
-
-.qFaqItem_votes a,
-.qFaqItem_votes a:focus,
-.qFaqItem_votes a:active {
-	color: #999;
-}
-
-.qFaqItem_votes a:hover {
-	color: #777;
-}
-
-.qFaqItem_votes .vote-count {
-	float: left;
-	position: relative;
-	color: #777;
-	font-size: 14px;
-	min-width: 35px;
-	height: 30px;
-	line-height: 30px;
-	padding: 0 10px;
-	box-sizing: border-box;
+	text-decoration: none;
 }
 
 /* Ajax pagination */
@@ -1161,309 +1001,6 @@ a.fbContent_paging_button:active {
 	display: none;
 	width: 24px;
 	height: 24px;
-}
-
-/* Question page */
-
-.qItem_header {
-	border-bottom: 1px solid #e5e5e5;
-	margin: 0 0 20px;
-}
-
-.qItem_header h2,
-.qItem_header h3 {
-	padding: 0 0 15px;
-	margin: 0;
-	line-height: 34px;
-}
-
-.fbQuestion .qItem_header h3 {
-	padding: 0;
-	margin: 0;
-	font-size: 18px;
-}
-
-.qItem_header h3 span {
-	font-size: 16px;
-}
-
-.qItem_header .header_labels {
-	font-size: 0;
-	vertical-align: top;
-}
-
-.qItem_header .label,
-.qItem_assign .label,
-.qItem_message .label {
-	font-size: 11px;
-	display: inline-block;
-	vertical-align: top;
-	line-height: 18px;
-	padding: .2em .6em .3em;
-	margin: 0 0 0 5px;
-	color: #fff;
-	border-radius: 0.25em;
-	font-weight: bold;
-	background-color: #999;
-	text-shadow: none;
-}
-
-.qItem_subscriptions {
-	margin: 0 0 10px;
-}
-
-.qItem_subscriptions .label {
-	display: inline-block;
-	padding: 3px 5px;
-	font-size: 11px;
-	font-weight: bold;
-	line-height: 14px;
-	color: #fff;
-	vertical-align: baseline;
-	white-space: nowrap;
-	text-shadow: none;
-	background-color: #999;
-}
-
-.fbQuestion .label {
-	color: #fff;
-	padding: .2em .6em .3em;
-	border-radius: 0.25em;
-}
-
-.fbQuestion .label.label-pinned {
-	background: #bb7bb4;
-}
-
-.fbQuestion .label.label-featured,
-.fbQuestion .label.label-pending {
-	background: #f0ad4e;
-}
-
-.fbQuestion .label.label-scheduled,
-.fbQuestion .label.label-resolved {
-	background: #5cb85c;
-}
-
-.fbQuestion .label.label-locked,
-.fbQuestion .label.label-private,
-.fbQuestion .label.label-unpublished,
-.fbQuestion .label.label-open {
-	background: #d9534f;
-}
-
-.fbQuestion .label.label-assigned {
-	background: #5bc0de;
-}
-
-.qItem_sidebar {
-	float: left;
-	margin: 0 10px 20px 0;
-	text-align: center;
-	font-size: 11px;
-	width: 52px;
-}
-
-.qItem_votes .vote-up,
-.qItem_votes .vote-down {
-	display: block;
-	width: 52px;
-	height: 30px;
-	margin: 0;
-	padding: 0;
-}
-
-.qItem_votes .has_voted,
-.qItem_votes .has_voted:hover,
-.qItem_votes .has_voted:focus,
-.qItem_votes .has_voted:active {
-	color: #4cae4c;
-}
-
-.qItem_votes a,
-.qItem_votes a:focus,
-.qItem_votes a:active {
-	color: #999;
-}
-
-.qItem_votes a:hover {
-	color: #777;
-}
-
-.qItem_votes .fas {
-	font-size: 40px;
-	line-height: 30px;
-}
-
-.qItem_votes .vote-count {
-	display: block;
-	position: relative;
-	color: #777;
-	margin: 4px 0;
-	font-size: 20px;
-	height: 30px;
-	line-height: 30px;
-}
-
-.qItem_content {
-	overflow: hidden;
-	padding: 0 10px 10px 10px;
-}
-
-.qItem_text {
-	padding: 5px 0 10px;
-}
-
-.qItem_topic {
-	margin: 0 0 15px;
-}
-
-.qItem_topic a {
-	background: #ecf0f4;
-	border-radius: 3px;
-	padding: 3px 6px;
-	margin: 0 2px 2px;
-	display: inline-block;
-}
-
-.qItem_topic a:hover,
-.qItem_topic a:focus {
-	background: #f0f2f7;
-	text-decoration: none;
-}
-
-.qItem_info {
-	font-size: 12px;
-	color: #777;
-}
-
-.qItem_info a {
-	white-space: nowrap;
-}
-
-.qItem_info span:after,
-.qItem_actions > span:after {
-	content: "\00b7";
-	font-size: 26px;
-	line-height: 16px;
-	vertical-align: middle;
-	padding: 0 4px;
-}
-
-.qItem_info span:last-child:after,
-.qItem_info span.qItem_edited:after,
-.qItem_actions > span:last-child:after {
-	content: none;
-}
-
-.qItem_id,
-.qItem_date,
-.qItem_edited {
-	cursor: help;
-}
-
-.qItem_edited {
-	font-style: italic;
-}
-
-.qItem_actions {
-	padding: 6px 10px;
-	margin: 15px 0 0;
-	font-size: 13px;
-	border: 1px solid #e5e5e5;
-	background: #f8f8f8;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.qItem_actions .publish-action-div span.publish-spinner,
-.qItem_actions .lock-action-div span.lock-spinner,
-.qItem_actions .feature-action-div span.feature-spinner,
-.qItem_actions .pin-action-div span.pin-spinner,
-.qItem_actions .resolve-action-div span.resolve-spinner,
-.qItem_assign span.assign-spinner,
-.qItem_assign span.state-spinner {
-	position: relative;
-	height: 18px;
-	width: 18px;
-	display: none;
-	vertical-align: top;
-}
-
-.fbFormExtended .cf-spinner {
-	position: relative;
-	height: 18px;
-	width: 100%;
-	display: block;
-	vertical-align: top;
-}
-
-.pin-action-div .pin-action {
-	color: #bb7bb4;
-}
-
-.feature-action-div .feature-action {
-	color: #f0ad4e;
-}
-
-.qItem_actions a.lock-question,
-.qItem_actions a.unpublish-question,
-.qItem_actions a.unpublish-answer,
-.qItem_actions a.unresolve-question {
-	color: #d9534f;
-}
-
-.qItem_actions a.unlock-question,
-.qItem_actions a.publish-question,
-.qItem_actions a.publish-answer,
-.qItem_actions a.resolve-question {
-	color: #5cb85c;
-}
-
-.qItem_assign span.assign-spinner,
-.qItem_assign span.state-spinner {
-	position: absolute;
-	top: 5px;
-	right: 12px;
-}
-
-.qItem_assign {
-	margin: 10px 0 0;
-	padding: 10px 0 0;
-	line-height: 22px;
-	font-size: 12px;
-	color: #777;
-}
-
-.qItem_assign > div {
-	margin: 0 0 5px;
-	padding: 0 30px 0 0;
-	display: inline-block;
-	position: relative;
-}
-
-.qItem_assign select {
-	display: inline-block;
-	height: 30px;
-	width: auto;
-	line-height: 30px;
-	margin: 0 10px 0 5px;
-	padding: 5px;
-}
-
-.qItem_assign .label-assigned {
-	background: #5bc0de;
-	margin: 0 0 0 5px;
-}
-
-.qItem_message {
-	display: none;
-	padding: 15px;
-	margin: 15px 0 0;
-	color: #468847;
-	background: #dff0d8;
-	border: 1px solid #d6e9c6;
-	vertical-align: middle;
-	line-height: 28px;
 }
 
 /* Popular topics */
@@ -1838,6 +1375,7 @@ h3.fb_column_header a:focus {
 
 .fb_column_topic a {
 	font-size: 12px;
+	text-decoration: none;
 }
 
 /* Responsive */
