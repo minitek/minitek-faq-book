@@ -4,9 +4,9 @@
 	<creationDate>January 2012</creationDate>
 	<author>Minitek.gr</author>
 	<authorUrl>https://www.minitek.gr/</authorUrl>
-	<copyright>Copyright (c) 2011-2020 Minitek. All rights reserved.</copyright>
+	<copyright>Copyright (c) 2011-2021 Minitek. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>4.0.7</version>
+	<version>4.0.8</version>
 	<namespace path="src">Joomla\Component\FAQBookPro</namespace>
 	<description>
 	<![CDATA[
