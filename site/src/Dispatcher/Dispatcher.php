@@ -11,6 +11,8 @@ namespace Joomla\Component\FAQBookPro\Site\Dispatcher;
 
 defined('JPATH_PLATFORM') or die;
 
+if(!defined('DS')){ define('DS',DIRECTORY_SEPARATOR); }
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 
