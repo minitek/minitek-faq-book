@@ -21,9 +21,6 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Administrator\Model\AnswerModel;
 
-if (!defined('DS'))
-	define('DS',DIRECTORY_SEPARATOR);
-
 /**
  * Model for a Question.
  *
