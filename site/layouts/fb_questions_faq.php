@@ -46,6 +46,12 @@ if (isset($this->topic->questions) && $this->topic->questions)
 					echo Text::_('COM_FAQBOOKPRO_SCHEDULED_QUESTION');
 				?></div><?php
 			}
+			if ($question->state == -2)
+			{
+				?><div class="trashed-header">
+					<?php echo Text::_('COM_FAQBOOKPRO_TRASHED_QUESTION'); ?>
+				</div><?php
+			}
 			if ($question->state == 0)
 			{
 				?><div class="unpublished-header">

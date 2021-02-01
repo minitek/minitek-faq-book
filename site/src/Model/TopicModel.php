@@ -185,14 +185,14 @@ class TopicModel extends BaseDatabaseModel
 		{
 			$editStateAuthorizedTopics = implode(',', $editStateAuthorizedTopics);
 			$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
-				OR (a.state IN (0,1,2) AND a.topicid IN (' . $editStateAuthorizedTopics . ')))');
+				OR (a.state IN (-2,0,1,2) AND a.topicid IN (' . $editStateAuthorizedTopics . ')))');
 		}
 		else
 		{
 			if ($user->id)
 			{
 				$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
-					OR (a.state IN (0,1,2) AND a.created_by = ' . $db->quote($user->id).'))');
+					OR (a.state IN (-2,0,1,2) AND a.created_by = ' . $db->quote($user->id).'))');
 			}
 			else
 			{
