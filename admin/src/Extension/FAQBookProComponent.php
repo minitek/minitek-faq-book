@@ -11,6 +11,8 @@ namespace Joomla\Component\FAQBookPro\Administrator\Extension;
 
 defined('_JEXEC') or die;
 
+if(!defined('DS')){ define('DS',DIRECTORY_SEPARATOR); }
+
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
