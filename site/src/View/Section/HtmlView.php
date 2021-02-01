@@ -618,6 +618,8 @@ class HtmlView extends BaseHtmlView
 		// Date
 		$question->time_since = UtilitiesHelper::getTimeSince($question->created);
 
+		$question->qListItem_class = '';
+		
 		// Pinned
 		if ($question->pinned && $this->tab == 'recent')
 		{
@@ -657,6 +659,12 @@ class HtmlView extends BaseHtmlView
 		if ($question->publish_up > $nowDate)
 		{
 			$question->qListItem_class .= ' qListItem_scheduled';
+		}
+
+		// Trashed
+		if ($question->state == -2)
+		{
+			$question->qListItem_class .= ' qListItem_trashed';
 		}
 
 		// Unpublished

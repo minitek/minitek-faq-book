@@ -576,6 +576,7 @@ h2.fbContent_title small {
 /* State headers */
 
 .fbContent_core .unpublished-header,
+.fbContent_core .trashed-header,
 .fbContent_core .archived-header,
 .fbContent_core .scheduled-header {
 	text-transform: uppercase;
@@ -596,6 +597,12 @@ h2.fbContent_title small {
 	color: #b94a48;
 	background: #f2dede;
 	border: 1px solid #ebccd1;
+}
+
+.fbContent_core .trashed-header {
+	color: #656565;
+	background: #e9e9e9;
+	border: 1px solid #ddd;
 }
 
 .fbContent_core .archived-header {
