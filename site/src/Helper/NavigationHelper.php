@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -27,7 +27,7 @@ abstract class NavigationHelper
 	{
 		$topicModel = new TopicModel;
 		$topicParams = json_decode($item->params, false);
-  	$output = '';
+  		$output = '';
 		$subitems = $topicModel->getTopicChildren($item->id);
 
 		if (count($subitems))
@@ -36,17 +36,17 @@ abstract class NavigationHelper
 
 			if ($depth === 0)
 			{
-		  	$item_class = 'NavLeftUL_endpoint';
+		  		$item_class = 'NavLeftUL_endpoint';
 				$span_class = 'NavLeftUL_endpointIcon';
 			}
 			else
 			{
-		  	$item_class = '';
+		  		$item_class = '';
 				$span_class = 'NavLeftUL_navIcon fas fa-chevron-right';
 			}
 
 			$output .= '<li id="liid'.$item->id.'" class="NavLeftUL_item NavLeftUL_topic '.$item_class.'">';
-			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;">';
+			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
 			if (isset($topicParams->topic_icon_class) && $topicParams->topic_icon_class)
@@ -61,7 +61,7 @@ abstract class NavigationHelper
 
 			foreach ($subitems as $subitem)
 			{
-		  	$output .= self::getTopicsTree($subitem, $level + 1);
+		  		$output .= self::getTopicsTree($subitem, $level + 1);
 			}
 
 			$output .= '<li id="backliid'.$item->id.'" class="NavLeftUL_backItem"><a href="#" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;"><span>'.Text::_('COM_FAQBOOKPRO_BACK').'<span class="NavLeftUL_navBackIcon fas fa-arrow-left"></span></span></a></li>';
@@ -70,8 +70,8 @@ abstract class NavigationHelper
 		}
 		else
 		{
-	  	$output .= '<li id="liid'.$item->id.'" class="NavLeftUL_item NavLeftUL_topic NavLeftUL_endpoint">';
-			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;">';
+	  		$output .= '<li id="liid'.$item->id.'" class="NavLeftUL_item NavLeftUL_topic NavLeftUL_endpoint">';
+			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
 			if (isset($topicParams->topic_icon_class) && $topicParams->topic_icon_class)
@@ -95,11 +95,11 @@ abstract class NavigationHelper
 
 		if (count($children))
 		{
-	  	$levels++;
+	  		$levels++;
 
-	  	foreach ($children as $child)
+	  		foreach ($children as $child)
 			{
-		  	if (count($topicModel->getTopicChildren($child->id)))
+		  		if (count($topicModel->getTopicChildren($child->id)))
 				{
 					return;
 				}
