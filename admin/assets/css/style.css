@@ -30,6 +30,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 .minitek-dashboard .media-body {
 	padding: 20px;
 	color: #4780aa;
+	overflow: hidden;
 }
 
 .minitek-dashboard .media-heading {
@@ -52,12 +53,13 @@ body.com_faqbookpro.view-dashboard #subhead {
 .dashboard-thumbnails .thumbnail {
 	flex-grow: 1;
 	flex-basis: 23%;
-	border: 0;
+	border: 1px solid #ddd;
 	padding: 0;
 	text-align: center;
 	background: #fff;
 	margin: 0 5px 10px;
 	min-width: inherit;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.055);
 }
 
 .dashboard-thumbnails .thumbnail a {
@@ -94,10 +96,17 @@ body.com_faqbookpro.view-dashboard #subhead {
 	width: 100%;
 }
 
-/* Sidebar */
+/* Dashboard modules */
 
 .dashboard-module .card {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+	border: 1px solid #ddd;
+	border-radius: 0;
 	overflow: hidden;
+}
+
+.dashboard-module a {
+	text-decoration: none;
 }
 
 /* Alert boxes */
