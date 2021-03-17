@@ -24,7 +24,6 @@
 			name="title"
 			type="textarea"
 			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
 			class="input-xxlarge input-large-text"
 			rows="3"
 			cols="30"
@@ -60,11 +59,9 @@
 			name="state"
 			type="list"
 			label="JSTATUS"
-			description="JFIELD_PUBLISHED_DESC"
-			class="custom-select-color-state"
-			filter="intval"
-			size="1"
+			class="form-select-color-state"
 			default="1"
+			filter="intval"
 		>
 			<option value="1">JPUBLISHED</option>
 			<option value="0">JUNPUBLISHED</option>
@@ -75,11 +72,10 @@
 		<field
 			name="featured"
 			type="list"
-			filter="intval"
 			label="JFEATURED"
-			description="COM_FAQBOOKPRO_FIELD_FEATURED_DESC"
+			class="form-select-color-state"
 			default="0"
-			class="custom-select-color-state"
+			filter="intval"
 		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -97,11 +93,9 @@
 			name="pinned"
 			type="list"
 			label="COM_FAQBOOKPRO_FIELD_PINNED_LABEL"
-			description="COM_FAQBOOKPRO_FIELD_PINNED_DESC"
-			filter="intval"
-			size="1"
+			class="form-select-color-state"
 			default="0"
-			class="custom-select-color-state"
+			filter="intval"
 		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -111,11 +105,9 @@
 			name="locked"
 			type="list"
 			label="COM_FAQBOOKPRO_FIELD_LOCKED_LABEL"
-			description="COM_FAQBOOKPRO_FIELD_LOCKED_DESC"
-			filter="intval"
-			size="1"
+			class="form-select-color-state"
 			default="0"
-			class="custom-select-color-state"
+			filter="intval"
 		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -125,11 +117,9 @@
 			name="private"
 			type="list"
 			label="COM_FAQBOOKPRO_FIELD_PRIVATE_LABEL"
-			description="COM_FAQBOOKPRO_FIELD_PRIVATE_DESC"
-			filter="intval"
-			size="1"
+			class="form-select-color-state"
 			default="0"
-			class="custom-select-color-state"
+			filter="intval"
 		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
