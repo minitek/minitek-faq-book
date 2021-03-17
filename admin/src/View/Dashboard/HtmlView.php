@@ -12,10 +12,12 @@ namespace Joomla\Component\FAQBookPro\Administrator\View\Dashboard;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\URI\URI;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Dashboard view class for FAQ Book.
@@ -36,8 +38,8 @@ class HtmlView extends BaseHtmlView
 		// Skip if view == update
 		if (Factory::getApplication()->input->get('view') != 'update')
 		{
-			// Load dashboard.js
-			Factory::getDocument()->addScript(URI::root(true).'/administrator/components/com_faqbookpro/assets/js/dashboard.js');
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useScript('com_faqbookpro.admin-dashboard');
 
 			$this->addToolbar();
 
@@ -54,6 +56,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		ToolbarHelper::title(\JText::_('COM_FAQBOOKPRO_DASHBOARD_TITLE'), '');
+		ToolbarHelper::title(Text::_('COM_FAQBOOKPRO_DASHBOARD_TITLE'), '');
 	}
 }

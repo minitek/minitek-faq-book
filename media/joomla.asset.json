@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_faqbookpro",
+  "version": "4.0.10",
+  "description": "A powerful Q&A and discussion forum for Joomla.",
+  "license": "GPL-3.0-or-later",
+  "assets": [
+    {
+      "name": "com_faqbookpro.admin-faqbookpro",
+      "type": "style",
+      "uri": "com_faqbookpro/admin-faqbookpro.css"
+    },
+    {
+      "name": "com_faqbookpro.admin-faqbookpro",
+      "type": "script",
+      "uri": "com_faqbookpro/admin-faqbookpro.js",
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_faqbookpro.admin-dashboard",
+      "type": "script",
+      "uri": "com_faqbookpro/admin-dashboard.js",
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_faqbookpro.fontawesome",
+      "type": "script",
+      "uri": "https://kit.fontawesome.com/ddbd3bdfdd.js"
+    },
+    {
+      "name": "com_faqbookpro.faqbookpro",
+      "type": "script",
+      "uri": "com_faqbookpro/faqbookpro.js",
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_faqbookpro.faqbookpro",
+      "type": "style",
+      "uri": "com_faqbookpro/faqbookpro.css"
+    }
+  ]
+}

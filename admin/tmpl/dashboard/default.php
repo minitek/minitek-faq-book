@@ -23,7 +23,7 @@ $localVersion = FAQBookProHelper::localVersion();
 		<div class="col-sm-12 col-md-8">
 			<div class="media mt-0">
 				<div class="float-start">
-					<img class="media-object" src="<?php echo URI::root(true).'/administrator/components/com_faqbookpro/assets/images/logo.png'; ?>">
+					<img class="media-object" src="<?php echo URI::root(true).'/media/com_faqbookpro/css/logo.png'; ?>">
 				</div>
 				<div class="media-body">
 			    <h2 class="media-heading"><?php echo Text::_('COM_FAQBOOKPRO'); ?> <span class="badge bg-success">Free</span></h2>

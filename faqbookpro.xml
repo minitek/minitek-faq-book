@@ -16,6 +16,13 @@
 
 	<scriptfile>install.faqbookpro.php</scriptfile>
 
+	<media destination="com_faqbookpro" folder="media">
+		<folder>css</folder>
+		<folder>js</folder>
+		<filename>index.html</filename>
+		<filename>joomla.asset.json</filename>
+	</media>
+
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -30,7 +37,6 @@
 
 	<!-- Site Main File Copy Section -->
 	<files folder="site">
-		<folder>assets</folder>
 		<folder>language</folder>
 		<folder>layouts</folder>
 		<folder>src</folder>
@@ -64,7 +70,6 @@
 		<!-- Administration Main File Copy Section -->
 		<files folder="admin">
 			<!-- Admin Main File Copy Section -->
-			<folder>assets</folder>
 			<folder>forms</folder>
 			<folder>services</folder>
 			<folder>sql</folder>

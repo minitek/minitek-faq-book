@@ -15,6 +15,7 @@ if(!defined('DS')){ define('DS',DIRECTORY_SEPARATOR); }
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * ComponentDispatcher class for com_faqbookpro
@@ -35,22 +36,24 @@ class Dispatcher extends ComponentDispatcher
 		// Get component params
 		$params = \JComponentHelper::getParams('com_faqbookpro');
 		$document = Factory::getDocument();
+		$wa = $document->getWebAssetManager();
 
 		// Fix relative links
 		if ($params->get('fix_relative', false))
 			$document->base = \JURI::root();
 
 		// Add main stylesheet
-		$document->addStyleSheet(\JURI::base().'components/com_faqbookpro/assets/css/style.css');
+		$wa->useStyle('com_faqbookpro.faqbookpro');
 
 		// Load FontAwesome
 		if ($params->get('load_fontawesome', 1))
-			$document->addScript('https://kit.fontawesome.com/ddbd3bdfdd.js');
+			$wa->useScript('com_faqbookpro.fontawesome');
 
 		// Load main script
 		$view = Factory::getApplication()->input->get('view');
-		if ($view && $view != 'sections' && $view != 'profile' && $view != 'questions')
-			$document->addScript(\JURI::base().'components/com_faqbookpro/assets/js/script.js');
+
+		if ($view && $view != 'sections')
+			$wa->useScript('com_faqbookpro.faqbookpro');
 
 		parent::dispatch();
 	}
