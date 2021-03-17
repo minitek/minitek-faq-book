@@ -24,19 +24,20 @@ class FAQBookSectionsField extends \JFormFieldList
 
 		if ($topicLevel > 1)
 		{
-			\JFactory::getDocument()->addScriptDeclaration('
-				(function($) {
-					$(function(){
-						var current_section = $(\'#jform_section_id option:selected\').text();
-						$(\'#jform_section_id\')
-							.addClass(\'disabled\')
-							.hide()
-							.end()
-						;
-						$(\'.section_id_duplicate\').show();
-						$(\'#jform_section_id_duplicate\').val(current_section);
-					})
-				})(jQuery);
+			\Joomla\CMS\Factory::getApplication()->getDocument()->addScriptDeclaration('
+			(function() {
+				document.addEventListener(\'DOMContentLoaded\', function() {
+					var jform_section_id = document.querySelector(\'#jform_section_id\');
+					var current_section = jform_section_id.options[jform_section_id.selectedIndex].text;
+					jform_section_id.classList.add(\'disabled\');
+					jform_section_id.style.display = \'none\';
+					
+					var section_id_duplicate = document.querySelector(\'#section_id_duplicate\');
+					section_id_duplicate.style.display = \'block\';
+					var jform_section_id_duplicate = document.querySelector(\'#jform_section_id_duplicate\');
+					jform_section_id_duplicate.value = current_section;
+				});
+			})();
 			');
 		}
 
