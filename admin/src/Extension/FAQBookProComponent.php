@@ -13,12 +13,15 @@ defined('_JEXEC') or die;
 
 if(!defined('DS')){ define('DS',DIRECTORY_SEPARATOR); }
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Component class for com_faqbookpro.
@@ -57,16 +60,13 @@ class FAQBookProComponent extends MVCComponent implements BootableExtensionInter
 	 */
 	protected function loadAssets()
 	{
-		$app = \JFactory::getApplication();
-		$document = \JFactory::getDocument();
+		$app = Factory::getApplication();
 
 		if ($app->isClient('administrator'))
 		{
-			// Add stylesheets
-			$document->addStyleSheet(\JURI::root(true).'/administrator/components/com_faqbookpro/assets/css/style.css');
-
-			// Add js
-			$document->addScript(\JURI::root(true).'/administrator/components/com_faqbookpro/assets/js/script.js');
+			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+			$wa->useStyle('com_faqbookpro.admin-faqbookpro')
+				->useScript('com_faqbookpro.admin-faqbookpro');
 		}
 	}
 
@@ -80,9 +80,9 @@ class FAQBookProComponent extends MVCComponent implements BootableExtensionInter
 	protected function checkAccess()
 	{
 		// Access check
-		if (!\JFactory::getUser()->authorise('core.manage', 'com_faqbookpro'))
+		if (!Factory::getUser()->authorise('core.manage', 'com_faqbookpro'))
 		{
-			throw new \Joomla\CMS\Access\Exception\Notallowed(\JText::_('JERROR_ALERTNOAUTHOR'), 403);
+			throw new \Joomla\CMS\Access\Exception\Notallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
 		}
 	}
 }

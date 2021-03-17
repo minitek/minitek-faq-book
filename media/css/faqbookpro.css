@@ -92,7 +92,7 @@ span.NavTopUL_link {
 }
 
 .NavTopUL_loading {
-	background: url("../images/loader.gif") no-repeat scroll center center transparent;
+	background: url("loader.gif") no-repeat scroll center center transparent;
 	display: none;
 	height: 14px;
 	line-height: 34px;
@@ -409,7 +409,7 @@ a.NavLeftUL_anchor i {
 }
 
 .li_loading span.NavLeftUL_endpointIcon {
-	background: url("../images/loader.gif") no-repeat scroll right 0 transparent;
+	background: url("loader.gif") no-repeat scroll right 0 transparent;
 	position: absolute;
 	right: 9px;
 	top: 12px;
@@ -1006,7 +1006,7 @@ a.fbContent_paging_button:active {
 }
 
 .fbContent_paging .fbContent_paging_loader {
-	background: url("../images/loader.gif") no-repeat scroll center center transparent;
+	background: url("loader.gif") no-repeat scroll center center transparent;
 	display: none;
 	width: 24px;
 	height: 24px;
