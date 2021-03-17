@@ -43,10 +43,6 @@ class Dispatcher extends ComponentDispatcher
 		// Add main stylesheet
 		$document->addStyleSheet(\JURI::base().'components/com_faqbookpro/assets/css/style.css');
 
-		// Load bootstrap css
-		if ($params->get('load_bootstrap_css', 0))
-			\JHtmlBootstrap::loadCss();
-
 		// Load FontAwesome
 		if ($params->get('load_fontawesome', 1))
 			$document->addScript('https://kit.fontawesome.com/ddbd3bdfdd.js');
