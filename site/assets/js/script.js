@@ -1,29 +1,16 @@
 (function($) {
 	$(function(){
 
-		// Main variables
-		var site_path = window.fbvars.site_path;
-		var page_view = window.fbvars.page_view;
-		var sectionId = window.fbvars.sectionId;
-		var topicId = window.fbvars.topicId;
-		var leftnav = window.fbvars.leftnav;
-		var loadAllTopics = window.fbvars.loadAllTopics;
-		var myid = window.fbvars.myid;
-		var active_tab = window.fbvars.active_tab;
-		var guestsvote = window.fbvars.guestsvote;
-
-		if (typeof window.fbvars.hash !== 'undefined') 
-		{
-		  var hash = window.fbvars.hash;
-		}
-		else
-		{
-			var hash = false;
-		}
-
+		var options = Joomla.getOptions('com_faqbookpro');
+		var site_path = options.site_path;
+		var page_view = options.page_view;
+		var sectionId = options.sectionId;
+		var topicId = options.topicId;
+		var leftnav = options.leftnav;
+		var loadAllTopics = options.loadAllTopics;
+		var active_tab = options.active_tab;
 		var ajax_request;
 		var duration = 300; // animate duration
-		var breakpoint = 768; // mobile screen breakpoint
 
 		// Fix leftnav height on window load
 		if (leftnav)
@@ -349,9 +336,6 @@
 				$('.NavTopUL_myquestion').remove();
 				$('.NavTopUL_myanswer').remove();
 
-				// Add class 'expanded' to 1st child ul / Move wrap to the left
-				var this_liclass = $(this).parent('li').attr('class');
-
 				// Slide menu only if not endpoint
 				if (!$(this).parent('li').hasClass('NavLeftUL_endpoint'))
 				{
@@ -427,7 +411,7 @@
 		});
 
 		// Top navigation
-		$('.fbTopNavigation_root').on('click', 'li', function(event, this_liclass)
+		$('.fbTopNavigation_root').on('click', 'li', function(event)
 		{
 			if (loadAllTopics == 0 && $(this).hasClass('NavTopUL_parent'))
 			{
@@ -446,7 +430,6 @@
 			}
 
 			var _duration = duration; // Reset duration
-			var this_liclass = $(this).attr('class');
 			var this_liid = $(this).attr('id');
 			var href = $(this).find('.NavTopUL_link').attr('href');
 

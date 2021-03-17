@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -47,16 +47,9 @@ class Dispatcher extends ComponentDispatcher
 		if ($params->get('load_bootstrap_css', 0))
 			\JHtmlBootstrap::loadCss();
 
-		// Load jQuery
-		if ($params->get('load_jquery', 1))
-			\JHtml::_('jquery.framework');
-
 		// Load FontAwesome
 		if ($params->get('load_fontawesome', 1))
 			$document->addScript('https://kit.fontawesome.com/ddbd3bdfdd.js');
-
-		// Load spinner
-		$document->addScript(\JURI::base().'components/com_faqbookpro/assets/js/spin.min.js');
 
 		// Load main script
 		$view = Factory::getApplication()->input->get('view');
