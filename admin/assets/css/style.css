@@ -147,7 +147,7 @@ label[id^="jform_attribs_separator_"] {
 
 /* Topic section_id_duplicate */
 
-.control-group .controls.section_id_duplicate {
+.control-group #section_id_duplicate {
 	margin: 0;
 }
 

@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -66,7 +66,6 @@ class FAQBookProComponent extends MVCComponent implements BootableExtensionInter
 			$document->addStyleSheet(\JURI::root(true).'/administrator/components/com_faqbookpro/assets/css/style.css');
 
 			// Add js
-			\JHtml::_('jquery.framework');
 			$document->addScript(\JURI::root(true).'/administrator/components/com_faqbookpro/assets/js/script.js');
 		}
 	}

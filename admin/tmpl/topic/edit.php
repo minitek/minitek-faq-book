@@ -58,7 +58,7 @@ $input = Factory::getApplication()->input;
 									<div class="controls">
 										<?php echo $this->form->getInput('section_id'); ?>
 									</div>
-									<div class="controls section_id_duplicate" style="display: none;">
+									<div class="controls" id="section_id_duplicate" style="display: none;">
 										<?php echo $this->form->getInput('section_id_duplicate'); ?>
 									</div>
 								</div>
