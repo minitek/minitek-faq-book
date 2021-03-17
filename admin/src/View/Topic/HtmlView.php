@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -51,11 +51,11 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		// Get javascript variables
-		Factory::getDocument()->addScriptDeclaration('window.mfbvars = {
-			token: "'.\JSession::getFormToken().'",
-			site_path: "'.\JURI::base().'",
-		};');
+		// Add script options 
+		Factory::getDocument()->addScriptOptions('com_faqbookpro', array(
+			'token' => \JSession::getFormToken(),
+			'site_path' => \JURI::base(),
+		));
 
 		$this->addToolbar();
 
