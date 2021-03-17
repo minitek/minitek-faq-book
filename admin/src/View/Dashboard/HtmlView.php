@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -37,7 +37,6 @@ class HtmlView extends BaseHtmlView
 		if (Factory::getApplication()->input->get('view') != 'update')
 		{
 			// Load dashboard.js
-			\JHtml::_('bootstrap.framework');
 			Factory::getDocument()->addScript(URI::root(true).'/administrator/components/com_faqbookpro/assets/js/dashboard.js');
 
 			$this->addToolbar();
