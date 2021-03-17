@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	function display($tpl = null)
 	{
 		$this->item = $this->get('Item');
-  	$app = Factory::getApplication();
+  		$app = Factory::getApplication();
 		$ajax = $app->input->get('task', false);
 		$this->user = Factory::getUser();
 		$this->sectionId = $this->item->id;
@@ -471,21 +471,16 @@ class HtmlView extends BaseHtmlView
 		{
 			$document = Factory::getDocument();
 
-			// Get javascript variables
-			$page_view = $app->input->get('view', false);
-
-			$document->addScriptDeclaration(
-			'window.fbvars = {
-				site_path: "'.Uri::root().'",
-				page_view: "'.$page_view.'",
-				sectionId: "'.$this->sectionId.'",
-				topicId: "'.$this->topicId.'",
-				leftnav: "'.$leftnav.'",
-				loadAllTopics: "'.$this->loadAllTopics.'",
-				myid: "'.$this->user->id.'",
-				active_tab: "'.$active_tab.'"
-			};'
-			);
+			// Add script options 
+			$document->addScriptOptions('com_faqbookpro', array(
+				'site_path' => Uri::root(),
+				'page_view' => $app->input->get('view', false),
+				'sectionId' => $this->sectionId,
+				'topicId' => $this->topicId,
+				'leftnav' => $leftnav,
+				'loadAllTopics' => $this->loadAllTopics,
+				'active_tab' => $active_tab
+			));
 
 			// Set title
 			$document->setTitle($this->section->title);

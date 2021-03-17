@@ -917,7 +917,7 @@ class QuestionModel extends AdminModel
 
 				if ($table->load(array('alias' => $data['alias'], 'topicid' => $data['topicid'])))
 				{
-					$msg = Text::_('COM_FAQBOOKPRO_SAVE_WARNING');
+					$msg = Text::_('COM_FAQBOOKPRO_ERROR_QUESTION_UNIQUE_ALIAS');
 				}
 
 				list($title, $alias) = $this->generateNewTitle($data['topicid'], $data['alias'], $data['title']);
