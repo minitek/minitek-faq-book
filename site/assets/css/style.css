@@ -309,19 +309,21 @@ ul.NavLeftUL_expanded {
 	top: 0;
 }
 
-.fbLeftNavigation_toggle a.NavLeftUL_anchor {
+.fbLeftNavigation_toggle a.NavLeftUL_toggle {
 	text-align: right;
 	padding: 9px 8px;
+	border: 0;
 }
 
-.fbLeftNavigation_toggle a.NavLeftUL_anchor i {
+.fbLeftNavigation_toggle a.NavLeftUL_toggle i {
 	font-size: 20px;
 	vertical-align: top;
 	line-height: 16px;
 }
 
 a.NavLeftUL_anchor,
-span.NavLeftUL_anchor {
+span.NavLeftUL_anchor,
+a.NavLeftUL_toggle {
 	box-sizing: border-box;
 	border-top: 1px solid #e5e5e5;
 	display: block;

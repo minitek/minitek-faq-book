@@ -1,7 +1,7 @@
 <?php
 /**
 * @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright   	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license   		GNU General Public License version 3 or later.
 * @author url   https://www.minitek.gr/
 * @developers   Minitek.gr
@@ -47,13 +47,13 @@ if ($items)
 // Is the left nav minimized?
 $is_minimized = $app->getUserState( 'com_faqbookpro.minimized_leftnav', false );
 $fb_minimized = '';
-$minimized_icon = '<a class="NavLeftUL_anchor NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-left"></i></a>';
+$minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-left"></i></a>';
 $section_title_html = '';
 
 if ((!$is_minimized && $sectionParams->leftnav == '2') || $is_minimized == 'on')
 {
   $fb_minimized = 'fb-minimized';
-  $minimized_icon = '<a class="NavLeftUL_anchor NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-right"></i></a>';
+  $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-right"></i></a>';
 }
 
 $visible_class = '';
