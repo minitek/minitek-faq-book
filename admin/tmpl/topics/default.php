@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 defined('_JEXEC') or die;
 
@@ -19,15 +20,14 @@ use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('behavior.multiselect');
 
-$user= Factory::getUser();
-$userId= $user->get('id');
+$user = Factory::getUser();
+$userId = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
-$listDirn= $this->escape($this->state->get('list.direction'));
+$listDirn = $this->escape($this->state->get('list.direction'));
 $ordering = ($listOrder == 'a.lft');
 $saveOrder = ($listOrder == 'a.lft' && strtolower($listDirn) == 'asc');
 
-if ($saveOrder)
-{
+if ($saveOrder && !empty($this->items)) {
 	$saveOrderingUrl = 'index.php?option=com_faqbookpro&task=topics.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
 	HTMLHelper::_('draggablelist.draggable');
 }
@@ -48,8 +48,8 @@ if ($saveOrder)
 					</div>
 				<?php else : ?>
 
-					<table class="table itemList" id="categoryList">
-						<caption id="captionTable" class="sr-only">
+					<table class="table" id="categoryList">
+						<caption class="visually-hidden">
 							<?php echo Text::_('COM_FAQBOOKPRO_TOPICS_TABLE_CAPTION'); ?>,
 							<span id="orderedBy"><?php echo Text::_('JGLOBAL_SORTED_BY'); ?> </span>,
 							<span id="filteredBy"><?php echo Text::_('JGLOBAL_FILTERED_BY'); ?></span>
@@ -58,7 +58,7 @@ if ($saveOrder)
 							<tr>
 								<td class="w-1 text-center">
 									<?php echo HTMLHelper::_('grid.checkall'); ?>
-								</th>
+									</th>
 								<th scope="col" class="w-1 text-center d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 								</th>
@@ -85,7 +85,7 @@ if ($saveOrder)
 								</th>
 							</tr>
 						</thead>
-						<tbody <?php if ($saveOrder) :?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true"<?php endif; ?>>
+						<tbody <?php if ($saveOrder) : ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false" <?php endif; ?>>
 							<?php foreach ($this->items as $i => $item) :
 								$item->max_ordering = 0;
 								$canEdit    = $user->authorise('core.edit',       'com_faqbookpro.topic.' . $item->id);
@@ -94,34 +94,26 @@ if ($saveOrder)
 								$canChange  = $user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $item->id) && $canCheckin;
 
 								// Get the parents of item for sorting
-								if ($item->level > 1)
-								{
+								if ($item->level > 1) {
 									$parentsStr = "";
 									$_currentParentId = $item->parent_id;
 									$parentsStr = " " . $_currentParentId;
-									for ($i2 = 0; $i2 < $item->level; $i2++)
-									{
-										foreach ($this->ordering as $k => $v)
-										{
+									for ($i2 = 0; $i2 < $item->level; $i2++) {
+										foreach ($this->ordering as $k => $v) {
 											$v = implode("-", $v);
 											$v = "-" . $v . "-";
-											if (strpos($v, "-" . $_currentParentId . "-") !== false)
-											{
+											if (strpos($v, "-" . $_currentParentId . "-") !== false) {
 												$parentsStr .= " " . $k;
 												$_currentParentId = $k;
 												break;
 											}
 										}
 									}
-								}
-								else
-								{
+								} else {
 									$parentsStr = "";
 								}
-								?>
-								<tr class="row<?php echo $i % 2; ?>"
-									data-dragable-group="<?php echo $item->parent_id; ?>"
-									item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
+							?>
+								<tr class="row<?php echo $i % 2; ?>" data-draggable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
 
 									<td class="text-center">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
@@ -130,12 +122,9 @@ if ($saveOrder)
 									<td class="text-center d-none d-md-table-cell">
 										<?php
 										$iconClass = '';
-										if (!$canChange)
-										{
+										if (!$canChange) {
 											$iconClass = ' inactive';
-										}
-										elseif (!$saveOrder)
-										{
+										} elseif (!$saveOrder) {
 											$iconClass = ' inactive tip-top hasTooltip" title="' . HTMLHelper::tooltipText('JORDERINGDISABLED');
 										}
 										?>
@@ -143,19 +132,12 @@ if ($saveOrder)
 											<span class="fas fa-ellipsis-v" aria-hidden="true"></span>
 										</span>
 										<?php if ($canChange && $saveOrder) : ?>
-											<input type="text" name="order[]" size="5" value="<?php echo $item->lft; ?>" class="width-20 text-area-order hidden">
+											<input type="text" class="hidden" name="order[]" size="5" value="<?php echo $item->lft; ?>">
 										<?php endif; ?>
 									</td>
 
-									<td class="article-status text-center">
-										<?php
-										$options = [
-											'task_prefix' => 'topics.',
-											'disabled' => !$canChange
-										];
-
-										echo (new PublishedButton)->render((int) $item->published, $i, $options);
-										?>
+									<td class="text-center">
+										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'topics.', $canChange, 'cb'); ?>
 									</td>
 
 									<th scope="row" class="has-context">
@@ -171,7 +153,7 @@ if ($saveOrder)
 												<?php echo $this->escape($item->title); ?>
 											<?php endif; ?>
 										</div>
-									</td>
+										</td>
 
 									<th scope="row" class="has-context">
 										<div class="break-word">
@@ -185,7 +167,7 @@ if ($saveOrder)
 									</th>
 
 									<td class="btns d-none d-lg-table-cell text-center itemnumber">
-										<a class="btn <?php echo ($item->questions_count > 0) ? 'btn-success' : 'btn-secondary'; ?>" href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions&filter[topic_id]='.$item->id); ?>">
+										<a class="btn <?php echo ($item->questions_count > 0) ? 'btn-success' : 'btn-secondary'; ?>" href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions&filter[topic_id]=' . $item->id); ?>">
 											<?php echo $item->questions_count; ?>
 										</a>
 									</td>
@@ -197,7 +179,7 @@ if ($saveOrder)
 									<td class="small d-none d-md-table-cell">
 										<?php if ($item->language == '*') : ?>
 											<?php echo Text::alt('JALL', 'language'); ?>
-										<?php else: ?>
+										<?php else : ?>
 											<?php echo $item->language_title ? $this->escape($item->language_title) : Text::_('JUNDEFINED'); ?>
 										<?php endif; ?>
 									</td>
