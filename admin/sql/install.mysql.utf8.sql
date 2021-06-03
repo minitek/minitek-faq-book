@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_answers` (
  `content` mediumtext NOT NULL,
  `selected` tinyint(3) NOT NULL DEFAULT '0',
  `state` tinyint(3) NOT NULL DEFAULT '0',
+ `seen` tinyint(3) NOT NULL DEFAULT '1',
  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
  `created_by_name` varchar(128) NOT NULL DEFAULT '',
