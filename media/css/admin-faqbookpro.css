@@ -12,6 +12,20 @@ body.com_faqbookpro.view-dashboard #subhead {
   display: none;
 }
 
+/* Dashboard alert */
+
+.minitek-dashboard .alert {
+  border-radius: 0;
+}
+
+.minitek-dashboard .alert .badge {
+  font-size: 15px;
+}
+
+.minitek-dashboard .alert h3 {
+  color: inherit;
+}
+
 /* Dashboard media box */
 
 .minitek-dashboard .media {
@@ -35,7 +49,7 @@ body.com_faqbookpro.view-dashboard #subhead {
 
 .minitek-dashboard .media-heading {
   margin: 0 0 15px;
-  color: #4780aa;
+  color: inherit;
 }
 
 .minitek-dashboard .media-heading .label {
