@@ -52,6 +52,36 @@ class com_faqbookproInstallerScript
 			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.0.11', '<')) {
 				self::update4011($parent);
 			}
+
+			// Run update script if old version is older than 4.0.12
+			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.0.12', '<')) {
+				self::update4012($parent);
+			}
+		}
+	}
+
+	/*
+	 * $parent is the class calling this method.
+	 * update runs if old version is < 4.0.12
+	 */
+	function update4012($parent)
+	{
+		$db = Factory::getDBO();
+
+		// Add column 'last_answer'
+		$questions_columns = $db->getTableColumns('#__minitek_faqbook_questions');
+
+		if (!isset($questions_columns['last_answer'])) {
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_questions` ";
+			$query .= " ADD COLUMN `last_answer` int(10) unsigned NOT NULL DEFAULT '0' ";
+			$db->setQuery($query);
+			$result = $db->execute();
+
+			if (!$result) {
+				throw new GenericDataException('Error 4012-1: Could not update __minitek_faqbook_questions table.', 500);
+				return false;
+			}
 		}
 	}
 
