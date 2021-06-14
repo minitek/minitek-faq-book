@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Site\View\Sections;
 
@@ -28,7 +29,7 @@ class HtmlView extends BaseHtmlView
 	function display($tpl = null)
 	{
 		$document = Factory::getDocument();
-  	$app = Factory::getApplication();
+		$app = Factory::getApplication();
 		$this->model = $this->getModel();
 		$sectionModel = new SectionModel;
 		$activeMenu = $app->getMenu()->getActive();
@@ -44,54 +45,43 @@ class HtmlView extends BaseHtmlView
 
 		// Params
 		$this->topic_col_class = '';
-		if ($this->params->get('sections_forum_last_question', true))
-		{
+		if ($this->params->get('sections_forum_last_question', true)) {
 			$this->topic_col_class = 'fb-col-8';
 		}
 
 		// Extra Section data
-		foreach ($this->sections as $key => $section)
-		{
+		foreach ($this->sections as $key => $section) {
 			$section->q_count = $this->model->getSectionQuestionsCount($section->id);
 			$section->topics = $sectionModel->getSectionTopics($section->id);
 
-			foreach ($section->topics as $topic)
-			{
+			foreach ($section->topics as $topic) {
 				$topic->q_count = $this->model->getTopicQuestionsCount($topic->id);
 				$topic->children = $this->model->getChildrenTopics($topic->id);
 				$topic->lastpost = $this->model->getTopicLastQuestion($topic->id);
-				if ($topic->lastpost)
-				{
+				if ($topic->lastpost) {
 					$topic->lastpost->time_since = UtilitiesHelper::getTimeSince($topic->lastpost->created);
 
 					// Author name
-					if ($topic->lastpost->created_by)
-					{
+					if ($topic->lastpost->created_by) {
 						// Check whether user exists
 						$userExists = UtilitiesHelper::userExists($topic->lastpost->created_by);
 						$topic->lastpost->created_by = $userExists ? $topic->lastpost->created_by : false;
 
-						if ($this->params->get('questions_author_name', 'username') === 'name')
-						{
+						if ($this->params->get('questions_author_name', 'username') === 'name') {
 							$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->name;
-						}
-						else if ($this->params->get('questions_author_name', 'username') === 'username')
-						{
+						} else if ($this->params->get('questions_author_name', 'username') === 'username') {
 							$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->username;
 						}
 					}
 				}
 
-				if ($topic->children)
-				{
-					foreach ($topic->children as $child)
-					{
+				if ($topic->children) {
+					foreach ($topic->children as $child) {
 						$child->q_count = $this->model->getTopicQuestionsCount($child->id);
 
 						$childParams = json_decode($child->params, false);
 						$child->icon_class = 'folder';
-						if (isset($childParams->topic_icon_class))
-						{
+						if (isset($childParams->topic_icon_class)) {
 							$child->icon_class = $childParams->topic_icon_class;
 						}
 					}
@@ -99,61 +89,52 @@ class HtmlView extends BaseHtmlView
 
 				$topicParams = json_decode($topic->params, false);
 				$topic->icon_class = 'folder';
-				if (isset($topicParams->topic_icon_class))
-				{
+				if (isset($topicParams->topic_icon_class)) {
 					$topic->icon_class = $topicParams->topic_icon_class;
 				}
 			}
 		}
 
 		// Set metadata
-		$document->setTitle($this->params->get('page_title'));
+		$this->setDocumentTitle($this->params->get('page_title'));
 
-		if ($this->params->get('menu-meta_description'))
-		{
+		if ($this->params->get('menu-meta_description')) {
 			$document->setDescription($this->params->get('menu-meta_description'));
 		}
 
-		if ($this->params->get('menu-meta_keywords'))
-		{
+		if ($this->params->get('menu-meta_keywords')) {
 			$document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 
-		if ($this->params->get('robots'))
-		{
+		if ($this->params->get('robots')) {
 			$document->setMetadata('robots', $this->params->get('robots'));
 		}
 
-		if (!is_object($this->params->get('metadata')))
-		{
+		if (!is_object($this->params->get('metadata'))) {
 			$metadata = new Registry($this->params->get('metadata'));
 		}
 
 		$mdata = $metadata->toArray();
 
-		foreach ($mdata as $k => $v)
-		{
-			if ($v)
-			{
+		foreach ($mdata as $k => $v) {
+			if ($v) {
 				$document->setMetadata($k, $v);
 			}
 		}
 
 		// Menu page display options
-		if ($this->params->get('page_heading'))
-		{
-		  $this->params->set('page_title', $this->params->get('page_heading'));
+		if ($this->params->get('page_heading')) {
+			$this->params->set('page_title', $this->params->get('page_heading'));
 		}
 
 		$this->params->set('show_page_title', $this->params->get('show_page_heading'));
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
+		if (count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
 		// Display the view
 		parent::display($tpl);
-  }
+	}
 }
