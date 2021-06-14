@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_questions` (
  `alias` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
  `content` mediumtext NOT NULL,
  `answers` int(10) unsigned NOT NULL DEFAULT '0',
+ `last_answer` int(10) unsigned NOT NULL DEFAULT '0',
  `state` tinyint(3) NOT NULL DEFAULT '0',
  `locked` tinyint(3) NOT NULL DEFAULT '0',
  `private` tinyint(3) NOT NULL DEFAULT '0',
