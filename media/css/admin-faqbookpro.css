@@ -7,8 +7,8 @@
 
 /* Dashboard */
 
-body.com_faqbookpro.view- #subhead,
-body.com_faqbookpro.view-dashboard #subhead {
+body.com_faqbookpro.view- #subhead-container,
+body.com_faqbookpro.view-dashboard #subhead-container {
   display: none;
 }
 
