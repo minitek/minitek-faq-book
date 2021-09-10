@@ -1,441 +1,455 @@
 /* General */
 
 #fbExtended {
-	padding: 0 0 20px;
+  padding: 0 0 20px;
 }
 
 #fbExtended .clearfix::after {
-	clear: both;
+  clear: both;
 }
 
 #fbExtended .clearfix::before,
 #fbExtended .clearfix::after {
-	display: table;
-	content: "";
-	line-height: 0;
+  display: table;
+  content: "";
+  line-height: 0;
 }
 
 #fbExtended a:focus {
-	outline: none;
+  outline: none;
 }
 
 /* Top Navigation */
 
 .fbTopNavigation_core_outer {
-	position: relative;
+  position: relative;
 }
 
 .fbTopNavigation_core {
-	background: none repeat scroll 0 0 #f0f2f7;
-	float: left;
-	width: 100%;
-	line-height: 22px;
-	min-height: 18px;
-	margin: 0;
-	padding: 15px 15px 15px 0;
-	box-sizing: border-box;
+  background: none repeat scroll 0 0 #f0f2f7;
+  float: left;
+  width: 100%;
+  line-height: 22px;
+  min-height: 18px;
+  margin: 0;
+  padding: 15px 15px 15px 0;
+  box-sizing: border-box;
 }
 
 .fbTopNavigation_wrap {
-	margin: 2px 0;
-	padding: 0 15px;
-	display: inline-block;
-	position: relative;
+  margin: 2px 0;
+  padding: 0 15px;
+  display: inline-block;
+  position: relative;
 }
 
 ul.fbTopNavigation_root {
-	white-space: nowrap;
-	list-style-type: none;
-	margin: 0 !important;
-	padding: 0 !important;
-	display: inline-block;
+  white-space: nowrap;
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block;
+  font-size: 0;
 }
 
 #top_liid_home {
-	display: inline-block !important;
+  display: inline-block !important;
 }
 
 .NavTopUL_item,
 .NavTopUL_home {
-	display: inline;
-	margin-right: 8px;
-	padding: 0;
-	position: relative;
-	background: none !important;
+  display: inline;
+  margin-right: 8px;
+  padding: 0;
+  position: relative;
+  background: none !important;
+  font-size: 1rem;
 }
 
 .NavTopUL_firstChild {
-	padding-left: 0;
+  padding-left: 0;
 }
 
 .NavTopUL_lastChild a {
-	color: #444;
+  color: #444;
 }
 
 .NavTopUL_link {
-	font-weight: bold;
-	white-space: normal;
-	outline: none;
-	text-decoration: none;
-	background: none;
-	line-height: 34px;
+  font-weight: bold;
+  white-space: normal;
+  outline: none;
+  text-decoration: none;
+  background: none;
+  line-height: 34px;
 }
 
 .NavTopUL_link:hover,
 .NavTopUL_link:focus {
-	background: none;
-	text-decoration: none;
+  background: none;
+  text-decoration: none;
+}
+
+.NavTopUL_link .fas {
+  margin-right: 8px;
 }
 
 span.NavTopUL_link {
-	color: #444;
+  color: #444;
 }
 
 .NavTopUL_loading {
-	background: url("loader.gif") no-repeat scroll center center transparent;
-	display: none;
-	height: 14px;
-	line-height: 34px;
-	width: 17px;
-	margin: 0;
-	vertical-align: middle;
+  background: url("loader.gif") no-repeat scroll center center transparent;
+  display: none;
+  height: 14px;
+  line-height: 34px;
+  width: 17px;
+  margin: 0;
+  vertical-align: middle;
 }
 
 .fbTopNavigation_wrap.NavTopULloading span.NavTopUL_loading {
-	display: inline-block;
+  display: inline-block;
 }
 
 .NavTopUL_buttons {
-	margin: 2px 0;
-	float: right;
+  margin: 2px 0;
+  float: right;
 }
 
 /* Menu Toggle button */
 
 .NavTopUL_buttons .show_menu {
-	margin: 0;
-	display: none;
-	float: right;
-	text-align: center;
+  margin: 0;
+  display: none;
+  float: right;
+  text-align: center;
 }
 
 .NavTopUL_buttons .show_menu a,
 .NavTopUL_buttons .show_menu a:focus {
-	margin: 0 0 0 10px;
-	line-height: 20px;
-	padding: 6px 10px;
-	border: 1px solid #e5e5e5;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-	background: #fff;
-	color: #333;
+  margin: 0 0 0 10px;
+  line-height: 20px;
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  color: #333;
 }
 
 .NavTopUL_buttons .show_menu a:hover,
 .NavTopUL_buttons .show_menu a.fb-active {
-	border: 1px solid #4cae4c;
-	background: #5cb85c;
-	color: #fff;
+  border: 1px solid #4cae4c;
+  background: #5cb85c;
+  color: #fff;
 }
 
 .NavTopUL_buttons .show_menu a:active {
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1) inset;
-	background: #5cb85c;
-	color: #fff;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1) inset;
+  background: #5cb85c;
+  color: #fff;
 }
 
 .NavTopUL_buttons .show_menu a i {
-	font-size: 14px;
-	line-height: 20px;
-	vertical-align: top;
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: top;
 }
 
 /* Left Navigation */
 
 .leftnav-hidden {
-	display: none !important;
+  display: none !important;
 }
 
 .fbLeftNavigation_core {
-	float: left;
-	margin-right: 30px;
-	position: relative;
-	width: 260px;
-	overflow: hidden;
-	transition: width 0.3s ease 0s;
-	border-right: 1px solid #e5e5e5;
+  float: left;
+  margin-right: 30px;
+  position: relative;
+  width: 260px;
+  overflow: hidden;
+  transition: width 0.3s ease 0s;
+  border-right: 1px solid #e5e5e5;
 }
 
 .fbLeftNavigation_core.fb-minimized {
-	width: 34px;
+  width: 34px;
 }
 
 .fbLeftNavigation_core.fb-minimized #NavLeftUL {
-	opacity: 0;
-	visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .fbLeftNavigation_core.fb-minimized .NavLeftUL_toggle {
-	width: 34px;
+  width: 34px;
 }
 
 .fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading {
-	width: 34px;
-	white-space: nowrap;
+  width: 34px;
+  white-space: nowrap;
 }
 
-.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading span.NavLeftUL_endpointIcon {
-	right: 13px;
+.fbLeftNavigation_core.fb-minimized
+  .NavLeftUL_item.li_loading
+  span.NavLeftUL_endpointIcon {
+  right: 13px;
 }
 
 .fbLeftNavigation_core.fb-minimized a.NavLeftUL_anchor {
-	width: 34px;
-	white-space: nowrap;
-	transition: width 0.3s ease 0s;
+  width: 34px;
+  white-space: nowrap;
+  transition: width 0.3s ease 0s;
 }
 
-.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading a.NavLeftUL_anchor i {
-	display: none;
+.fbLeftNavigation_core.fb-minimized
+  .NavLeftUL_item.li_loading
+  a.NavLeftUL_anchor
+  i {
+  display: none;
 }
 
-.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading a.NavLeftUL_anchor span.NavLeftUL_text {
-	opacity: 0;
+.fbLeftNavigation_core.fb-minimized
+  .NavLeftUL_item.li_loading
+  a.NavLeftUL_anchor
+  span.NavLeftUL_text {
+  opacity: 0;
 }
 
 .NavLeftUL_anchor.NavLeftUL_toggle,
 .NavLeftUL_anchor.NavLeftUL_toggle:hover,
 .NavLeftUL_anchor.NavLeftUL_toggle:focus {
-	background: none;
-	border: 0;
+  background: none;
+  border: 0;
 }
 
 .fbLeftNavigation_user li span.username {
-	font-weight: bold;
-	font-size: 13px;
-	display: block;
-	padding: 0 0 3px;
+  font-weight: bold;
+  font-size: 13px;
+  display: block;
+  padding: 0 0 3px;
 }
 
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn {
-	float: right;
-	padding: 1px 5px;
-	font-size: 12px;
-	line-height: 1.5;
-	border-radius: 3px;
-	margin: 0;
-	position: relative;
-	top: -3px;
-	font-weight: normal;
-	border: 1px solid #ccc;
-	background: #fff;
-	color: #333;
-	white-space: nowrap;
-	text-align: center;
+  float: right;
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  margin: 0;
+  position: relative;
+  top: -3px;
+  font-weight: normal;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:hover,
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:focus {
-	outline: none;
-	text-decoration: none;
-	background: #e6e6e6;
-	border: 1px solid #adadad;
+  outline: none;
+  text-decoration: none;
+  background: #e6e6e6;
+  border: 1px solid #adadad;
 }
 
 .fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:active {
-	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
 .fbLeftNavigation_toggle {
-	font-size: 12px;
-	overflow: hidden;
-	position: relative;
-	line-height: 1.4;
-	float: right;
-	width: 34px;
+  font-size: 12px;
+  overflow: hidden;
+  position: relative;
+  line-height: 1.4;
+  float: right;
+  width: 34px;
 }
 
 .fbLeftNavigation_toggle ul {
-	position: relative;
-	margin: 0 !important;
-	padding: 0 !important;
-	list-style-type: none;
+  position: relative;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style-type: none;
 }
 
 .fbLeftNavigation_toggle li {
-	list-style: none outside none;
-	padding: 0;
-	background: none !important;
+  list-style: none outside none;
+  padding: 0;
+  background: none !important;
 }
 
 .fbLeftNavigation_topics,
 .fbLeftNavigation_user {
-	font-size: 12px;
-	overflow: hidden;
-	position: relative;
-	width: 260px;
-	line-height: 1.4;
+  font-size: 12px;
+  overflow: hidden;
+  position: relative;
+  width: 260px;
+  line-height: 1.4;
 }
 
 .fbLeftNavigation_topics ul,
 .fbLeftNavigation_user ul {
-	position: relative;
-	width: 260px;
-	margin: 0 !important;
-	padding: 0 !important;
-	list-style-type: none;
+  position: relative;
+  width: 260px;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style-type: none;
 }
 
 .fbLeftNavigation_topics li,
 .fbLeftNavigation_user li {
-	list-style: none outside none;
-	width: 260px;
-	padding: 0;
-	background: none !important;
+  list-style: none outside none;
+  width: 260px;
+  padding: 0;
+  background: none !important;
 }
 
 ul.NavLeftUL_sublist {
-	display: none;
-	position: absolute;
-	left: 100%;
-	top: 0;
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
 }
 
 ul.NavLeftUL_expanded {
-	display: block;
+  display: block;
 }
 
 .fbLeftNavigation_wrap {
-	left: 0;
-	position: relative;
-	top: 0;
+  left: 0;
+  position: relative;
+  top: 0;
 }
 
 .fbLeftNavigation_toggle a.NavLeftUL_toggle {
-	text-align: right;
-	padding: 9px 8px;
-	border: 0;
+  text-align: right;
+  padding: 9px 8px;
+  border: 0;
 }
 
 .fbLeftNavigation_toggle a.NavLeftUL_toggle i {
-	font-size: 20px;
-	vertical-align: top;
-	line-height: 16px;
+  font-size: 20px;
+  vertical-align: top;
+  line-height: 16px;
 }
 
 a.NavLeftUL_anchor,
 span.NavLeftUL_anchor,
 a.NavLeftUL_toggle {
-	box-sizing: border-box;
-	border-top: 1px solid #e5e5e5;
-	display: block;
-	outline: 0 none;
-	padding: 9px 30px 9px 8px;
-	position: relative;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	text-decoration: none;
-	outline: none;
-	width: 100%;
-	font-size: 13px;
-	line-height: 1.4;
+  box-sizing: border-box;
+  border-top: 1px solid #e5e5e5;
+  display: block;
+  outline: 0 none;
+  padding: 9px 30px 9px 8px;
+  position: relative;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 span.NavLeftUL_anchor {
-	font-weight: 600;
-	color: #656565;
-	border-top: 0;
+  font-weight: 600;
+  color: #656565;
+  border-top: 0;
 }
 
 span.NavLeftUL_anchor small {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 span.NavLeftUL_title {
-	padding: 9px 8px;
+  padding: 9px 8px;
 }
 
 span.NavLeftUL_title i {
-	margin: 0 8px 0 0;
-	opacity: 0;
-	width: 18px;
+  margin: 0 8px 0 0;
+  opacity: 0;
+  width: 18px;
 }
 
 span.NavLeftUL_title .fb-link {
-	float: right;
-	font-weight: normal;
-	font-size: 11px;
-	line-height: 16px;
+  float: right;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16px;
 }
 
 span.NavLeftUL_title .fb-link i {
-	opacity: 1;
-	margin: 0 3px 0 0;
-	width: auto;
+  opacity: 1;
+  margin: 0 3px 0 0;
+  width: auto;
 }
 
 a.NavLeftUL_anchor:hover,
 a.NavLeftUL_anchor:focus {
-	background-color: #f0f2f7;
-	position: relative;
-	text-decoration: none;
-	outline: none;
+  background-color: #f0f2f7;
+  position: relative;
+  text-decoration: none;
+  outline: none;
 }
 
 a.NavLeftUL_anchor i {
-	font-size: 13px;
-	width: 18px;
-	text-align: center;
-	margin: 0 8px 0 0;
+  font-size: 13px;
+  width: 18px;
+  text-align: center;
+  margin: 0 8px 0 0;
 }
 
 .NavLeftUL_navIcon.fas {
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	height: 15px;
-	width: 10px;
-	background: none;
-	font-size: 11px;
-	line-height: 15px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 15px;
+  width: 10px;
+  background: none;
+  font-size: 11px;
+  line-height: 15px;
 }
 
 .NavLeftUL_navBackIcon.fas {
-	position: absolute;
-	right: 9px;
-	top: 11px;
-	height: 16px;
-	width: 16px;
-	background: none;
-	font-size: 14px;
-	line-height: 16px;
+  position: absolute;
+  right: 9px;
+  top: 11px;
+  height: 16px;
+  width: 16px;
+  background: none;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .li_loading span.NavLeftUL_endpointIcon {
-	background: url("loader.gif") no-repeat scroll right 0 transparent;
-	position: absolute;
-	right: 9px;
-	top: 12px;
-	height:14px;
-	width: 17px;
+  background: url("loader.gif") no-repeat scroll right 0 transparent;
+  position: absolute;
+  right: 9px;
+  top: 12px;
+  height: 14px;
+  width: 17px;
 }
 
 .li_loading ul span.NavLeftUL_endpointIcon {
-	background: none;
+  background: none;
 }
 
 .fbLeftNavigation_core .li_selected > a,
 .fbLeftNavigation_core .li_selected > a:hover,
 .fbLeftNavigation_core .li_selected > a:focus {
-	background: #3b5998;
-	border-top: 1px solid #3b5998;
-	color: #fff;
-	text-shadow: none;
+  background: #3b5998;
+  border-top: 1px solid #3b5998;
+  color: #fff;
+  text-shadow: none;
 }
 
 /* Loaders */
 
 .fb_loader,
 .topic_loader {
-	text-align: center;
-	display: none;
+  text-align: center;
+  display: none;
 }
 
 .fb_loader {
@@ -457,110 +471,110 @@ a.NavLeftUL_anchor i {
   min-height: 42px;
 }
 
-@keyframes placeHolderShimmer{
-	0%{
-		background-position: -468px 0
-	}
-	100%{
-		background-position: 468px 0
-	}
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
 }
 
 .animated-background {
-	animation-duration: 1.2s;
-	animation-fill-mode: forwards;
-	animation-iteration-count: infinite;
-	animation-name: placeHolderShimmer;
-	animation-timing-function: linear;
-	background: #f6f7f8;
-	background: linear-gradient(to right, #f0f2f7 8%, #eee 18%, #f0f2f7 33%);
-	background-size: 900px 42px;
-	height: 42px;
-	position: relative;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #f0f2f7 8%, #eee 18%, #f0f2f7 33%);
+  background-size: 900px 42px;
+  height: 42px;
+  position: relative;
 }
 
 .background-masker {
-	background: #fff;
-	position: absolute;
+  background: #fff;
+  position: absolute;
 }
 
 .background-masker.title-top {
-	top: 0;
-	right: 0;
-	width: 50%;
-	height: 25px;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 25px;
 }
 
 .background-masker.title-bottom {
-	top: 25px;
-	left: 0;
-	right: 0;
-	height: 17px;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 17px;
 }
 
 .background-masker.top-left {
-	top: 0;
-	left: 50px;
-	height: 20px;
-	width: 10px;
+  top: 0;
+  left: 50px;
+  height: 20px;
+  width: 10px;
 }
 
 .background-masker.top-bottom {
-	top: 20px;
-	left: 50px;
-	right: 0;
-	height: 10px;
+  top: 20px;
+  left: 50px;
+  right: 0;
+  height: 10px;
 }
 
 .background-masker.middle-left {
-	top: 30px;
-	left: 50px;
-	height: 12px;
-	width: 10px;
+  top: 30px;
+  left: 50px;
+  height: 12px;
+  width: 10px;
 }
 
 .background-masker.middle-bottom {
-	top: 42px;
-	left: 50px;
-	right: 0;
-	height: 8px;
+  top: 42px;
+  left: 50px;
+  right: 0;
+  height: 8px;
 }
 
 /* Main */
 
 .fbContent_core {
-	overflow: hidden;
-	padding-top: 20px;
-	position: relative;
+  overflow: hidden;
+  padding-top: 20px;
+  position: relative;
 }
 
 .fbContent_root {
-	padding-top: 0;
-	margin: 0;
+  padding-top: 0;
+  margin: 0;
 }
 
 /* Headers */
 
 h2.fbContent_title {
-	font-size: 22px;
-	line-height: 34px;
-	margin: 0 0 25px 0;
+  font-size: 22px;
+  line-height: 34px;
+  margin: 0 0 25px 0;
 }
 
 h2.fbContent_title a,
 h2.fbContent_title a:hover,
 h2.fbContent_title a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 h2.fbContent_title .btn {
-	font-size: 13px;
-	font-weight: normal;
+  font-size: 13px;
+  font-weight: normal;
 }
 
 h2.fbContent_title small {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 /* Subheaders */
@@ -568,11 +582,11 @@ h2.fbContent_title small {
 .fbContent_root .topic_subheader,
 .fbContent_root .myanswers_subheader,
 .fbContent_root .answers_subheader {
-	margin: 20px 0 0;
-	border-bottom: 1px solid #e5e5e5;
-	height: 37px;
-	clear: both;
-	box-sizing: border-box;
+  margin: 20px 0 0;
+  border-bottom: 1px solid #e5e5e5;
+  height: 37px;
+  clear: both;
+  box-sizing: border-box;
 }
 
 /* State headers */
@@ -581,912 +595,920 @@ h2.fbContent_title small {
 .fbContent_core .trashed-header,
 .fbContent_core .archived-header,
 .fbContent_core .scheduled-header {
-	text-transform: uppercase;
-	margin: 0 5px 10px 0;
-	padding: 5px 10px;
-	font-size: 11px;
-	font-weight: bold;
-	line-height: 14px;
-	display: inline-block;
-	border-radius: 4px;
+  text-transform: uppercase;
+  margin: 0 5px 10px 0;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 14px;
+  display: inline-block;
+  border-radius: 4px;
 }
 
 .fbContent_core .scheduled-header {
-	cursor: help;
+  cursor: help;
 }
 
 .fbContent_core .unpublished-header {
-	color: #b94a48;
-	background: #f2dede;
-	border: 1px solid #ebccd1;
+  color: #b94a48;
+  background: #f2dede;
+  border: 1px solid #ebccd1;
 }
 
 .fbContent_core .trashed-header {
-	color: #656565;
-	background: #e9e9e9;
-	border: 1px solid #ddd;
+  color: #656565;
+  background: #e9e9e9;
+  border: 1px solid #ddd;
 }
 
 .fbContent_core .archived-header {
-	color: #656565;
-	background: #e9e9e9;
-	border: 1px solid #ddd;
+  color: #656565;
+  background: #e9e9e9;
+  border: 1px solid #ddd;
 }
 
 .fbContent_core .scheduled-header {
-	color: #468847;
-	background: #dff0d8;
-	border: 1px solid #d6e9c6;
+  color: #468847;
+  background: #dff0d8;
+  border: 1px solid #d6e9c6;
 }
 
 .fbContent_core .scheduled-header small {
-	font-size: 10px;
-	color: #468847;
+  font-size: 10px;
+  color: #468847;
 }
 
 /* Browse Topics (Topics tree) */
 
 .fbContent_topics {
-	margin: 0 0 20px;
-	padding: 20px 0 0;
-	list-style: none;
+  margin: 0 0 20px;
+  padding: 20px 0 0;
+  list-style: none;
 }
 
 .fbContent_topics > li {
-	display: inline-block;
-	vertical-align: top;
-	margin: 0;
-	padding: 0 10px;
-	box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .fbContent_topics > li > a {
-	font-size: 18px;
-	font-weight: 600;
-	margin: 0 0 13px;
-	width: 100%;
-	padding: 0 0 10px;
-	border-bottom: 1px solid #eee;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 13px;
+  width: 100%;
+  padding: 0 0 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .fbContent_topics > li > a img {
-	margin: 0 15px 0 0;
-	max-width: 120px;
+  margin: 0 15px 0 0;
+  max-width: 120px;
 }
 
 .fbContent_topics li a {
-	display: inline-block;
-	text-decoration: none;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .fbContent_topics ul {
-	padding: 0;
-	margin: 0 0 0 10px;
-	list-style: none;
+  padding: 0;
+  margin: 0 0 0 10px;
+  list-style: none;
 }
 
 .fbContent_topics .level1 {
-	margin: 0 0 20px 10px;
+  margin: 0 0 20px 10px;
 }
 
 .fbContent_topics .level1 ul {
-	margin: 0 0 2px 15px;
+  margin: 0 0 2px 15px;
 }
 
 .fbContent_topics .level1 li a {
-	margin: 0 0 7px;
+  margin: 0 0 7px;
 }
 
 .fbContent_topics .level2 li a {
-	font-size: 85%;
+  font-size: 85%;
 }
 
 /* Section */
 
 .fbSection_description {
-	padding: 10px 0;
-	margin: 0 0 20px;
+  padding: 10px 0;
+  margin: 0 0 20px;
 }
 
 /* Topic */
 
 .fbTopic {
-	position: relative;
-	padding: 0 0 20px;
+  position: relative;
+  padding: 0 0 20px;
 }
 
 .fbTopic_permalink {
-	line-height: 34px;
+  line-height: 34px;
 }
 
 .fbTopic_description {
-	padding: 10px 0;
+  padding: 10px 0;
 }
 
 .fbTopic_image {
-	text-align: left;
-	padding: 20px 0;
+  text-align: left;
+  padding: 20px 0;
 }
 
 .fbTopic_image img {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 .fbTopic_content {
-	clear: both;
-	margin: 0 0 30px;
+  clear: both;
+  margin: 0 0 30px;
 }
 
 /* Questions List */
 
 .fbContent_empty {
-	margin: 20px 0 0;
-	padding: 20px 0;
-	line-height: 23px;
-	text-align: center;
+  margin: 20px 0 0;
+  padding: 20px 0;
+  line-height: 23px;
+  text-align: center;
 }
 
 .fbContent_qList {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .fbContent_qListItem {
-	padding: 10px 10px 10px 7px;
-	margin: 0;
-	border-color: transparent transparent #e5e5e5 transparent;
-	border-style: solid;
-	border-width: 0 0 1px 3px;
-	background: none;
+  padding: 10px 10px 10px 7px;
+  margin: 0;
+  border-color: transparent transparent #e5e5e5 transparent;
+  border-style: solid;
+  border-width: 0 0 1px 3px;
+  background: none;
 }
 
 .fbContent_qListItem.qListItem_pinned {
-	border-left: 3px solid #E4C1E0;
-	border-bottom: 1px solid #F7DDF4;
-	margin: 0 0 1px;
+  border-left: 3px solid #e4c1e0;
+  border-bottom: 1px solid #f7ddf4;
+  margin: 0 0 1px;
 }
 
 .fbContent_qListItemInner {
-	padding: 5px 0;
+  padding: 5px 0;
 }
 
 .qListItem_preview {
-	overflow: hidden;
-	padding: 0 10px;
+  overflow: hidden;
+  padding: 0 10px;
 }
 
 .qListItem_preview h3 {
-	margin: 0 0 10px;
-	line-height: 23px;
+  margin: 0 0 10px;
+  line-height: 23px;
 }
 
 .qListItem_preview h3 i {
-	font-size: 14px;
-	margin: 0 3px 0 0;
+  font-size: 14px;
+  margin: 0 3px 0 0;
 }
 
 .qListItem_preview h3 .label {
-	font-size: 11px;
-	vertical-align: top;
-	display: inline-block;
-	margin: 0 0 0 5px;
-	color: #fff;
-	text-shadow: none;
-	padding: .2em .6em .3em;
-	border-radius: 0.25em;
-	line-height: 18px;
+  font-size: 11px;
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 0 0 5px;
+  color: #fff;
+  text-shadow: none;
+  padding: 0.2em 0.6em 0.3em;
+  border-radius: 0.25em;
+  line-height: 18px;
 }
 
 .qListItem_preview .label.label-pending {
-	background: #f0ad4e;
+  background: #f0ad4e;
 }
 
 .qListItem_preview .label.label-open {
-	background: #d9534f;
+  background: #d9534f;
 }
 
 .qListItem_preview img {
-	margin: 0 0 15px;
+  margin: 0 0 15px;
 }
 
 h3.qListItem_header a,
 h3.qListItem_header a:hover,
 h3.qListItem_header a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .fas.qListItem_pinned {
-	color: #bb7bb4;
+  color: #bb7bb4;
 }
 
 .qListItem_link {
-	line-height: 23px;
-	font-size: 16px;
-	font-weight: 500;
+  line-height: 23px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .qListItem_introtext {
-	margin: 0 0 8px;
+  margin: 0 0 8px;
 }
 
 .qListItem_info {
-	font-size: 12px;
-	margin: 0 0 8px;
-	color: #777;
+  font-size: 12px;
+  margin: 0 0 8px;
+  color: #777;
 }
 
 .qListItem_info > span:after {
-	content: "\00b7";
-	font-size: 26px;
-	line-height: 16px;
-	vertical-align: middle;
-	padding: 0 4px;
+  content: "\00b7";
+  font-size: 26px;
+  line-height: 16px;
+  vertical-align: middle;
+  padding: 0 4px;
 }
 
 .qListItem_info > span:last-child:after {
-	content: none;
+  content: none;
 }
 
 .qListItem_info a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .qListItem_date {
-	cursor: help;
+  cursor: help;
 }
 
 .qListItem_edit_link {
-	font-size: 12px;
-	padding: 0;
-	margin: 0;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
 }
 
 .qListItem_topic {
-	padding: 3px 0 0;
+  padding: 3px 0 0;
 }
 
 .qListItem_topic a {
-	background: #ecf0f4;
-	border-radius: 3px;
-	padding: 3px 6px;
-	margin: 0 2px 2px;
-	display: inline-block;
-	text-decoration: none;
+  background: #ecf0f4;
+  border-radius: 3px;
+  padding: 3px 6px;
+  margin: 0 2px 2px;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .qListItem_topic a:hover,
 .qListItem_topic a:focus {
-	background: #f0f2f7;
-	text-decoration: none;
+  background: #f0f2f7;
+  text-decoration: none;
 }
 
 /* Theme: FAQ */
 
 .fbContent_qFaqItemInner {
-	padding: 0 0 0 22px;
-	position: relative;
+  padding: 0 0 0 22px;
+  position: relative;
 }
 
 .fbContent_qFaqItemInner .qListItem_preview {
-	padding: 0;
+  padding: 0;
 }
 
 .fbContent_qFaqItemInner .qListItem_preview h3 {
-	margin: 0;
-	line-height: 22px;
+  margin: 0;
+  line-height: 22px;
 }
 
 .qFaqItem_link {
-	padding: 0;
-	margin: 0;
-	text-decoration: none;
-	display: block;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  display: block;
 }
 
 .qFaqItem_link:focus,
 .qFaqItem_link:hover {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .faq_open .qFaqItem_link {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .qFaqItem_triangle {
-	width: 22px;
-	height: 22px;
-	left: 0;
-	top: 0;
-	position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 0;
+  top: 0;
+  position: absolute;
 }
 
 .qFaqItem_triangle .fas {
-	line-height: 23px;
-	vertical-align: top;
-	text-align: center;
-	height: 22px;
-	width: 20px;
-	font-size: 15px;
-	color: #777;
+  line-height: 23px;
+  vertical-align: top;
+  text-align: center;
+  height: 22px;
+  width: 20px;
+  font-size: 15px;
+  color: #777;
 }
 
 .qFaqItem_introtext {
-	padding: 8px 0 0;
-	color: #999;
+  padding: 8px 0 0;
+  color: #999;
 }
 
 .faq_open .qFaqItem_introtext {
-	display: none;
+  display: none;
 }
 
 .qFaqItem_answer {
-	display: none;
-	padding: 8px 0 0;
+  display: none;
+  padding: 8px 0 0;
 }
 
 .faq_open .qFaqItem_answer {
-	display: block;
+  display: block;
 }
 
 .qFaqItem_answer img {
-	max-width: 100%;
-	margin: 0 0 15px;
+  max-width: 100%;
+  margin: 0 0 15px;
 }
 
 .qFaqItem_tools {
-	background: none repeat scroll 0 0 #f9f9f9;
-	border-top: 1px solid #E3E8F3;
-	margin: 1em 0 0.8em;
-	position: relative;
-	padding: 0 5px 0 0;
+  background: none repeat scroll 0 0 #f9f9f9;
+  border-top: 1px solid #e3e8f3;
+  margin: 1em 0 0.8em;
+  position: relative;
+  padding: 0 5px 0 0;
 }
 
 .qFaqItem_links {
-	float: right;
+  float: right;
 }
 
 .qFaqItem_links a {
-	margin: 0 3px;
-	font-size: 12px;
-	display: inline-block;
-	vertical-align: top;
-	line-height: 30px;
-	text-decoration: none;
+  margin: 0 3px;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 30px;
+  text-decoration: none;
 }
 
 /* Ajax pagination */
 
 .fbContent_paging {
-	text-align: center;
-	margin: 30px 0;
+  text-align: center;
+  margin: 30px 0;
 }
 
 .fbContent_paging span {
-	display: inline-block;
-	height: 24px;
-	vertical-align: top;
+  display: inline-block;
+  height: 24px;
+  vertical-align: top;
 }
 
 a.fbContent_paging_button {
-	display: inline-block;
-	line-height: 24px;
-	padding: 6px 12px;
-	border: 1px solid #e5e5e5;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-	text-decoration: none;
-	min-width: 110px;
+  display: inline-block;
+  line-height: 24px;
+  padding: 6px 12px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  min-width: 110px;
 }
 
 a.fbContent_paging_button:hover,
 a.fbContent_paging_button:focus {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 a.fbContent_paging_button:hover {
-	background: #eee;
+  background: #eee;
 }
 
 a.fbContent_paging_button:focus {
-	background: #fff;
+  background: #fff;
 }
 
 a.fbContent_paging_button.fbContent_btn_disabled .fbContent_paging_text,
 a.fbContent_paging_button.fbContent_btn_disabled .fbContent_noresults {
-	opacity: 0.5;
+  opacity: 0.5;
 }
 
 a.fbContent_paging_button:active {
-	background: #eee;
+  background: #eee;
 }
 
 .fbContent_paging .fbContent_noresults {
-	display: none;
+  display: none;
 }
 
 .fbContent_paging .fbContent_paging_loader {
-	background: url("loader.gif") no-repeat scroll center center transparent;
-	display: none;
-	width: 24px;
-	height: 24px;
+  background: url("loader.gif") no-repeat scroll center center transparent;
+  display: none;
+  width: 24px;
+  height: 24px;
 }
 
 /* Popular topics */
 
 .fbContent_grid {
-	width: 100%;
-	margin-bottom: 30px;
-	margin-left: 0 !important;
-	padding: 0;
-	list-style: none !important;
+  width: 100%;
+  margin-bottom: 30px;
+  margin-left: 0 !important;
+  padding: 0;
+  list-style: none !important;
 }
 
 .fbContent_gridItem {
-	float: left;
-	margin: 0 0 20px;
+  float: left;
+  margin: 0 0 20px;
 }
 
 .fbContent_gridItem.onecolgrid {
-	margin: 0 0 10px;
-	padding: 0 0 10px;
-	border-bottom: 1px solid #eee;
+  margin: 0 0 10px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .onecolgrid .fbContent_gridItemContainer {
-	text-align: left;
+  text-align: left;
 }
 
 .onecolgrid .fbContent_gridItemContainer img {
-	float: left;
-	margin: 0;
+  float: left;
+  margin: 0;
 }
 
 .onecolgrid .fbContent_gridItemContainer .pop-item-desc {
-	text-align: left;
+  text-align: left;
 }
 
 .fbContent_gridItemContainer .pop-item-desc {
-	text-align: justify;
+  text-align: justify;
 }
 
 .fbContent_gridItemContainer {
-	margin: 0 10px;
-	padding: 0;
-	text-align: center;
-	opacity: 0.85;
+  margin: 0 10px;
+  padding: 0;
+  text-align: center;
+  opacity: 0.85;
 }
 
 .fbContent_gridItemContainer:hover {
-	opacity: 1;
+  opacity: 1;
 }
 
 .fbContent_gridItemContainer h4 {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .fbContent_gridItemContainer h4 a {
-	font-size: 14px;
-	text-decoration: none;
-	font-weight: normal;
-	background: none;
-	display: inline-block;
-	width: 100%;
-	padding: 15px 0;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: normal;
+  background: none;
+  display: inline-block;
+  width: 100%;
+  padding: 15px 0;
 }
 
 .fbContent_gridItemContainer h4 a:hover,
 .fbContent_gridItemContainer h4 a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .fbContent_gridItemContainer .pop-item-img {
-	margin: 0;
-	padding: 4px;
-	border: 1px solid #e5e5e5;
-	background: none !important;
-	display: inline-block;
-	width: 100%;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid #e5e5e5;
+  background: none !important;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .fbContent_gridItemContainer .pop-item-img:hover,
 .fbContent_gridItemContainer .pop-item-img:focus {
-	background: none !important;
+  background: none !important;
 }
 
 .fbContent_gridItemContainer img {
-	margin: 0;
-	max-width: 100%;
-	width: 100%;
-	float: left;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+  float: left;
 }
 
 /* Popular questions */
 
 .fbContent_popQuestions {
-	width: 100%;
-	margin-bottom: 30px;
-	margin-left: 0;
-	padding: 0;
-	list-style-type: none;
+  width: 100%;
+  margin-bottom: 30px;
+  margin-left: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .fbContent_popQuestions li {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .fbContent_popQuestions li + li {
-	border-top: 1px solid #eee;
+  border-top: 1px solid #eee;
 }
 
 .fbContent_popQuestions li a {
-	margin: 0;
-	padding: 8px 0;
-	display: inline-block;
-	font-size: 14px;
+  margin: 0;
+  padding: 8px 0;
+  display: inline-block;
+  font-size: 14px;
 }
 
 /* Alert boxes */
 
 #myquestions_public_msg {
-	padding: 15px;
+  padding: 15px;
 }
 
 #myquestions_public_msg .control-group {
-	margin: 0 0 15px;
+  margin: 0 0 15px;
 }
 
 .myquestion_private_selector .control-label .private-locked {
-	display: inline-block;
-	padding: 2px 5px;
-	font-size: 11px;
-	background-color: #FBECEC;
-	border: 1px solid #ebccd1;
-	color: #b94a48;
-	border-radius: 4px;
-	margin: 0 0 0 10px;
-	font-weight: normal;
-	line-height: 12px;
+  display: inline-block;
+  padding: 2px 5px;
+  font-size: 11px;
+  background-color: #fbecec;
+  border: 1px solid #ebccd1;
+  color: #b94a48;
+  border-radius: 4px;
+  margin: 0 0 0 10px;
+  font-weight: normal;
+  line-height: 12px;
 }
 
 .myquestions_public_msg {
-	margin: 0 0 20px;
+  margin: 0 0 20px;
 }
 
 /* Sections */
 
 .fbContent_sections_desc {
-	margin: 0 0 20px;
+  margin: 0 0 20px;
 }
 
 /* Forum layout (Sections) */
 
 .fb_forums {
-	padding: 20px 0 0;
+  padding: 20px 0 0;
 }
 
 .fb_forum {
-	margin: 0 0 40px;
-	padding: 0;
-	border-bottom: 1px solid #e5e5e5;
+  margin: 0 0 40px;
+  padding: 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .fb_forum small {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 .fb_forum_header {
-	margin: 0;
-	padding: 0 10px 10px;
+  margin: 0;
+  padding: 0 10px 10px;
 }
 
 .fb_forum_header > h2 {
-	line-height: 28px;
+  line-height: 28px;
 }
 
 .fb_forum_header > h2 a,
 .fb_forum_header > h2 a:hover,
 .fb_forum_header > h2 a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .fb_forum_body_header {
-	border-top: 1px solid #e5e5e5;
-	background: #f9f9f9;
-	padding: 15px 0;
-	color: #888;
+  border-top: 1px solid #e5e5e5;
+  background: #f9f9f9;
+  padding: 15px 0;
+  color: #888;
 }
 
 .fb_forum_row {
-	padding: 15px 0;
-	border-top: 1px solid #e5e5e5;
+  padding: 15px 0;
+  border-top: 1px solid #e5e5e5;
 }
 
 .fb_forum_row small {
-	color: #999;
+  color: #999;
 }
 
 .fb_table_row {
-	display: table;
-	width: 100%;
-	table-layout: fixed;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .fb_table_cell {
-	display: table-cell;
-	vertical-align: top;
+  display: table-cell;
+  vertical-align: top;
 }
 
 .fb_table_cell_padding {
-	padding: 0 15px;
+  padding: 0 15px;
 }
 
 .fb-col-8 {
-	width: 66.67%;
+  width: 66.67%;
 }
 
 .fb-col-4 {
-	width: 33.33%;
+  width: 33.33%;
 }
 
 .fb_forum_topic_icon,
 .fb_forum_topic_image {
-	float: left;
-	margin: 0 15px 0 0;
-	padding: 5px;
+  float: left;
+  margin: 0 15px 0 0;
+  padding: 5px;
 }
 
 .fb_forum_topic_icon a {
-	width: 32px;
-	height: 32px;
-	display: inline-block;
-	text-align: center;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  text-align: center;
 }
 
 .fb_forum_topic_image a {
-	display: inline-block;
-	max-width: 120px;
+  display: inline-block;
+  max-width: 120px;
 }
 
 .fb_forum_topic_icon i {
-	font-size: 32px;
-	vertical-align: top;
-	height: 32px;
-	width: 32px;
+  font-size: 32px;
+  vertical-align: top;
+  height: 32px;
+  width: 32px;
 }
 
 .fb_forum_topic_body {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .fb_forum_topic_title {
-	margin: 12px 0 10px;
-	font-size: 18px;
+  margin: 12px 0 10px;
+  font-size: 18px;
 }
 
 h3.fb_forum_topic_title a,
 h3.fb_forum_topic_title a:hover,
 h3.fb_forum_topic_title a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .fb_forum_topic_desc {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .fb_forum_topic_children {
-	padding: 5px 0 0;
+  padding: 5px 0 0;
 }
 
 .fb_forum_topic_child {
-	display: inline-block;
-	margin: 0 8px 4px;
+  display: inline-block;
+  margin: 0 8px 4px;
 }
 
 .fb_forum_topic_child i {
-	margin: 0 5px 0 0;
+  margin: 0 5px 0 0;
 }
 
 .fb_forum_topic_child a {
-	font-size: 12px;
+  font-size: 12px;
 }
 
 .fb_forum_question_title {
-	margin: 12px 0 10px;
+  margin: 12px 0 10px;
 }
 
 .fb_forum_question_meta {
-	font-size: 13px;
-	color: #888;
+  font-size: 13px;
+  color: #888;
 }
 
 .fb_forum_question_meta > span:after {
-	content: "\00b7";
-	font-size: 26px;
-	line-height: 16px;
-	vertical-align: middle;
-	padding: 0 4px;
+  content: "\00b7";
+  font-size: 26px;
+  line-height: 16px;
+  vertical-align: middle;
+  padding: 0 4px;
 }
 
 .fb_forum_question_meta > span:last-child:after {
-	content: none;
+  content: none;
 }
 
 /* Columns layout (sections) */
 
 .fb_columns {
-	margin: 0 -10px;
-	padding: 0;
+  margin: 0 -10px;
+  padding: 0;
 }
 
 .fb_column {
-	float: left;
-	margin: 0 0 20px;
-	text-align: left;
+  float: left;
+  margin: 0 0 20px;
+  text-align: left;
 }
 
 .fb_column small {
-	color: #999;
+  color: #999;
 }
 
 .fb_column_inner {
-	margin: 0 10px;
-	padding: 15px;
-	border: 1px solid #e5e5e5;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-	background: #fff;
+  margin: 0 10px;
+  padding: 15px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
 }
 
 .fb_column_inner .fb_column_image {
-	display: block;
-	margin: 0 0 15px;
+  display: block;
+  margin: 0 0 15px;
 }
 
 .fb_column_inner img {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 .fb_column_inner small {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 h3.fb_column_header {
-	margin: 0;
-	padding: 10px 0 20px;
-	font-size: 18px;
+  margin: 0;
+  padding: 10px 0 20px;
+  font-size: 18px;
 }
 
 h3.fb_column_header a,
 h3.fb_column_header a:hover,
 h3.fb_column_header a:focus {
-	text-decoration: none;
-	background: none;
+  text-decoration: none;
+  background: none;
 }
 
 .fb_column_topics {
-	padding: 10px 0;
+  padding: 10px 0;
 }
 
 .fb_column_topic {
-	display: inline-block;
-	margin: 0 5px 4px;
+  display: inline-block;
+  margin: 0 5px 4px;
 }
 
 .fb_column_topic i {
-	margin: 0 5px 0 0;
+  margin: 0 5px 0 0;
 }
 
 .fb_column_topic a {
-	font-size: 12px;
-	text-decoration: none;
+  font-size: 12px;
+  text-decoration: none;
 }
 
 /* Responsive */
 
-@media(max-width: 768px) {
-	.fb-hidden-phone li.NavTopUL_item {
-		display: none !important;
-	}
-	.fbContent_core {
-		width: 100% !important;
-		float: left !important;
-	}
-	.fbLeftNavigation_core {
-		margin: 0 !important;
-		width: 100% !important;
-		transition: none;
-	}
-	.fbLeftNavigation_toggle {
-		display: none;
-	}
-	.fbLeftNavigation_core.fb-minimized #NavLeftUL {
-		opacity: 1;
-		visibility: visible;
-	}
-	.fbLeftNavigation_core {
-		border-right: 0 !important;
-	}
-	.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading {
-		width: auto;
-		white-space: normal;
-	}
-	.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading span.NavLeftUL_endpointIcon {
-		right: 9px;
-	}
-	.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading a.NavLeftUL_anchor i {
-		display: inline-block;
-	}
-	.fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading a.NavLeftUL_anchor span.NavLeftUL_text {
-		opacity: 1;
-	}
-	.fbLeftNavigation_core a.NavLeftUL_anchor {
-		width: 100% !important;
-		transition: none !important;
-	}
-	.fbLeftNavigation_user,
-	.fbLeftNavigation_topics {
-		margin: 0 !important;
-		width: 100% !important;
-	}
-	.fbLeftNavigation_wrap {
-		margin: 0 !important;
-		width: 100% !important;
-	}
-	.fbLeftNavigation_user ul,
-	.fbLeftNavigation_topics ul {
-		margin: 0 !important;
-		width: 100% !important;
-	}
-	.fbLeftNavigation_user li,
-	.fbLeftNavigation_topics li {
-		margin: 0 !important;
-		width: 100% !important;
-	}
-	.fbLeftNavigation_core.fb-hidden {
-		display: none;
-	}
-	.fbTopNavigation_core .show_menu {
-		display: block;
-	}
-	.fb-hidden-phone li.NavTopUL_item {
-		display: none !important;
-	}
-	.fb_forum_body_header .fb-col-8 {
-		width: 100%;
-	}
-	.fb_forum_body_header .fb-col-4 {
-		display: none;
-	}
-	.fb_forum_body_container .fb-col-8 {
-		width: 100%;
-	}
-	.fb_forum_body_container .fb-col-4 {
-		display: none;
-	}
-	.fb_column {
-		width: 100% !important;
-	}
-	.fbContent_topics li {
-		width: 100% !important;
-	}
+@media (max-width: 768px) {
+  .fb-hidden-phone li.NavTopUL_item {
+    display: none !important;
+  }
+  .fbContent_core {
+    width: 100% !important;
+    float: left !important;
+  }
+  .fbLeftNavigation_core {
+    margin: 0 !important;
+    width: 100% !important;
+    transition: none;
+  }
+  .fbLeftNavigation_toggle {
+    display: none;
+  }
+  .fbLeftNavigation_core.fb-minimized #NavLeftUL {
+    opacity: 1;
+    visibility: visible;
+  }
+  .fbLeftNavigation_core {
+    border-right: 0 !important;
+  }
+  .fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading {
+    width: auto;
+    white-space: normal;
+  }
+  .fbLeftNavigation_core.fb-minimized
+    .NavLeftUL_item.li_loading
+    span.NavLeftUL_endpointIcon {
+    right: 9px;
+  }
+  .fbLeftNavigation_core.fb-minimized
+    .NavLeftUL_item.li_loading
+    a.NavLeftUL_anchor
+    i {
+    display: inline-block;
+  }
+  .fbLeftNavigation_core.fb-minimized
+    .NavLeftUL_item.li_loading
+    a.NavLeftUL_anchor
+    span.NavLeftUL_text {
+    opacity: 1;
+  }
+  .fbLeftNavigation_core a.NavLeftUL_anchor {
+    width: 100% !important;
+    transition: none !important;
+  }
+  .fbLeftNavigation_user,
+  .fbLeftNavigation_topics {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .fbLeftNavigation_wrap {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .fbLeftNavigation_user ul,
+  .fbLeftNavigation_topics ul {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .fbLeftNavigation_user li,
+  .fbLeftNavigation_topics li {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .fbLeftNavigation_core.fb-hidden {
+    display: none;
+  }
+  .fbTopNavigation_core .show_menu {
+    display: block;
+  }
+  .fb-hidden-phone li.NavTopUL_item {
+    display: none !important;
+  }
+  .fb_forum_body_header .fb-col-8 {
+    width: 100%;
+  }
+  .fb_forum_body_header .fb-col-4 {
+    display: none;
+  }
+  .fb_forum_body_container .fb-col-8 {
+    width: 100%;
+  }
+  .fb_forum_body_container .fb-col-4 {
+    display: none;
+  }
+  .fb_column {
+    width: 100% !important;
+  }
+  .fbContent_topics li {
+    width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 992px) {
-	.fbContent_gridItem,
-	.fbContent_allTopics > li {
-		width: 50% !important;
-	}
+  .fbContent_gridItem,
+  .fbContent_allTopics > li {
+    width: 50% !important;
+  }
 }
 
 @media screen and (max-width: 500px) {
-	.fbContent_gridItem,
-	.fbContent_allTopics > li {
-		width: 100% !important;
-	}
+  .fbContent_gridItem,
+  .fbContent_allTopics > li {
+    width: 100% !important;
+  }
 }
