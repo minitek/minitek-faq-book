@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2021 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -20,14 +21,14 @@ $message_version = FAQBookProHelper::updateMessageVersion();
 $type = \JFactory::getApplication()->input->get('type', 'auto');
 
 if ($latestVersion && version_compare($latestVersion, $localVersion, '>')) { ?>
-  <div class="alert alert-success text-center mt-0" id="update-box">
+  <div class="alert alert-success text-center mt-0" class="update-box">
     <div class="update-info">
       <div>
         <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_A_NEW_VERSION_IS_AVAILABLE'); ?></span>
         <span class="badge bg-success"><?php echo $latestVersion; ?></span> <span class="badge bg-success">Free</span>
       </div>
       <div class="mt-10">
-        <a class="button-success btn btn-sm btn-success" href="<?php echo Route::_('index.php?option=com_installer&view=update'); ?>">
+        <a class="button-info btn btn-sm btn-info" href="<?php echo Route::_('index.php?option=com_installer&view=update'); ?>">
           <span class="icon-refresh" aria-hidden="true"></span>
           <?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_UPDATE_NOW'); ?>
         </a>
@@ -47,20 +48,20 @@ if ($latestVersion && version_compare($latestVersion, $localVersion, '>')) { ?>
   </div>
 <?php } else if ($type == 'check') { ?>
   <?php if ($latestVersion) { ?>
-  <div class="alert alert-success text-center mt-0" id="update-box">
-    <div class="update-info">
-      <div>
-        <?php if ($latestVersion == $localVersion) { ?>
-          <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_THE_LATEST_VERSION'); ?></span>
-        <?php } else { ?>
-          <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_A_DEVELOPMENT_VERSION'); ?></span>
-        <?php } ?>
-        <span class="badge bg-success"><?php echo $latestVersion; ?></span> <span class="badge bg-success">Free</span>
+    <div class="alert alert-success text-center mt-0" class="update-box">
+      <div class="update-info">
+        <div>
+          <?php if ($latestVersion == $localVersion) { ?>
+            <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_THE_LATEST_VERSION'); ?></span>
+          <?php } else { ?>
+            <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_YOU_HAVE_A_DEVELOPMENT_VERSION'); ?></span>
+          <?php } ?>
+          <span class="badge bg-success"><?php echo $latestVersion; ?></span> <span class="badge bg-success">Free</span>
+        </div>
       </div>
     </div>
-  </div>
   <?php } else { ?>
-    <div class="alert alert-danger text-center mt-0" id="update-box">
+    <div class="alert alert-danger text-center mt-0" class="update-box">
       <div class="update-info">
         <div>
           <span><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_COULD_NOT_FETCH_UPDATE_INFO'); ?></span>
