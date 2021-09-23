@@ -239,7 +239,7 @@
 
 			<field
 				name="load_all_topics"
-				type="list"
+				type="radio"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_DESC"
@@ -425,10 +425,12 @@
 
 			<field
 				name="popular_topics_count"
-				type="text"
+				type="number"
 				default="5"
+				min="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_DESC"
+				filter="integer"
 			/>
 
 			<field
@@ -468,11 +470,12 @@
 
 			<field
 				name="popular_topics_description_limit"
-				type="text"
+				type="number"
 				default="15"
-				size="4"
+				min="0"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_DESC"
+				filter="integer"
 			/>
 
 			<field
@@ -515,10 +518,12 @@
 
 			<field
 				name="popular_questions_count"
-				type="text"
+				type="number"
 				default="5"
+				min="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_DESC"
+				filter="integer"
 			/>
 
 			<field
@@ -535,11 +540,12 @@
 
 			<field
 				name="popular_questions_description_limit"
-				type="text"
+				type="number"
 				default="15"
-				size="4"
+				min="0"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_DESC"
+				filter="integer"
 			/>
 
 		</fieldset>
@@ -588,7 +594,6 @@
 				class="info"
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_TITLE"
 			/>
 
@@ -669,7 +674,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_TITLE"
 				default="static"
 			/>
@@ -693,9 +697,8 @@
 
 			<field
 				name="questions_ordering_dir"
-				type="list"
+				type="radio"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_DESC"
 				default="DESC"
 			>
 				<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
@@ -709,7 +712,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_DESC"
 				default="recent"
 			/>
 
@@ -719,7 +721,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -728,7 +729,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -737,7 +737,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -746,7 +745,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -755,7 +753,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -764,7 +761,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -773,7 +769,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_DESC"
 			/>
 
 			<field
@@ -782,7 +777,6 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_DESC"
 			/>
 
 		</fieldset>
@@ -795,7 +789,6 @@
 				class="info"
 				default="faq"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_TITLE"
 			/>
 
@@ -816,7 +809,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_TITLE"
 				default="1"
 			/>
@@ -826,7 +818,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_TITLE"
 				default="1"
 			/>
@@ -836,7 +827,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_TITLE"
 				default="1"
 			/>
@@ -846,7 +836,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_TITLE"
 				default="1"
 			/>
@@ -877,7 +866,8 @@
 
 			<field
 				name="questions_introtext_limit"
-				type="text"
+				type="number"
+				min="0"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_DESC"
 				default="20"
@@ -889,7 +879,6 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_DESC"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_TITLE"
 				default="1"
 			/>
@@ -920,9 +909,8 @@
 
 			<field
 				name="questions_author_name"
-				type="list"
+				type="radio"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_LABEL"
-				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_DESC"
 				default="username"
 			>
 				<option value="username">COM_FAQBOOKPRO_FIELD_OPTION_USERNAME</option>

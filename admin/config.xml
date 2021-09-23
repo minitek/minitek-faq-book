@@ -10,10 +10,11 @@
 
 		<field
 			name="pagination_limit"
-			type="text"
+			type="number"
 			label="COM_FAQBOOKPRO_CONFIG_PAGINATION_LIMIT_LABEL"
 			description="COM_FAQBOOKPRO_CONFIG_PAGINATION_LIMIT_DESC"
 			default="20"
+			min="1"
 			filter="integer"
 		/>
 
