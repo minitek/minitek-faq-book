@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -25,7 +25,7 @@ if ($this->first_level_topics)
 				$first_level_topic,
 				$this->browse_topics_levels,
 				$this->browse_topics_cols,
-				$level = 1,
+				1,
 				$this->browse_topics_icons,
 				$this->browse_topics_images
 			);

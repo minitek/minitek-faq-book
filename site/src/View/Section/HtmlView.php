@@ -458,7 +458,7 @@ class HtmlView extends BaseHtmlView
 		parent::display($tpl);
 	}
 
-	public static function getTopicsIndex($item, $maxLevels, $cols, $level = 1, $icons, $images)
+	public static function getTopicsIndex($item, $maxLevels, $cols, $level, $icons, $images)
 	{
 		$topicModel = new TopicModel;
 		$topicParams = json_decode($item->params, false);

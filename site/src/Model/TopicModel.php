@@ -143,7 +143,7 @@ class TopicModel extends BaseDatabaseModel
 		return $this->_item[$pk];
 	}
 
-	public function getTopicQuestions($topicId, $ordering, $ordering_dir, $page = 1, $merge)
+	public function getTopicQuestions($topicId, $ordering, $ordering_dir, $page, $merge)
 	{
 		$db = Factory::getDbo();
 		$user = Factory::getUser();
