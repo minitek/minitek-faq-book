@@ -553,6 +553,10 @@ a.NavLeftUL_anchor i {
   margin: 0;
 }
 
+.fbContent_root a:not([class]) {
+  text-decoration: none;
+}
+
 /* Headers */
 
 h2.fbContent_title {
@@ -834,7 +838,7 @@ h3.qListItem_header a:focus {
   content: "\00b7";
   font-size: 26px;
   line-height: 16px;
-  vertical-align: middle;
+  vertical-align: top;
   padding: 0 4px;
 }
 
