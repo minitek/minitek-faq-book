@@ -6,5 +6,5 @@ DROP TABLE IF EXISTS `#__minitek_faqbook_topics`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_votes`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_customfields`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_customfields_topics`;
-DROP TABLE IF EXISTS `#__minitek_faqbook_customstates`;
+DROP TABLE IF EXISTS `#__minitek_faqbook_question_types`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_attachments`;

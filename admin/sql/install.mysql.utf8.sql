@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_attachments` (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_customstates` (
+CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_question_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `asset_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -107,7 +107,8 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_questions` (
  `locked` tinyint(3) NOT NULL DEFAULT '0',
  `private` tinyint(3) NOT NULL DEFAULT '0',
  `pinned` tinyint(3) NOT NULL DEFAULT '0',
- `resolved` varchar(255) NOT NULL DEFAULT '0',
+ `resolved` tinyint(3) NOT NULL DEFAULT '0',
+ `question_type` varchar(255) NOT NULL DEFAULT '',
  `topicid` int(10) unsigned NOT NULL DEFAULT '0',
  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
  `created_by` int(10) unsigned NOT NULL DEFAULT '0',

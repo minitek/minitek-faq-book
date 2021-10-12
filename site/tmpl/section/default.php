@@ -45,8 +45,6 @@ endif;
 				case 'top':
 				case 'featured':
 				case 'unanswered':
-				case 'resolved':
-				case 'unresolved':
 					echo $this->loadTemplate('content');
 					break;
 				case 'topics':
