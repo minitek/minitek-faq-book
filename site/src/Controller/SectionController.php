@@ -29,15 +29,15 @@ class SectionController extends BaseController
 
 		// Get variables
 		$sectionId = $input->get('sectionId', '', 'INT');
-    $topicId = $input->get('topicId', '', 'INT');
+    	$topicId = $input->get('topicId', '', 'INT');
 		$tab = $input->get('tab', '', 'STRING');
 		$page = $input->get('page', '1', 'INT');
-    $filter = $input->get('filter', '', 'STRING');
+    	$filter = $input->get('filter', '', 'STRING');
 
 		// Set variables
 		$input->set('view', 'section');
 		$input->set('id', $sectionId);
-    $input->set('topicId', $topicId);
+    	$input->set('topicId', $topicId);
 		$input->set('page', $page);
 
 		// Set layout
@@ -47,8 +47,6 @@ class SectionController extends BaseController
 			case 'top':
 			case 'featured':
 			case 'unanswered':
-			case 'unresolved':
-			case 'resolved':
 			case 'open':
 			case 'pending':
 				$layout = 'content';

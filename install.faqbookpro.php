@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -57,6 +57,105 @@ class com_faqbookproInstallerScript
 			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.0.12', '<')) {
 				self::update4012($parent);
 			}
+
+			// Run update script if old version is older than 4.1.1
+			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.1.1', '<')) {
+				self::update411($parent);
+			}
+		}
+	}
+
+	/*
+	 * $parent is the class calling this method.
+	 * update runs if old version is < 4.1.1
+	 */
+	function update411($parent)
+	{
+		$db = Factory::getDBO();
+
+		// Rename table '#__minitek_faqbook_customstates'
+		$columns = $db->getTableColumns('#__minitek_faqbook_customstates');
+
+		if ($columns) {
+			$query = $db->getQuery(true);
+			$query ='RENAME TABLE ' . $db->quoteName('#__minitek_faqbook_customstates') . ' TO ' . $db->quoteName('#__minitek_faqbook_question_types');
+			$db->setQuery($query);
+			$result = $db->execute();
+
+			if (!$result) {
+				throw new GenericDataException('Error 411-1: Could not rename __minitek_faqbook_customstates table.', 500);
+				return false;
+			}
+		}
+
+		$questions_columns = $db->getTableColumns('#__minitek_faqbook_questions');
+
+		// Add column 'question_type'
+		if (!isset($questions_columns['question_type'])) {
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_questions` ";
+			$query .= " ADD COLUMN `question_type` varchar(255) NOT NULL DEFAULT '' ";
+			$db->setQuery($query);
+			$result = $db->execute();
+
+			if (!$result) {
+				throw new GenericDataException('Error 411-2: Could not update __minitek_faqbook_questions table.', 500);
+				return false;
+			}
+		}
+
+		// Get all questions
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from($db->quoteName('#__minitek_faqbook_questions'));
+		$query->where($db->quoteName('resolved').' NOT REGEXP \'^[0-9]+$\'');
+		$db->setQuery($query);
+
+		try 
+		{
+			$questions = $db->loadObjectList();
+		}
+		catch (\Exception $e)
+		{
+			throw new GenericDataException('Error 411-3: Could not read questions.', 500);
+
+			return false;
+		}
+		
+		if ($questions)
+		{	
+			foreach ($questions as $question)
+			{
+				// Copy resolved to question_type	
+				$query = $db->getQuery(true);
+				$query
+					->update($db->quoteName('#__minitek_faqbook_questions'))
+					->set($db->quoteName('question_type').' = '.$db->quote($question->resolved))
+					->where($db->quoteName('id').' = '.$db->quote($question->id));			
+				$db->setQuery($query);
+				$db->execute();
+
+				// Set resolved to '0'
+				$query = $db->getQuery(true);
+				$query
+					->update($db->quoteName('#__minitek_faqbook_questions'))
+					->set($db->quoteName('resolved').' = '.$db->quote(0))
+					->where($db->quoteName('id').' = '.$db->quote($question->id));			
+				$db->setQuery($query);
+				$db->execute();
+			}
+		}
+
+		// Modify column 'resolved'
+		$query = $db->getQuery(true);
+		$query = " ALTER TABLE `#__minitek_faqbook_questions` ";
+		$query .= " MODIFY COLUMN `resolved` tinyint(3) NOT NULL DEFAULT '0' ";
+		$db->setQuery($query);
+		$result = $db->execute();
+
+		if (!$result) {
+			throw new GenericDataException('Error 411-4: Could not update __minitek_faqbook_questions table.', 500);
+			return false;
 		}
 	}
 

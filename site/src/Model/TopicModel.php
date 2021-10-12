@@ -154,7 +154,7 @@ class TopicModel extends BaseDatabaseModel
 			'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
 			'a.modified_by,' .
 			'a.images, a.attribs, a.metadata, a.metakey, a.metadesc, a.access, ' .
-			'a.hits, a.featured, a.locked, a.pinned, a.private, a.resolved, a.publish_up, a.publish_down'
+			'a.hits, a.featured, a.locked, a.pinned, a.private, a.publish_up, a.publish_down'
 		);
 		$query->from('#__minitek_faqbook_questions AS a');
 
@@ -247,45 +247,16 @@ class TopicModel extends BaseDatabaseModel
 			$query->having('answers = 0');
 		}
 
-		// Filter by resolved
-		if ($ordering == 'resolved')
-		{
-			$query->where('a.resolved = 1');
-		}
-
-		// Filter by unresolved
-		if ($ordering == 'unresolved')
-		{
-			$query->where('a.resolved IN (0,2)');
-		}
-
-		// Filter by open
-		if ($ordering == 'open')
-		{
-			$query->where('a.resolved = '.$db->quote(0));
-		}
-
-		// Filter by pending
-		if ($ordering == 'pending')
-		{
-			$query->where('a.resolved = 2');
-		}
-
 		// Get ordering
 		switch ($ordering)
 		{
 			case 'recent':
 				$order = 'a.pinned '.$ordering_dir.', a.created '.$ordering_dir.'';
 				break;
-			case 'top':
-				$order = 'diff '.$ordering_dir.', resolved '.$ordering_dir.', answers '.$ordering_dir.', a.created '.$ordering_dir.'';
-				break;
 			case 'featured':
 			case 'unanswered':
-			case 'unresolved':
 			case 'open':
 			case 'pending':
-			case 'resolved':
 				$order = 'a.created '.$ordering_dir.'';
 				break;
 			// Static ordering

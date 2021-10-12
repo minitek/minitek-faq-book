@@ -53,7 +53,7 @@ $localVersion = FAQBookProHelper::localVersion();
 
 				<div class="thumbnail card">
 					<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions'); ?>">
-						<i class="icon icon-question"></i>
+						<i class="icon icon-question-circle"></i>
 						<span class="thumbnail-title">
 							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTIONS'); ?>
 						</span>
@@ -82,7 +82,7 @@ $localVersion = FAQBookProHelper::localVersion();
 
 				<div class="thumbnail card">
 					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-folder-plus"></i>
+						<i class="icon icon-edit"></i>
 						<span class="thumbnail-title">
 							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CUSTOM_FIELDS'); ?>
 							<span class="badge bg-danger">Pro</span>
@@ -92,9 +92,9 @@ $localVersion = FAQBookProHelper::localVersion();
 
 				<div class="thumbnail card">
 					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-checkmark-2"></i>
+						<i class="icon icon-cubes"></i>
 						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CUSTOM_STATES'); ?>
+							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTION_TYPES'); ?>
 							<span class="badge bg-danger">Pro</span>
 						</span>
 					</a>

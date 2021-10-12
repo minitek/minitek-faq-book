@@ -671,7 +671,6 @@ class QuestionModel extends AdminModel
 			$form->setFieldAttribute('publish_up', 'disabled', 'true');
 			$form->setFieldAttribute('publish_down', 'disabled', 'true');
 			$form->setFieldAttribute('state', 'disabled', 'true');
-			$form->setFieldAttribute('resolved', 'disabled', 'true');
 
 			// Disable fields while saving.
 			// The controller has already verified this is a question you can edit.
@@ -679,7 +678,6 @@ class QuestionModel extends AdminModel
 			$form->setFieldAttribute('publish_up', 'filter', 'unset');
 			$form->setFieldAttribute('publish_down', 'filter', 'unset');
 			$form->setFieldAttribute('state', 'filter', 'unset');
-			$form->setFieldAttribute('resolved', 'filter', 'unset');
 		}
 
 		if ($id != 0 && (!$user->authorise('core.pin', 'com_faqbookpro.question.' . (int) $id))
