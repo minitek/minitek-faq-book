@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Model\TopicModel;
+use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 /**
@@ -26,6 +27,7 @@ abstract class NavigationHelper
 	public static function getTopicsTree($item, $level = 1)
 	{
 		$topicModel = new TopicModel;
+		$sectionModel = new SectionModel;
 		$topicParams = json_decode($item->params, false);
   		$output = '';
 		$subitems = $topicModel->getTopicChildren($item->id);
@@ -64,7 +66,17 @@ abstract class NavigationHelper
 		  		$output .= self::getTopicsTree($subitem, $level + 1);
 			}
 
-			$output .= '<li id="backliid'.$item->id.'" class="NavLeftUL_backItem"><a href="#" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;"><span>'.Text::_('COM_FAQBOOKPRO_BACK').'<span class="NavLeftUL_navBackIcon fas fa-arrow-left"></span></span></a></li>';
+			$back_href = $item->parent_id > 1 
+				? Route::_(RouteHelper::getTopicRoute($item->parent_id)) 
+				: Route::_(RouteHelper::getSectionRoute($item->section_id));
+			$data_title = $item->parent_id > 1 
+				? $topicModel->getItem($item->parent_id)->title 
+				: $sectionModel->getItem($item->section_id)->title;
+
+			$output .= '<li id="backliid'.$item->parent_id.'" class="NavLeftUL_backItem">';
+			$output .= '<a href="'.$back_href.'" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;" data-title="'.$data_title.'">';
+			$output .= '<span>'.Text::_('COM_FAQBOOKPRO_BACK').'<span class="NavLeftUL_navBackIcon fas fa-arrow-left"></span></span>';
+			$output .= '</a></li>';
 			$output .= '</ul>';
 			$output .= '</li>';
 		}

@@ -707,6 +707,10 @@
             if (e.target && e.target.closest(".NavLeftUL_backItem")) {
               var _this = e.target;
               var this_backliid = _this.parentNode.id;
+              let endpoint_id = this_backliid.split("id").pop(1);
+              let this_liid = "liid" + endpoint_id;
+              var href = _this.href;
+              let topic_title = _this.getAttribute("data-title");
 
               // Fix left navigation topics height
               var back_child_ul =
@@ -746,6 +750,11 @@
                     );
                   }
                 }
+
+                // Load parent topic if it exists
+                if (endpoint_id > 1)
+                  loadEndpoint(endpoint_id, this_liid, href, topic_title);
+                else loadHome(href);
 
                 wrap.classList.remove("wrap_animated");
               };
