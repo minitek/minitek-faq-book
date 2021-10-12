@@ -162,12 +162,6 @@ class TopicModel extends BaseDatabaseModel
 		$query->select('c.title AS topic_title, c.path AS topic_route, c.access AS topic_access, c.alias AS topic_alias')
 			->join('LEFT', '#__minitek_faqbook_topics AS c ON c.id = a.topicid');
 
-		// Join over the votes for the question.
-		$query->select('COUNT(DISTINCT vu.id) as votes_up, COUNT(DISTINCT vd.id) as votes_down, (COUNT(DISTINCT vu.id) - COUNT(DISTINCT vd.id)) as diff')
-			->join('LEFT', '#__minitek_faqbook_votes AS vu ON vu.target_id = a.id AND vu.vote_up=1 AND vu.target_type="question"')
-			->join('LEFT', '#__minitek_faqbook_votes AS vd ON vd.target_id = a.id AND vd.vote_down=1 AND vd.target_type="question"')
-			->group('a.id');
-
 		// Filter by access level
 		$groups = implode(',', $user->getAuthorisedViewLevels());
 		$query->where('a.access IN (' . $groups . ')')
@@ -311,20 +305,6 @@ class TopicModel extends BaseDatabaseModel
 		$questions = $db->loadObjectList();
 
 		return $questions;
-	}
-
-	public static function getQuestionVotes($questionId, $type)
-	{
-  	$db = Factory::getDBO();
-  	$query = "SELECT COUNT(*) FROM "
-      .$db->quoteName("#__minitek_faqbook_votes")
-      ." WHERE " . $db->quoteName("target_id") . "=" . $db->Quote($questionId)
-			." AND " . $db->quoteName("target_type") . "='question'"
-      ." AND " . $db->quoteName($type) . "=" . $db->Quote('1');
-		$db->setQuery($query);
-		$vote_sum = $db->loadResult();
-
-		return $vote_sum;
 	}
 
 	public static function addHit($id)

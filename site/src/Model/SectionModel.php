@@ -203,12 +203,6 @@ class SectionModel extends BaseDatabaseModel
 		$query->select('section.title as section_title, section.id as section_id')
 			->join('LEFT', '#__minitek_faqbook_sections as section ON section.id = c.section_id');
 
-		// Join over the votes for the question.
-		$query->select('COUNT(DISTINCT vu.id) as votes_up, COUNT(DISTINCT vd.id) as votes_down, (COUNT(DISTINCT vu.id) - COUNT(DISTINCT vd.id)) as diff')
-			->join('LEFT', '#__minitek_faqbook_votes AS vu ON vu.target_id = a.id AND vu.vote_up=1 AND vu.target_type="question"')
-			->join('LEFT', '#__minitek_faqbook_votes AS vd ON vd.target_id = a.id AND vd.vote_down=1 AND vd.target_type="question"')
-			->group('a.id');
-
 		// Filter by topic language
 		$query->where('c.language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 
@@ -440,11 +434,6 @@ class SectionModel extends BaseDatabaseModel
 			'section.title',
 			'section.id',
 		);
-
-		// Join over the votes
-		$query->select('COUNT(v.vote_up) as votes_up')
-			->join('LEFT', '#__minitek_faqbook_votes AS v ON v.target_id = a.id AND v.target_type = '.$db->quote('question').' AND v.vote_up = '.$db->quote('1').'')
-			->group($db->quoteName($groupBy));
 
 		$groups = implode(',', $user->getAuthorisedViewLevels());
 		$query->where('a.access IN (' . $groups . ')')
