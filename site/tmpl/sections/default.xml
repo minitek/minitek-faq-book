@@ -45,7 +45,7 @@
 
 			<field
 				name="sections_layout"
-				type="radio"
+				type="list"
 				default="columns"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAYOUT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAYOUT_DESC"

@@ -239,7 +239,7 @@
 
 			<field
 				name="load_all_topics"
-				type="radio"
+				type="list"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_DESC"
@@ -428,9 +428,10 @@
 				type="number"
 				default="5"
 				min="1"
+				step="1"
+				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_DESC"
-				filter="integer"
 			/>
 
 			<field
@@ -473,9 +474,10 @@
 				type="number"
 				default="15"
 				min="0"
+				step="1"
+				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_DESC"
-				filter="integer"
 			/>
 
 			<field
@@ -521,9 +523,10 @@
 				type="number"
 				default="5"
 				min="1"
+				step="1"
+				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_DESC"
-				filter="integer"
 			/>
 
 			<field
@@ -543,9 +546,10 @@
 				type="number"
 				default="15"
 				min="0"
+				step="1"
+				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_DESC"
-				filter="integer"
 			/>
 
 		</fieldset>
@@ -697,7 +701,7 @@
 
 			<field
 				name="questions_ordering_dir"
-				type="radio"
+				type="list"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_LABEL"
 				default="DESC"
 			>
@@ -867,10 +871,11 @@
 			<field
 				name="questions_introtext_limit"
 				type="number"
-				min="0"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_INTROTEXT_LIMIT_DESC"
 				default="20"
+				min="0"
+				step="1"
 				filter="integer"
 			/>
 
@@ -909,7 +914,7 @@
 
 			<field
 				name="questions_author_name"
-				type="radio"
+				type="list"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_AUTHOR_NAME_LABEL"
 				default="username"
 			>
