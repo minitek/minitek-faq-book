@@ -163,49 +163,6 @@ abstract class RouteHelper
 		return $link;
 	}
 
-	public static function newQuestionRoute($sectionId, $topicId = 0, $language = 0)
-	{
-		if ($topicId)
-		{
-			$link = 'index.php?option=com_faqbookpro&view=myquestion&layout=edit&section='.$sectionId.'&topicid='.$topicId;
-		}
-		else
-		{
-			$link = 'index.php?option=com_faqbookpro&view=myquestion&layout=edit&section='.$sectionId;
-		}
-
-		$needles = array(
-			'myquestion' => (int)$sectionId
-		);
-
-		if ($language && $language != "*" && Multilanguage::isEnabled())
-		{
-			$db = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('a.sef AS sef')
-				->select('a.lang_code AS lang_code')
-				->from('#__languages AS a');
-			$db->setQuery($query);
-			$langs = $db->loadObjectList();
-
-			foreach ($langs as $lang)
-			{
-				if ($language == $lang->lang_code)
-				{
-					$link .= '&lang='.$lang->sef;
-					$needles['language'] = $language;
-				}
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
 	public static function editQuestionRoute($id, $sectionId, $hash = 0, $language = 0)
 	{
 		$link = 'index.php?option=com_faqbookpro&view=myquestion&layout=edit&a_id='.$id.'&section='.$sectionId;
