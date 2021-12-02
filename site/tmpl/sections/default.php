@@ -29,16 +29,6 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 						</li>
 					</ul>
 				</div>
-				<?php
-				if ($this->params->get('profile_link', false) && Factory::getUser()->id) {
-				?><div class="NavTopUL_buttons">
-						<a href="<?php echo Route::_(RouteHelper::getFullProfileRoute(Factory::getUser()->id)); ?>" class="fbTopNavigation_profile btn btn-default">
-							<i class="fas fa-user"></i><?php echo Text::_('COM_FAQBOOKPRO_VIEW_PROFILE'); ?>
-						</a>
-					</div>
-				<?php
-				}
-				?>
 			</div>
 			<div class="clearfix"> </div>
 		</div>

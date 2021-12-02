@@ -163,64 +163,6 @@ abstract class RouteHelper
 		return $link;
 	}
 
-	public static function getFullProfileRoute($userid, $type = false, $tab = false, $language = 0)
-	{
-		$userid = (int)$userid;
-
-		if ($type)
-		{
-			$link = 'index.php?option=com_faqbookpro&view=profile&type='.$type.'&userid='.$userid;
-
-			if ($tab)
-			{
-				$link = 'index.php?option=com_faqbookpro&view=profile&type='.$type.'&tab='.$tab.'&userid='.$userid;
-			}
-		}
-		else
-		{
-			if ($userid)
-			{
-				$link = 'index.php?option=com_faqbookpro&view=profile&userid='.$userid;
-			}
-			else
-			{
-				$link = 'index.php?option=com_faqbookpro&view=profile';
-			}
-		}
-
-		$needles = array(
-			'profile' => 0,
-			'userid' => (int)$userid
-		);
-
-		if ($language && $language != "*" && Multilanguage::isEnabled())
-		{
-			$db = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('a.sef AS sef')
-				->select('a.lang_code AS lang_code')
-				->from('#__languages AS a');
-			$db->setQuery($query);
-			$langs = $db->loadObjectList();
-
-			foreach ($langs as $lang)
-			{
-				if ($language == $lang->lang_code)
-				{
-					$link .= '&lang='.$lang->sef;
-					$needles['language'] = $language;
-				}
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
 	public static function newQuestionRoute($sectionId, $topicId = 0, $language = 0)
 	{
 		if ($topicId)
