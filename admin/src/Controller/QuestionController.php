@@ -233,28 +233,6 @@ class QuestionController extends FormController
 			return false;
 		}
 
-		// See Private check
-		if ($recordId)
-		{
-			$recordAuthor = $model->getQuestion($recordId)->created_by;
-			$recordIsPrivate = $model->getQuestion($recordId)->private;
-
-			if ($recordIsPrivate && !$user->authorise('core.private.see', 'com_faqbookpro.question.' . $recordId) && $user->id != $recordAuthor)
-			{
-				$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_NOT_ALLOWED_TO_SEE_PRIVATE_QUESTIONS'));
-				$this->setMessage($this->getError(), 'error');
-
-				$this->setRedirect(
-					Route::_(
-						'index.php?option=' . $this->option . '&view=' . $this->view_list
-						. $this->getRedirectToListAppend(), false
-					)
-				);
-
-				return false;
-			}
-		}
-
 		// Attempt to check-out the new record for editing and redirect.
 		if ($checkin && !$model->checkout($recordId))
 		{
