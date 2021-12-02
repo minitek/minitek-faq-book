@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 
 if ($this->popular_questions_header) {
@@ -26,10 +25,8 @@ if (count($this->popular_questions))
 		<ul class="fbContent_popQuestions clearfix"><?php
 			foreach ($this->popular_questions as $key => $question)
 			{
-				?><li>
-					<a href="<?php echo Route::_(RouteHelper::getQuestionRoute($question->id, $question->topicid)); ?>">
-						<?php echo $question->title; ?>
-					</a><?php
+				?><li><?php 
+					echo $question->title;		
 
 					if ($this->popular_questions_description && $question->content)
 					{

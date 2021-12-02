@@ -163,11 +163,9 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 														<div class="fb_table_cell_padding"><?php
 															if ($topic->lastpost)
 															{
-																?><div class="fb_forum_question_title">
-																	<a href="<?php echo Route::_(RouteHelper::getQuestionRoute($topic->lastpost->id, $topic->lastpost->topicid)); ?>"><?php
-																		echo $topic->lastpost->title;
-																	?></a>
-																</div><?php
+																?><div class="fb_forum_question_title"><?php
+																	echo $topic->lastpost->title;
+																?></div><?php
 																if ($this->params->get('sections_forum_question_date', true) || $this->params->get('sections_forum_question_author', true))
 																{
 																	?><div class="fb_forum_question_meta"><?php

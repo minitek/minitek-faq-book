@@ -163,55 +163,6 @@ abstract class RouteHelper
 		return $link;
 	}
 
-	public static function getQuestionRoute($id, $topicid = 0, $tab = false, $hash = 0, $language = 0)
-	{
-		if ($tab && $tab != '*') // '*' is used to prevent empty tab in plugin search results
-		{
-			$link = 'index.php?option=com_faqbookpro&view=question&id='. $id .'&tab=' . $tab;
-		}
-		else
-		{
-			$link = 'index.php?option=com_faqbookpro&view=question&id='. $id;
-		}
-
-		if ($hash)
-		{
-			$link .= '&hash='.$hash;
-		}
-
-		$needles = array(
-			'question' => (int)$id,
-			'tab' => $tab
-		);
-
-		if ($language && $language != "*" && Multilanguage::isEnabled())
-		{
-			$db = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('a.sef AS sef')
-				->select('a.lang_code AS lang_code')
-				->from('#__languages AS a');
-			$db->setQuery($query);
-			$langs = $db->loadObjectList();
-
-			foreach ($langs as $lang)
-			{
-				if ($language == $lang->lang_code)
-				{
-					$link .= '&lang='.$lang->sef;
-					$needles['language'] = $language;
-				}
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
 	public static function getFullProfileRoute($userid, $type = false, $tab = false, $language = 0)
 	{
 		$userid = (int)$userid;
