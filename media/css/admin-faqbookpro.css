@@ -166,6 +166,17 @@ label[id^="jform_attribs_separator_"] {
   margin: 0;
 }
 
+/* Questions */
+
+body.com_faqbookpro.view-questions .itemList tr.pinned td,
+body.com_faqbookpro.view-questions .itemList tr.pinned th {
+  background: #fff3fe;
+}
+
+body.com_faqbookpro.view-questions .itemList th .fa-thumbtack {
+  color: #bb7bb4;
+}
+
 /* Question */
 
 .question-title .badge {
