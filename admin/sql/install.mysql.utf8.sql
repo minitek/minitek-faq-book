@@ -202,3 +202,18 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_votes` (
  `creation_date` datetime NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_answer_templates` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+ `title` varchar(255) NOT NULL DEFAULT '',
+ `content` mediumtext NOT NULL,
+ `state` tinyint(3) NOT NULL DEFAULT '0',
+ `access` int(10) unsigned NOT NULL DEFAULT '0',
+ `language` char(7) NOT NULL,
+ `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+ `created_by` int(10) unsigned NOT NULL DEFAULT '0',
+ `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
+ `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

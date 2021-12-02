@@ -72,6 +72,16 @@ $localVersion = FAQBookProHelper::localVersion();
 
 				<div class="thumbnail card">
 					<a href="#" class="disabled" onclick="return: false;">
+						<i class="icon icon-comment"></i>
+						<span class="thumbnail-title">
+							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWER_TEMPLATES'); ?>
+							<span class="badge bg-danger">Pro</span>
+						</span>
+					</a>
+				</div>
+
+				<div class="thumbnail card">
+					<a href="#" class="disabled" onclick="return: false;">
 						<i class="icon icon-envelope"></i>
 						<span class="thumbnail-title">
 							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_EMAIL_TEMPLATES'); ?>
