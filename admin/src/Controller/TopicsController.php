@@ -64,14 +64,14 @@ class TopicsController extends AdminController
 		if ($model->rebuild())
 		{
 			// Rebuild succeeded.
-			$this->setMessage(\JText::_('COM_FAQBOOKPRO_REBUILD_SUCCESS'));
+			$this->setMessage(\JText::_('COM_FAQBOOKPRO_SUCCESS_REBUILD_TOPICS'));
 
 			return true;
 		}
 		else
 		{
 			// Rebuild failed.
-			$this->setMessage(\JText::_('COM_FAQBOOKPRO_REBUILD_FAILURE'));
+			$this->setMessage(\JText::_('COM_FAQBOOKPRO_ERROR_REBUILD_TOPICS'));
 
 			return false;
 		}
@@ -95,7 +95,7 @@ class TopicsController extends AdminController
 		if ($root_topic)
 		{
 			$this->setRedirect(\JRoute::_('index.php?option=com_faqbookpro&view=topics', false));
-			$this->setMessage(\JText::_('COM_FAQBOOKPRO_ROOT_TOPIC_EXISTS'));
+			$this->setMessage(\JText::_('COM_FAQBOOKPRO_WARNING_ROOT_TOPIC_EXISTS'));
 		}
 		else
 		{
@@ -111,7 +111,7 @@ class TopicsController extends AdminController
 			$db->execute();
 
 			$this->setRedirect(\JRoute::_('index.php?option=com_faqbookpro&view=topics', false));
-			$this->setMessage(\JText::_('COM_FAQBOOKPRO_ROOT_TOPIC_CREATED'));
+			$this->setMessage(\JText::_('COM_FAQBOOKPRO_SUCCESS_ROOT_TOPIC_CREATED'));
 		}
 	}
 
