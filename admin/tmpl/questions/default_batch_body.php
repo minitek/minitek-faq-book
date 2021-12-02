@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -13,16 +13,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 
-$published = $this->state->get('filter.published');
+$published = (int) $this->state->get('filter.published');
 ?>
 
-<div class="container">
+<div class="p-3">
 	<div class="row">
-		<div class="form-group col-md-6">
-			<div class="controls">
-				<?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
-			</div>
-		</div>
 		<div class="form-group col-md-6">
 			<div class="controls">
 				<?php echo LayoutHelper::render('joomla.html.batch.access', []); ?>
@@ -42,7 +37,7 @@ $published = $this->state->get('filter.published');
 
 					<label id="batch-choose-action-lbl" for="batch-choose-action"><?php echo JText::_('COM_FAQBOOKPRO_BATCH_MENU_LABEL'); ?></label>
 					<div id="batch-choose-action" class="control-group">
-						<select name="batch[topic_id]" class="custom-select" id="batch-topic-id">
+						<select name="batch[topic_id]" class="form-select" id="batch-topic-id">
 							<option value=""><?php echo JText::_('JSELECT'); ?></option>
 							<?php foreach ($this->topics as $topic) { ?>
 								<option value="<?php echo $topic->value; ?>"><?php echo $topic->text; ?></option>
@@ -52,7 +47,7 @@ $published = $this->state->get('filter.published');
 
 					<div id="batch-move-copy" class="control-group radio">
 						<?php echo HTMLHelper::_('select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm'); ?>
-					</div><hr />
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>
