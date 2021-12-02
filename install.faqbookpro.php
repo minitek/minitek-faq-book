@@ -62,6 +62,46 @@ class com_faqbookproInstallerScript
 			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.1.1', '<')) {
 				self::update411($parent);
 			}
+
+			// Run update script if old version is older than 4.1.2
+			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.1.2', '<')) {
+				self::update412($parent);
+			}
+		}
+	}
+
+	/*
+	 * $parent is the class calling this method.
+	 * update runs if old version is < 4.1.2
+	 */
+	function update412($parent)
+	{
+		$db = Factory::getDbo();
+
+		// Create table __minitek_faqbook_answer_templates
+		$query = $db->getQuery(true);
+		$query = " CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_answer_templates` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+			`title` varchar(255) NOT NULL DEFAULT '',
+			`content` mediumtext NOT NULL,
+			`state` tinyint(3) NOT NULL DEFAULT '0',
+			`access` int(10) unsigned NOT NULL DEFAULT '0',
+			`language` char(7) NOT NULL,
+			`created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			`created_by` int(10) unsigned NOT NULL DEFAULT '0',
+			`checked_out` int(10) unsigned NOT NULL DEFAULT '0',
+			`checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+		";
+
+		$db->setQuery($query);
+		$result = $db->execute();
+
+		if (!$result) {
+			throw new GenericDataException('Error 412-1: Could not create table __minitek_faqbook_answer_templates. If the problem persists the update cannot be completed.', 500);
+			return false;
 		}
 	}
 

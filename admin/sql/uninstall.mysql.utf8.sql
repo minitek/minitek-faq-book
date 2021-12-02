@@ -8,3 +8,4 @@ DROP TABLE IF EXISTS `#__minitek_faqbook_customfields`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_customfields_topics`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_question_types`;
 DROP TABLE IF EXISTS `#__minitek_faqbook_attachments`;
+DROP TABLE IF EXISTS `#__minitek_faqbook_answer_templates`;
