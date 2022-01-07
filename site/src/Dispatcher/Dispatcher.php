@@ -42,6 +42,10 @@ class Dispatcher extends ComponentDispatcher
 		if ($params->get('fix_relative', false))
 			$document->base = \JURI::root();
 
+		// Load Bootstrap css
+		if ($params->get('load_bootstrap', 0))
+			HTMLHelper::_('bootstrap.loadCss');
+
 		// Add main stylesheet
 		$wa->useStyle('com_faqbookpro.faqbookpro');
 
