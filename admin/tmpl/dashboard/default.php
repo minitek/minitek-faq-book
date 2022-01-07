@@ -19,134 +19,170 @@ $localVersion = FAQBookProHelper::localVersion();
 ?>
 
 <div class="minitek-dashboard mt-3">
-	<div class="row">
-
-		<div class="col-sm-12 col-md-8">
-			<div class="media mt-0">
-				<div class="float-start">
-					<img class="media-object" src="<?php echo URI::root(true) . '/media/com_faqbookpro/css/logo.png'; ?>">
-				</div>
-				<div class="media-body">
-					<h2 class="media-heading"><?php echo Text::_('COM_FAQBOOKPRO'); ?> <span class="badge bg-success">Free</span></h2>
-					<?php echo Text::_('COM_FAQBOOKPRO_DESC'); ?>
+	<div class="row g-3">
+		<div class="col-12 col-lg-8">
+			<div class="brand card mb-3 p-3">
+				<div class="d-flex">
+					<div class="me-4">
+						<img src="<?php echo URI::root(true) . '/media/com_faqbookpro/css/logo.png'; ?>">
+					</div>
+					<div class="py-3">
+						<h2 class="mb-3"><?php echo Text::_('COM_FAQBOOKPRO'); ?> <span class="badge bg-success">Free</span></h2>
+						<p class="m-0"><?php echo Text::_('COM_FAQBOOKPRO_DESC'); ?></p>
+					</div>
 				</div>
 			</div>
 
-			<div class="dashboard-thumbnails">
-				<div class="thumbnail card">
-					<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=sections'); ?>">
-						<i class="icon icon-list-2"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_SECTIONS'); ?>
-						</span>
-					</a>
+			<div class="dashboard-cards row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-3 text-center">
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=sections'); ?>">
+								<div class="mt-1 mb-3"><i class="icon icon-list-2"></i></div>
+								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_SECTIONS'); ?></div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=topics'); ?>">
-						<i class="icon icon-folder"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_TOPICS'); ?>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=topics'); ?>">
+								<div class="mt-1 mb-3"><i class="icon icon-folder"></i></div>
+								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_TOPICS'); ?></div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions'); ?>">
-						<i class="icon icon-question-circle"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTIONS'); ?>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions'); ?>">
+								<div class="mt-1 mb-3"><i class="icon icon-question-circle"></i></div>
+								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTIONS'); ?></div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-comment"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWERS'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-comment"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWERS'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-comment"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWER_TEMPLATES'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-comment"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWER_TEMPLATES'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-envelope"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_EMAIL_TEMPLATES'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-envelope"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_EMAIL_TEMPLATES'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-edit"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CUSTOM_FIELDS'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-edit"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CUSTOM_FIELDS'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-cubes"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTION_TYPES'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-cubes"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTION_TYPES'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="#" class="disabled" onclick="return: false;">
-						<i class="icon icon-attachment"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ATTACHMENTS'); ?>
-							<span class="badge bg-danger">Pro</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="#" class="disabled" onclick="return: false;">
+								<div class="mt-1 mb-3"><i class="icon icon-attachment"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ATTACHMENTS'); ?>
+									<span class="badge bg-danger">Pro</span>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_faqbookpro&path=&return=' . base64_encode(URI::getInstance()->toString())); ?>">
-						<i class="icon icon-cog"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CONFIGURATION'); ?>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_faqbookpro&path=&return=' . base64_encode(URI::getInstance()->toString())); ?>">
+								<div class="mt-1 mb-3"><i class="icon icon-cog"></i></div>
+								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CONFIGURATION'); ?></div>
+							</a>
+						</div>
+					</div>
 				</div>
 
-				<div class="thumbnail card">
-					<a href="https://extensions.joomla.org/extensions/extension/directory-a-documentation/faq/minitek-faq-book/" target="_blank">
-						<i class="icon icon-star" style="color: #ffcb52;"></i>
-						<span class="thumbnail-title">
-							<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_LIKE_THIS_EXTENSION'); ?><br>
-							<span class="small">
-								<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_LEAVE_A_REVIEW_ON_JED'); ?>
-							</span>
-						</span>
-					</a>
+				<div class="col">
+					<div class="card border h-100 py-2">
+						<div class="card-body">
+							<a href="https://extensions.joomla.org/extensions/extension/directory-a-documentation/faq/minitek-faq-book/" target="_blank">
+								<div class="mt-1 mb-3"><i class="icon icon-star" style="color: #ffcb52;"></i></div>
+								<div>
+									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_LIKE_THIS_EXTENSION'); ?><br>
+									<div class="small">
+										<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_LEAVE_A_REVIEW_ON_JED'); ?>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="col-sm-12 col-md-4">
-
+		<div class="col-12 col-lg-4">
 			<div class="dashboard-module">
-				<div class="card mb-3">
+				<div class="card border mb-3 overflow-hidden">
 					<div class="card-header">
 						<h4 class="m-0"><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_SIDEBAR_ABOUT'); ?></h4>
 					</div>
@@ -179,7 +215,7 @@ $localVersion = FAQBookProHelper::localVersion();
 			</div>
 
 			<div class="dashboard-module">
-				<div class="card mb-3">
+				<div class="card border mb-3 overflow-hidden">
 					<div class="card-header">
 						<h4 class="m-0"><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_SIDEBAR_QUICK_LINKS'); ?></h4>
 					</div>
@@ -225,8 +261,6 @@ $localVersion = FAQBookProHelper::localVersion();
 					</div>
 				</div>
 			</div>
-
 		</div>
-
 	</div>
 </div>
