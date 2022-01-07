@@ -62,7 +62,7 @@ class FAQBookProComponent extends MVCComponent implements BootableExtensionInter
 	{
 		$app = Factory::getApplication();
 
-		if ($app->isClient('administrator'))
+		if ($app->isClient('administrator') && $app->input->get('option') == 'com_faqbookpro')
 		{
 			$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 			$wa->useStyle('com_faqbookpro.admin-faqbookpro')
