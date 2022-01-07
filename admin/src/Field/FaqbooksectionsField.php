@@ -11,6 +11,8 @@ namespace Joomla\Component\FAQBookPro\Administrator\Field;
 
 defined('_JEXEC') or die;
 
+use Joomla\Utilities\ArrayHelper;
+
 \JFormHelper::loadFieldClass('list');
 
 class FAQBookSectionsField extends \JFormFieldList
@@ -56,7 +58,7 @@ class FAQBookSectionsField extends \JFormFieldList
 
 			if ($sections = $params->get('filter_sections', []))
 			{
-				\JArrayHelper::toInteger($sections);
+				ArrayHelper::toInteger($sections);
 				$sections = implode(',', $sections);
 
 				$query->where('s.id IN ('.$sections.')');
