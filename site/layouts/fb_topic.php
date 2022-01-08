@@ -116,7 +116,11 @@ $canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->topic->id);
 					}
 						?><span class="fbContent_paging_text"><?php echo Text::_('COM_FAQBOOKPRO_LOAD_MORE'); ?></span>
 						<span class="fbContent_noresults"><?php echo Text::_('COM_FAQBOOKPRO_NO_MORE_ITEMS'); ?></span>
-						<span class="fbContent_paging_loader"> </span>
+						<div class="fbContent_paging_loader">
+							<div class="spinner-border spinner-border-sm" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						</div>
 					</a>
 				</div><?php
 			}

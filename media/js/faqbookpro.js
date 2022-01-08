@@ -126,7 +126,8 @@
         if (nodes.fbLeftNavigation_core)
           nodes.fbLeftNavigation_core.classList.remove("fb-hidden");
 
-        if (nodes.show_menu_btn) nodes.show_menu_btn.classList.add("fb-active");
+        if (nodes.show_menu_btn)
+          nodes.show_menu_btn.classList.add("active", "text-white");
 
         // Remove all li items after home in topnav
         if (nodes.fbTopNavigation_root) {
@@ -294,7 +295,7 @@
 
           if (query("#" + this_liid).classList.contains("NavLeftUL_endpoint")) {
             if (nodes.show_menu_btn)
-              nodes.show_menu_btn.classList.remove("fb-active");
+              nodes.show_menu_btn.classList.remove("active", "text-white");
 
             // Hide left navigation
             if (nodes.fbLeftNavigation_core)
@@ -331,7 +332,7 @@
     nodes.fbTopNavigation_wrap = query(".fbTopNavigation_wrap");
     nodes.fbTopNavigation_root = query(".fbTopNavigation_root");
     nodes.top_liid_home = query("#top_liid_home");
-    nodes.show_menu_btn = query(".show_menu a");
+    nodes.show_menu_btn = query("a.show_menu");
     nodes.fbLeftNavigation_core = query(".fbLeftNavigation_core");
     nodes.fbLeftNavigation_wrap = query(".fbLeftNavigation_wrap");
     nodes.NavLeftUL_parents = queryAll(".NavLeftUL_parent");
@@ -384,16 +385,9 @@
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
   }
 
-  function createElementFromHTML(htmlString) {
-    var div = document.createElement("div");
-    div.innerHTML = htmlString.trim();
-
-    return div.firstChild;
-  }
-
+  // Fix leftnav height
   window.addEventListener("load", function () {
-    // Fix leftnav height
-    if (leftnav && page_view == "topic") {
+    if (leftnav && (page_view == "topic" || page_view == "question")) {
       // Show left navigation before calculating height
       if (nodes.fbLeftNavigation_core)
         nodes.fbLeftNavigation_core.classList.remove("fb-hidden");
@@ -416,7 +410,12 @@
 
       if (nodes.show_menu_btn)
         nodes.show_menu_btn.classList.remove("fb-active");
-    } else if (page_view == "section") {
+    } else if (
+      page_view == "section" ||
+      page_view == "profile" ||
+      page_view == "myquestion" ||
+      page_view == "myanswer"
+    ) {
       // Fix left navigation topics height
       if (nodes.fbLeftNavigation_wrap)
         nodes.fbLeftNavigation_wrap.style.height = "auto";
@@ -426,8 +425,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     getStaticNodes();
 
-    // Topic view
-    if (page_view == "topic") {
+    // Topic / Question view
+    if (page_view == "topic" || page_view == "question") {
       var liid_topicId = query("#liid" + topicId);
 
       // Active left navigation li
@@ -574,7 +573,8 @@
       nodes.show_menu_btn.addEventListener("click", function (e) {
         e.preventDefault();
 
-        this.classList.toggle("fb-active");
+        this.classList.toggle("active");
+        this.classList.toggle("text-white");
 
         if (nodes.fbLeftNavigation_core)
           nodes.fbLeftNavigation_core.classList.toggle("fb-hidden");
@@ -599,7 +599,7 @@
               var endpoint_liid = _this.closest("li").id;
               var endpoint_id = endpoint_liid.split("id").pop(1);
               var href = _this.href;
-              var topic_title = _this.textContent;
+              var topic_title = _this.querySelector(".topicTitle").textContent;
 
               // Remove browse topics li from top navigation
               if (query(".NavTopUL_topics")) query(".NavTopUL_topics").remove();
@@ -647,7 +647,7 @@
 
                     // Add topic to breadcrumbs
                     var this_title = query("#" + this_liid).querySelector(
-                      "a"
+                      ".topicTitle"
                     ).textContent;
                     nodes.fbTopNavigation_root.innerHTML +=
                       '<li id="top_' +
@@ -668,7 +668,7 @@
                 };
               } else {
                 var this_title = query("#" + this_liid).querySelector(
-                  "a"
+                  ".topicTitle"
                 ).textContent;
 
                 // Remove lastchild class from section li
@@ -705,8 +705,7 @@
             // Back link
             if (e.target && e.target.closest(".NavLeftUL_backItem")) {
               var _this = e.target;
-              var this_backliid = _this.parentNode.id;
-              let endpoint_id = this_backliid.split("id").pop(1);
+              var endpoint_id = _this.parentNode.getAttribute("data-parent");
               let this_liid = "liid" + endpoint_id;
               var href = _this.href;
               let topic_title = _this.getAttribute("data-title");
@@ -731,9 +730,7 @@
 
               animation.onfinish = function () {
                 wrap.style.left = new_left + "%";
-                query("#" + this_backliid)
-                  .closest("ul")
-                  .classList.remove("NavLeftUL_expanded");
+                _this.closest("ul").classList.remove("NavLeftUL_expanded");
 
                 if (nodes.fbTopNavigation_root) {
                   // Remove last endpoint
@@ -804,6 +801,14 @@
           )
             return;
 
+          // If in question/answer form, treat the section link as a normal link
+          if (page_view == "myquestion" || page_view == "myanswer") {
+            if (_this.parentNode.id == "top_liid_home")
+              window.location.href = _this.href;
+
+            return;
+          }
+
           // Topic links
           if (
             _this.parentNode.classList.contains("NavTopUL_parent") &&
@@ -827,9 +832,10 @@
 
             _this.parentNode.classList.add("NavTopUL_lastChild");
 
-            // Fix left navigation topics height
             var li_id = _this.parentNode.id.split("_").pop(0);
             var leftnav_li = query("#" + li_id);
+
+            // Fix left navigation topics height
             var child_ul = leftnav_li.querySelector("ul");
             var eheight = parseFloat(child_ul.clientHeight);
 
