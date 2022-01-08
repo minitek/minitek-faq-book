@@ -2,21 +2,23 @@
 
 #fbExtended {
   padding: 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-#fbExtended .clearfix::after {
-  clear: both;
+#fbExtended > * {
+  flex-shrink: 0;
 }
 
-#fbExtended .clearfix::before,
-#fbExtended .clearfix::after {
-  display: table;
-  content: "";
-  line-height: 0;
+/* Main Content */
+
+.fbContent_core {
+  flex: 1 0 0%;
+  padding-top: 20px;
 }
 
-#fbExtended a:focus {
-  outline: none;
+.fbContent_root a:not([class]) {
+  text-decoration: none;
 }
 
 /* Top Navigation */
@@ -94,45 +96,6 @@ a.NavTopUL_link .fas {
   float: right;
 }
 
-/* Menu Toggle button */
-
-.NavTopUL_buttons .show_menu {
-  margin: 0;
-  display: none;
-  float: right;
-  text-align: center;
-}
-
-.NavTopUL_buttons .show_menu a,
-.NavTopUL_buttons .show_menu a:focus {
-  margin: 0 0 0 10px;
-  line-height: 20px;
-  padding: 6px 10px;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
-  color: #333;
-}
-
-.NavTopUL_buttons .show_menu a:hover,
-.NavTopUL_buttons .show_menu a.fb-active {
-  border: 1px solid #4cae4c;
-  background: #5cb85c;
-  color: #fff;
-}
-
-.NavTopUL_buttons .show_menu a:active {
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1) inset;
-  background: #5cb85c;
-  color: #fff;
-}
-
-.NavTopUL_buttons .show_menu a i {
-  font-size: 14px;
-  line-height: 20px;
-  vertical-align: top;
-}
-
 /* Left Navigation */
 
 .leftnav-hidden {
@@ -140,17 +103,15 @@ a.NavTopUL_link .fas {
 }
 
 .fbLeftNavigation_core {
-  float: left;
-  margin-right: 30px;
-  position: relative;
-  width: 260px;
+  width: 280px !important;
   overflow: hidden;
   transition: width 0.3s ease 0s;
   border-right: 1px solid #e5e5e5;
+  margin-right: 30px;
 }
 
 .fbLeftNavigation_core.fb-minimized {
-  width: 34px;
+  width: 34px !important;
 }
 
 .fbLeftNavigation_core.fb-minimized #NavLeftUL {
@@ -200,53 +161,16 @@ a.NavTopUL_link .fas {
   border: 0;
 }
 
-.fbLeftNavigation_user li span.username {
-  font-weight: bold;
-  font-size: 13px;
-  display: block;
-  padding: 0 0 3px;
-}
-
-.fbLeftNavigation_user .NavLeftUL_anchor .fb-btn {
-  float: right;
-  padding: 1px 5px;
-  font-size: 12px;
-  line-height: 1.5;
-  border-radius: 3px;
-  margin: 0;
-  position: relative;
-  top: -3px;
-  font-weight: normal;
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #333;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:hover,
-.fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:focus {
-  outline: none;
-  text-decoration: none;
-  background: #e6e6e6;
-  border: 1px solid #adadad;
-}
-
-.fbLeftNavigation_user .NavLeftUL_anchor .fb-btn:active {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-
 .fbLeftNavigation_toggle {
   font-size: 12px;
   overflow: hidden;
   position: relative;
   line-height: 1.4;
-  float: right;
-  width: 34px;
 }
 
 .fbLeftNavigation_toggle ul {
-  position: relative;
+  float: right;
+  width: 34px;
   margin: 0 !important;
   padding: 0 !important;
   list-style-type: none;
@@ -260,17 +184,15 @@ a.NavTopUL_link .fas {
 
 .fbLeftNavigation_topics,
 .fbLeftNavigation_user {
-  font-size: 12px;
-  overflow: hidden;
   position: relative;
-  width: 260px;
+  width: 280px;
   line-height: 1.4;
 }
 
 .fbLeftNavigation_topics ul,
 .fbLeftNavigation_user ul {
   position: relative;
-  width: 260px;
+  width: 100%;
   margin: 0 !important;
   padding: 0 !important;
   list-style-type: none;
@@ -279,7 +201,7 @@ a.NavTopUL_link .fas {
 .fbLeftNavigation_topics li,
 .fbLeftNavigation_user li {
   list-style: none outside none;
-  width: 260px;
+  width: 100%;
   padding: 0;
   background: none !important;
 }
@@ -309,14 +231,13 @@ ul.NavLeftUL_expanded {
 
 .fbLeftNavigation_toggle a.NavLeftUL_toggle i {
   font-size: 20px;
-  vertical-align: top;
+  vertical-align: middle;
   line-height: 16px;
 }
 
 a.NavLeftUL_anchor,
 span.NavLeftUL_anchor,
 a.NavLeftUL_toggle {
-  box-sizing: border-box;
   border-top: 1px solid #e5e5e5;
   display: block;
   outline: 0 none;
@@ -326,18 +247,12 @@ a.NavLeftUL_toggle {
   text-decoration: none;
   outline: none;
   width: 100%;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
 span.NavLeftUL_anchor {
-  font-weight: 600;
-  color: #656565;
   border-top: 0;
-}
-
-span.NavLeftUL_anchor small {
-  white-space: nowrap;
 }
 
 span.NavLeftUL_title {
@@ -350,29 +265,15 @@ span.NavLeftUL_title i {
   width: 18px;
 }
 
-span.NavLeftUL_title .fb-link {
-  float: right;
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 16px;
-}
-
-span.NavLeftUL_title .fb-link i {
-  opacity: 1;
-  margin: 0 3px 0 0;
-  width: auto;
-}
-
 a.NavLeftUL_anchor:hover,
 a.NavLeftUL_anchor:focus {
   background-color: #f0f2f7;
-  position: relative;
   text-decoration: none;
   outline: none;
 }
 
 a.NavLeftUL_anchor i {
-  font-size: 13px;
+  font-size: 14px;
   width: 18px;
   text-align: center;
   margin: 0 8px 0 0;
@@ -381,7 +282,7 @@ a.NavLeftUL_anchor i {
 .NavLeftUL_navIcon.fas {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 11px;
   height: 15px;
   width: 10px;
   background: none;
@@ -418,6 +319,26 @@ a.NavLeftUL_anchor i {
   border-top: 1px solid #3b5998;
   color: #fff;
   text-shadow: none;
+}
+
+/* Buttons */
+
+.btn.btn-mfb {
+  margin: 0 0 0 10px;
+  line-height: 20px;
+  padding: 6px 10px;
+  font-size: 0.875rem;
+}
+
+.NavTopUL_buttons .show_menu {
+  display: none;
+  text-align: center;
+}
+
+.NavTopUL_buttons a.show_menu i {
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: top;
 }
 
 /* Loaders */
@@ -516,23 +437,6 @@ a.NavLeftUL_anchor i {
   height: 8px;
 }
 
-/* Main */
-
-.fbContent_core {
-  overflow: hidden;
-  padding-top: 20px;
-  position: relative;
-}
-
-.fbContent_root {
-  padding-top: 0;
-  margin: 0;
-}
-
-.fbContent_root a:not([class]) {
-  text-decoration: none;
-}
-
 /* Headers */
 
 h2.fbContent_title {
@@ -548,25 +452,8 @@ h2.fbContent_title a:focus {
   background: none;
 }
 
-h2.fbContent_title .btn {
-  font-size: 13px;
-  font-weight: normal;
-}
-
 h2.fbContent_title small {
   white-space: nowrap;
-}
-
-/* Subheaders */
-
-.fbContent_root .topic_subheader,
-.fbContent_root .myanswers_subheader,
-.fbContent_root .answers_subheader {
-  margin: 20px 0 0;
-  border-bottom: 1px solid #e5e5e5;
-  height: 37px;
-  clear: both;
-  box-sizing: border-box;
 }
 
 /* State headers */
@@ -574,7 +461,9 @@ h2.fbContent_title small {
 .fbContent_core .unpublished-header,
 .fbContent_core .trashed-header,
 .fbContent_core .archived-header,
-.fbContent_core .scheduled-header {
+.fbContent_core .private-header,
+.fbContent_core .scheduled-header,
+.fbContent_core .selected-header {
   text-transform: uppercase;
   margin: 0 5px 10px 0;
   padding: 5px 10px;
@@ -585,6 +474,7 @@ h2.fbContent_title small {
   border-radius: 4px;
 }
 
+.fbContent_core .private-header,
 .fbContent_core .scheduled-header {
   cursor: help;
 }
@@ -607,6 +497,17 @@ h2.fbContent_title small {
   border: 1px solid #ddd;
 }
 
+.fbContent_core .private-header {
+  color: #b94a48;
+  background: #f2dede;
+  border: 1px solid #ebccd1;
+}
+
+.fbContent_core .private-header small {
+  font-size: 10px;
+  color: #d88f8d;
+}
+
 .fbContent_core .scheduled-header {
   color: #468847;
   background: #dff0d8;
@@ -616,6 +517,12 @@ h2.fbContent_title small {
 .fbContent_core .scheduled-header small {
   font-size: 10px;
   color: #468847;
+}
+
+.fbContent_core .selected-header {
+  color: #468847;
+  background: #dff0d8;
+  border: 1px solid #d6e9c6;
 }
 
 /* Browse Topics (Topics tree) */
@@ -631,7 +538,6 @@ h2.fbContent_title small {
   vertical-align: top;
   margin: 0;
   padding: 0 10px;
-  box-sizing: border-box;
 }
 
 .fbContent_topics > li > a {
@@ -720,24 +626,17 @@ h2.fbContent_title small {
   text-align: center;
 }
 
-.fbContent_qList {
-  padding: 0;
-  margin: 0;
-}
-
 .fbContent_qListItem {
   padding: 10px 10px 10px 7px;
-  margin: 0;
-  border-color: transparent transparent #e5e5e5 transparent;
+  border-color: #e5e5e5 transparent transparent transparent;
   border-style: solid;
-  border-width: 0 0 1px 3px;
-  background: none;
+  border-width: 1px 0 0 3px;
 }
 
 .fbContent_qListItem.qListItem_pinned {
   border-left: 3px solid #e4c1e0;
-  border-bottom: 1px solid #f7ddf4;
-  margin: 0 0 1px;
+  border-top: 1px solid #f7ddf4;
+  margin: 1px 0 0;
 }
 
 .fbContent_qListItemInner {
@@ -761,7 +660,6 @@ h2.fbContent_title small {
 
 .qListItem_preview h3 .label {
   font-size: 11px;
-  vertical-align: top;
   display: inline-block;
   margin: 0 0 0 5px;
   color: #fff;
@@ -794,6 +692,18 @@ h3.qListItem_header a:focus {
   color: #bb7bb4;
 }
 
+.fas.qListItem_resolved {
+  color: #5cb85c;
+}
+
+.fas.qListItem_feat_star {
+  color: #ffa500;
+}
+
+.fas.qListItem_locked_icon {
+  color: #d9534f;
+}
+
 .qListItem_link {
   line-height: 23px;
   font-size: 16px;
@@ -811,10 +721,7 @@ h3.qListItem_header a:focus {
 }
 
 .qListItem_info > span:after {
-  content: "\00b7";
-  font-size: 26px;
-  line-height: 16px;
-  vertical-align: top;
+  content: "\2022";
   padding: 0 4px;
 }
 
@@ -950,6 +857,19 @@ h3.qListItem_header a:focus {
   text-decoration: none;
 }
 
+.fbItem_voting {
+  float: left;
+}
+
+.fbItem_voting .voting-text {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 30px;
+  font-size: 11px;
+  color: #777;
+  padding: 0 8px;
+}
+
 /* Ajax pagination */
 
 .fbContent_paging {
@@ -1005,101 +925,9 @@ a.fbContent_paging_button:active {
   height: 24px;
 }
 
-/* Popular topics */
+/* Popular topics/questions */
 
-.fbContent_grid {
-  width: 100%;
-  margin-bottom: 30px;
-  margin-left: 0 !important;
-  padding: 0;
-  list-style: none !important;
-}
-
-.fbContent_gridItem {
-  float: left;
-  margin: 0 0 20px;
-}
-
-.fbContent_gridItem.onecolgrid {
-  margin: 0 0 10px;
-  padding: 0 0 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.onecolgrid .fbContent_gridItemContainer {
-  text-align: left;
-}
-
-.onecolgrid .fbContent_gridItemContainer img {
-  float: left;
-  margin: 0;
-}
-
-.onecolgrid .fbContent_gridItemContainer .pop-item-desc {
-  text-align: left;
-}
-
-.fbContent_gridItemContainer .pop-item-desc {
-  text-align: justify;
-}
-
-.fbContent_gridItemContainer {
-  margin: 0 10px;
-  padding: 0;
-  text-align: center;
-  opacity: 0.85;
-}
-
-.fbContent_gridItemContainer:hover {
-  opacity: 1;
-}
-
-.fbContent_gridItemContainer h4 {
-  margin: 0;
-  padding: 0;
-}
-
-.fbContent_gridItemContainer h4 a {
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: normal;
-  background: none;
-  display: inline-block;
-  width: 100%;
-  padding: 15px 0;
-}
-
-.fbContent_gridItemContainer h4 a:hover,
-.fbContent_gridItemContainer h4 a:focus {
-  text-decoration: none;
-  background: none;
-}
-
-.fbContent_gridItemContainer .pop-item-img {
-  margin: 0;
-  padding: 4px;
-  border: 1px solid #e5e5e5;
-  background: none !important;
-  display: inline-block;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.fbContent_gridItemContainer .pop-item-img:hover,
-.fbContent_gridItemContainer .pop-item-img:focus {
-  background: none !important;
-}
-
-.fbContent_gridItemContainer img {
-  margin: 0;
-  max-width: 100%;
-  width: 100%;
-  float: left;
-}
-
-/* Popular questions */
-
-.fbContent_popQuestions {
+.fbContent_popItems {
   width: 100%;
   margin-bottom: 30px;
   margin-left: 0;
@@ -1107,47 +935,25 @@ a.fbContent_paging_button:active {
   list-style-type: none;
 }
 
-.fbContent_popQuestions li {
+.fbContent_popItems li {
   margin: 0;
   padding: 0;
 }
 
-.fbContent_popQuestions li + li {
+.fbContent_popItems li + li {
   border-top: 1px solid #eee;
 }
 
-.fbContent_popQuestions li a {
+.fbContent_popItems li h5 {
   margin: 0;
-  padding: 8px 0;
-  display: inline-block;
-  font-size: 14px;
+  padding: 10px 0;
+  font-size: 1rem;
 }
 
-/* Alert boxes */
-
-#myquestions_public_msg {
-  padding: 15px;
-}
-
-#myquestions_public_msg .control-group {
-  margin: 0 0 15px;
-}
-
-.myquestion_private_selector .control-label .private-locked {
-  display: inline-block;
-  padding: 2px 5px;
-  font-size: 11px;
-  background-color: #fbecec;
-  border: 1px solid #ebccd1;
-  color: #b94a48;
-  border-radius: 4px;
-  margin: 0 0 0 10px;
-  font-weight: normal;
-  line-height: 12px;
-}
-
-.myquestions_public_msg {
-  margin: 0 0 20px;
+.fbContent_popItems a,
+.fbContent_popItems a:hover,
+.fbContent_popItems a:focus {
+  text-decoration: none;
 }
 
 /* Sections */
@@ -1300,10 +1106,7 @@ h3.fb_forum_topic_title a:focus {
 }
 
 .fb_forum_question_meta > span:after {
-  content: "\00b7";
-  font-size: 26px;
-  line-height: 16px;
-  vertical-align: middle;
+  content: "\2022";
   padding: 0 4px;
 }
 
@@ -1313,53 +1116,36 @@ h3.fb_forum_topic_title a:focus {
 
 /* Columns layout (sections) */
 
-.fb_columns {
-  margin: 0 -10px;
-  padding: 0;
-}
-
-.fb_column {
-  float: left;
-  margin: 0 0 20px;
-  text-align: left;
-}
-
 .fb_column small {
   color: #999;
 }
 
-.fb_column_inner {
-  margin: 0 10px;
-  padding: 15px;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
-}
-
-.fb_column_inner .fb_column_image {
+.fb_column .fb_column_image {
   display: block;
   margin: 0 0 15px;
 }
 
-.fb_column_inner img {
+.fb_column img {
   max-width: 100%;
 }
 
-.fb_column_inner small {
+.fb_column small {
   white-space: nowrap;
 }
 
-h3.fb_column_header {
-  margin: 0;
-  padding: 10px 0 20px;
-  font-size: 18px;
+.fb_column_header {
+  margin: 10px 0 15px;
 }
 
-h3.fb_column_header a,
-h3.fb_column_header a:hover,
-h3.fb_column_header a:focus {
+.fb_column_header a,
+.fb_column_header a:hover,
+.fb_column_header a:focus {
   text-decoration: none;
   background: none;
+}
+
+.fb_column_desc {
+  padding: 10px 0;
 }
 
 .fb_column_topics {
@@ -1382,112 +1168,117 @@ h3.fb_column_header a:focus {
 
 /* Responsive */
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
+  #fbExtended {
+    flex-direction: column;
+  }
+
+  .fb-hidden-phone li.NavTopUL_item.NavTopUL_firstChild,
+  .fb-hidden-phone li.NavTopUL_item.NavTopUL_user {
+    display: inline-block !important;
+  }
+
   .fb-hidden-phone li.NavTopUL_item {
     display: none !important;
   }
-  .fbContent_core {
-    width: 100% !important;
-    float: left !important;
-  }
+
   .fbLeftNavigation_core {
-    margin: 0 !important;
-    width: 100% !important;
     transition: none;
+    width: 100% !important;
+    margin: 0 0 30px;
+    border: 1px solid #e5e5e5;
+    border-top: 0;
   }
+
   .fbLeftNavigation_toggle {
     display: none;
   }
+
+  .fbLeftNavigation_core.fb-minimized {
+    width: 100% !important;
+  }
+
   .fbLeftNavigation_core.fb-minimized #NavLeftUL {
     opacity: 1;
     visibility: visible;
   }
-  .fbLeftNavigation_core {
-    border-right: 0 !important;
-  }
+
   .fbLeftNavigation_core.fb-minimized .NavLeftUL_item.li_loading {
     width: auto;
     white-space: normal;
   }
+
   .fbLeftNavigation_core.fb-minimized
     .NavLeftUL_item.li_loading
     .NavLeftUL_endpointIcon {
     right: 9px;
   }
+
   .fbLeftNavigation_core.fb-minimized
     .NavLeftUL_item.li_loading
     a.NavLeftUL_anchor
     i {
     display: inline-block;
   }
+
   .fbLeftNavigation_core.fb-minimized
     .NavLeftUL_item.li_loading
     a.NavLeftUL_anchor
     span.NavLeftUL_text {
     opacity: 1;
   }
+
   .fbLeftNavigation_core a.NavLeftUL_anchor {
     width: 100% !important;
     transition: none !important;
   }
+
   .fbLeftNavigation_user,
   .fbLeftNavigation_topics {
     margin: 0 !important;
     width: 100% !important;
   }
+
   .fbLeftNavigation_wrap {
     margin: 0 !important;
     width: 100% !important;
   }
+
   .fbLeftNavigation_user ul,
   .fbLeftNavigation_topics ul {
     margin: 0 !important;
     width: 100% !important;
   }
+
   .fbLeftNavigation_user li,
   .fbLeftNavigation_topics li {
     margin: 0 !important;
     width: 100% !important;
   }
+
   .fbLeftNavigation_core.fb-hidden {
     display: none;
   }
+
   .fbTopNavigation_core .show_menu {
-    display: block;
+    display: inline-block;
   }
+
   .fb-hidden-phone li.NavTopUL_item {
     display: none !important;
   }
-  .fb_forum_body_header .fb-col-8 {
-    width: 100%;
-  }
-  .fb_forum_body_header .fb-col-4 {
-    display: none;
-  }
+
+  .fb_forum_body_header .fb-col-8,
   .fb_forum_body_container .fb-col-8 {
     width: 100%;
   }
+
+  .fb_forum_body_header .fb-col-4,
   .fb_forum_body_container .fb-col-4 {
     display: none;
   }
-  .fb_column {
-    width: 100% !important;
-  }
+
   .fbContent_topics li {
-    width: 100% !important;
-  }
-}
-
-@media screen and (max-width: 992px) {
-  .fbContent_gridItem,
-  .fbContent_allTopics > li {
-    width: 50% !important;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .fbContent_gridItem,
-  .fbContent_allTopics > li {
     width: 100% !important;
   }
 }
