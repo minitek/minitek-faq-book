@@ -10,7 +10,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 
 if ($this->popular_questions_header) {
@@ -22,11 +21,11 @@ if ($this->popular_questions_header) {
 if (count($this->popular_questions))
 {
 	?><div id="fb_popQuestions">
-		<ul class="fbContent_popQuestions clearfix"><?php
+		<ul class="fbContent_popItems clearfix"><?php
 			foreach ($this->popular_questions as $key => $question)
 			{
-				?><li><?php 
-					echo $question->title;		
+				?><li>
+					<h5><?php echo $question->title; ?></h5><?php
 
 					if ($this->popular_questions_description && $question->content)
 					{

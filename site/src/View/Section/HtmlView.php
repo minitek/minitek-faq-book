@@ -377,12 +377,10 @@ class HtmlView extends BaseHtmlView
 		if ($this->sectionParams->show_popular_topics) {
 			$this->show_popular_topics = true;
 			$this->popular_topics_header = $this->sectionParams->popular_topics_header;
-			$this->popular_topics_cols = $this->sectionParams->popular_topics_cols;
 			$this->popular_topics_count = $this->sectionParams->popular_topics_count;
 			$this->popular_topics_title = $this->sectionParams->popular_topics_title;
 			$this->popular_topics_desc = $this->sectionParams->popular_topics_description;
 			$this->popular_topics_desc_limit = $this->sectionParams->popular_topics_description_limit;
-			$this->popular_topics_image = $this->sectionParams->popular_topics_image;
 			$this->popular_topics = $this->model->getPopularTopics($this->sectionId, $this->popular_topics_count);
 		}
 

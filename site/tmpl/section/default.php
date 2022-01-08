@@ -17,7 +17,7 @@ if ($this->params->get('show_page_title')):
 	?></h1><?php
 endif;
 
-?><div id="fbExtended" class="fbSectionExtended clearfix"><?php
+?><div id="fbExtended" class="fbSectionExtended"><?php
 
 	if ($this->topnavigation)
 	{
@@ -45,6 +45,8 @@ endif;
 				case 'top':
 				case 'featured':
 				case 'unanswered':
+				case 'resolved':
+				case 'unresolved':
 					echo $this->loadTemplate('content');
 					break;
 				case 'topics':
