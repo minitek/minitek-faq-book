@@ -57,14 +57,19 @@
 			<field type="separator" text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR" />
 
 			<field
-				name="sections_cols"
-				type="integer"
-				default="3"
-				first="1"
-				last="6"
-				step="1"
-				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLS_LABEL"
-				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLS_DESC"
+				name="sections_column_class"
+				type="text"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMN_CLASS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMN_CLASS_DESC"
+				default="col-12 col-lg-6"
+			/>
+
+			<field
+				name="sections_card_class"
+				type="text"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_DESC"
+				default="border-0 shadow-sm"
 			/>
 
 			<field

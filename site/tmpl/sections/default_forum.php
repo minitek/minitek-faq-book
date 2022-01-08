@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -166,6 +166,7 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 																?><div class="fb_forum_question_title"><?php
 																	echo $topic->lastpost->title;
 																?></div><?php
+
 																if ($this->params->get('sections_forum_question_date', true) || $this->params->get('sections_forum_question_author', true))
 																{
 																	?><div class="fb_forum_question_meta"><?php
@@ -187,8 +188,8 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 																				?><span><?php
 																					echo Text::_('COM_FAQBOOKPRO_BY');
 																					?>&nbsp;<?php
-																						echo $topic->lastpost->author_name;
-																					?></span><?php
+																					echo $topic->lastpost->author_name;
+																				?></span><?php
 																			}
 																			else
 																			{
@@ -197,7 +198,7 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 																					?><span><?php
 																						echo Text::_('COM_FAQBOOKPRO_BY');
 																						?>&nbsp;<?php
-																						echo $topic->lastpost->created_by_name;
+																						echo $topic->lastpost->author_name;
 																					?></span><?php
 																				}
 																			}
