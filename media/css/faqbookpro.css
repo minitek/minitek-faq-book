@@ -22,25 +22,17 @@
 /* Top Navigation */
 
 .fbTopNavigation_core_outer {
-  position: relative;
+  width: 100%;
 }
 
 .fbTopNavigation_core {
-  background: none repeat scroll 0 0 #f0f2f7;
-  float: left;
-  width: 100%;
-  line-height: 22px;
-  min-height: 18px;
-  margin: 0;
-  padding: 15px 15px 15px 0;
-  box-sizing: border-box;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0;
 }
 
 .fbTopNavigation_wrap {
-  margin: 2px 0;
-  padding: 0 15px;
+  padding: 0 15px 0 8px;
   display: inline-block;
-  position: relative;
 }
 
 ul.fbTopNavigation_root {
@@ -52,67 +44,53 @@ ul.fbTopNavigation_root {
   font-size: 0;
 }
 
-#top_liid_home {
-  display: inline-block !important;
-}
-
-.NavTopUL_item,
-.NavTopUL_home {
-  display: inline;
-  margin-right: 8px;
+li.NavTopUL_item,
+li.NavTopUL_home {
+  display: inline-block;
+  margin: 0 8px 0 0;
   padding: 0;
-  position: relative;
   background: none !important;
   font-size: 1rem;
 }
 
-.NavTopUL_firstChild {
-  padding-left: 0;
+li.NavTopUL_lastChild a {
+  color: inherit;
 }
 
-.NavTopUL_lastChild a {
-  color: #444;
-}
-
-.NavTopUL_link {
-  font-weight: bold;
+a.NavTopUL_link {
   white-space: normal;
-  outline: none;
   text-decoration: none;
   background: none;
   line-height: 34px;
 }
 
-.NavTopUL_link:hover,
-.NavTopUL_link:focus {
+a.NavTopUL_link:hover,
+a.NavTopUL_link:focus {
   background: none;
   text-decoration: none;
 }
 
-.NavTopUL_link .fas {
+a.NavTopUL_link .fas {
   margin-right: 8px;
 }
 
-span.NavTopUL_link {
-  color: #444;
+.NavTopUL_loading {
+  display: none;
 }
 
-.NavTopUL_loading {
-  background: url("loader.gif") no-repeat scroll center center transparent;
-  display: none;
-  height: 14px;
-  line-height: 34px;
-  width: 17px;
-  margin: 0;
+#fbExtended .spinner-border {
   vertical-align: middle;
 }
 
-.fbTopNavigation_wrap.NavTopULloading span.NavTopUL_loading {
+#fbExtended .spinner-border-sm {
+  border-width: 2px;
+}
+
+.fbTopNavigation_wrap.NavTopULloading .NavTopUL_loading {
   display: inline-block;
 }
 
 .NavTopUL_buttons {
-  margin: 2px 0;
   float: right;
 }
 
@@ -191,7 +169,7 @@ span.NavTopUL_link {
 
 .fbLeftNavigation_core.fb-minimized
   .NavLeftUL_item.li_loading
-  span.NavLeftUL_endpointIcon {
+  .NavLeftUL_endpointIcon {
   right: 13px;
 }
 
@@ -422,17 +400,15 @@ a.NavLeftUL_anchor i {
   line-height: 16px;
 }
 
-.li_loading span.NavLeftUL_endpointIcon {
-  background: url("loader.gif") no-repeat scroll right 0 transparent;
-  position: absolute;
-  right: 9px;
-  top: 12px;
-  height: 14px;
-  width: 17px;
+.NavLeftUL_endpointIcon {
+  display: none;
 }
 
-.li_loading ul span.NavLeftUL_endpointIcon {
-  background: none;
+.li_loading > a > .NavLeftUL_endpointIcon {
+  display: inline-block;
+  position: absolute;
+  right: 9px;
+  top: 7px;
 }
 
 .fbLeftNavigation_core .li_selected > a,
@@ -1024,7 +1000,6 @@ a.fbContent_paging_button:active {
 }
 
 .fbContent_paging .fbContent_paging_loader {
-  background: url("loader.gif") no-repeat scroll center center transparent;
   display: none;
   width: 24px;
   height: 24px;
@@ -1436,7 +1411,7 @@ h3.fb_column_header a:focus {
   }
   .fbLeftNavigation_core.fb-minimized
     .NavLeftUL_item.li_loading
-    span.NavLeftUL_endpointIcon {
+    .NavLeftUL_endpointIcon {
     right: 9px;
   }
   .fbLeftNavigation_core.fb-minimized

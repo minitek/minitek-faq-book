@@ -103,7 +103,11 @@ if (!$visible)
           <a href="<?php echo Route::_(RouteHelper::getSectionRoute($sectionId, 'topics')); ?>" id="NavLeftUL_browseTopics" class="NavLeftUL_anchor">
             <i class="fas fa-folder-open"></i><?php
             ?><span class="NavLeftUL_text"><?php echo Text::_('COM_FAQBOOKPRO_BROWSE_TOPICS'); ?></span>
-            <span class="NavLeftUL_endpointIcon"></span>
+            <div class="NavLeftUL_endpointIcon">
+				      <div class="spinner-border spinner-border-sm" role="status">
+				        <span class="visually-hidden">Loading...</span>
+				      </div>
+			  	  </div>
           </a>
         </li><?php
       }
