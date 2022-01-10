@@ -14,7 +14,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 $column_class = $this->params->get('sections_column_class', 'col-12 col-lg-6');
-$card_class = $this->params->get('sections_card_class', 'border-0 shadow-sm');
+$card_class = $this->params->get('sections_card_class', 'shadow-sm');
 
 ?><div class="fbContent_sections"><?php
 
