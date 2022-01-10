@@ -1064,32 +1064,36 @@
         ) {
           e.preventDefault();
 
-          // Check if there is a pending ajax request
-          if (typeof ajax_request !== "undefined") ajax_request.abort();
+          if (contentLoaded()) {
+            // Check if there is a pending ajax request
+            if (typeof ajax_request !== "undefined") ajax_request.abort();
 
-          nodes.fbLeftNavigation_core.classList.toggle("fb-minimized");
+            nodes.fbLeftNavigation_core.classList.toggle("fb-minimized");
 
-          if (nodes.fbLeftNavigation_core.classList.contains("fb-minimized")) {
-            query(".fbLeftNavigation_toggle .NavLeftUL_toggle").innerHTML =
-              '<i class="fas fa-angle-double-right"></i>';
-            var minimized = "on";
-          } else {
-            query(".fbLeftNavigation_toggle .NavLeftUL_toggle").innerHTML =
-              '<i class="fas fa-angle-double-left"></i>';
-            var minimized = "off";
+            if (
+              nodes.fbLeftNavigation_core.classList.contains("fb-minimized")
+            ) {
+              query(".fbLeftNavigation_toggle .NavLeftUL_toggle").innerHTML =
+                '<i class="fas fa-angle-double-right"></i>';
+              var minimized = "on";
+            } else {
+              query(".fbLeftNavigation_toggle .NavLeftUL_toggle").innerHTML =
+                '<i class="fas fa-angle-double-left"></i>';
+              var minimized = "off";
+            }
+
+            ajax_request = Joomla.request({
+              url:
+                site_path +
+                "index.php?option=com_faqbookpro&task=section.toggleLeftnav&minimized=" +
+                minimized,
+              method: "POST",
+              onSuccess: (response, xhr) => {},
+              onError: (xhr) => {
+                console.log(xhr);
+              },
+            });
           }
-
-          ajax_request = Joomla.request({
-            url:
-              site_path +
-              "index.php?option=com_faqbookpro&task=section.toggleLeftnav&minimized=" +
-              minimized,
-            method: "POST",
-            onSuccess: (response, xhr) => {},
-            onError: (xhr) => {
-              console.log(xhr);
-            },
-          });
         }
       });
     }
