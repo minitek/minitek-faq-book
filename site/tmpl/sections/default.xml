@@ -69,7 +69,7 @@
 				type="text"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_DESC"
-				default="border-0 shadow-sm"
+				default="shadow-sm"
 			/>
 
 			<field
