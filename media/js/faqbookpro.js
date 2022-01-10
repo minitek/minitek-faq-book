@@ -594,7 +594,13 @@
               e.target.closest(".NavLeftUL_topic") &&
               !e.target.closest(".NavLeftUL_backItem")
             ) {
-              var _this = e.target;
+              if (
+                e.target.classList.contains("topicTitle") ||
+                e.target.classList.contains("NavLeftUL_navIcon")
+              )
+                var _this = e.target.parentNode;
+              else var _this = e.target;
+
               var this_liid = _this.closest("li").id;
               var endpoint_liid = _this.closest("li").id;
               var endpoint_id = endpoint_liid.split("id").pop(1);
