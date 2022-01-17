@@ -367,6 +367,9 @@ class TopicModel extends AdminModel
 			return false;
 		}
 
+		// Trigger the after save event.
+		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
+
 		// Rebuild the path for the topic:
 		if (!$table->rebuildPath($table->id))
 		{
