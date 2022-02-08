@@ -66,24 +66,28 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 					{
 						if (count($section->topics))
 						{
-							?><div class="fb_forum_body">
-								<div class="fb_forum_body_header">
-									<div class="fb_table_row">
-										<div class="fb_table_cell <?php echo $this->topic_col_class; ?>">
-											<div class="fb_table_cell_padding">
-												<div><?php echo $this->params->get('sections_forum_topic_text', 'Topic'); ?></div>
-											</div>
-										</div><?php
-										if ($this->params->get('sections_forum_last_question', true))
-										{
-											?><div class="fb_table_cell fb-col-4">
+							?><div class="fb_forum_body"><?php 
+								if ($this->params->get('sections_forum_headers', true))
+								{
+									?><div class="fb_forum_body_header">
+										<div class="fb_table_row">
+											<div class="fb_table_cell <?php echo $this->topic_col_class; ?>">
 												<div class="fb_table_cell_padding">
-													<div><?php echo $this->params->get('sections_forum_question_text', 'Latest question'); ?></div>
+													<div><?php echo $this->params->get('sections_forum_topic_text', 'Topic'); ?></div>
 												</div>
 											</div><?php
-										}
-									?></div>
-								</div><?php
+											if ($this->params->get('sections_forum_last_question', true))
+											{
+												?><div class="fb_table_cell fb-col-4">
+													<div class="fb_table_cell_padding">
+														<div><?php echo $this->params->get('sections_forum_question_text', 'Latest question'); ?></div>
+													</div>
+												</div><?php
+											}
+										?></div>
+									</div><?php
+								}
+								
 								foreach ($section->topics as $topic)
 								{
 									?><div class="fb_forum_body_container">
