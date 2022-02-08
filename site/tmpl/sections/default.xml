@@ -27,8 +27,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOP_NAVIGATION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOP_NAVIGATION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -39,8 +39,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_PAGE_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_PAGE_DESCRIPTION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -80,8 +80,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -92,8 +92,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -104,8 +104,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -116,8 +116,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -128,8 +128,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -140,8 +140,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -164,8 +164,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -176,8 +176,20 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+				name="sections_forum_headers"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_HEADERS_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_HEADERS_DESC"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -188,8 +200,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -208,8 +220,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -220,8 +232,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -232,8 +244,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -244,8 +256,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -256,8 +268,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -268,8 +280,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -280,8 +292,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -308,8 +320,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 			<field
@@ -320,8 +332,8 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_DESC"
 			>
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
 
 		</fieldset>
