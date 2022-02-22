@@ -6,7 +6,7 @@
 	<authorUrl>https://www.minitek.gr/</authorUrl>
 	<copyright>Copyright (c) 2011-2022 Minitek. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>4.1.7</version>
+	<version>4.2.0</version>
 	<namespace path="src">Joomla\Component\FAQBookPro</namespace>
 	<description>
 	<![CDATA[
