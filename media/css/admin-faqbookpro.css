@@ -67,12 +67,6 @@ label[id^="jform_attribs_separator_"] {
   font-size: 15px;
 }
 
-/* Topic section_id_duplicate */
-
-.control-group #section_id_duplicate {
-  margin: 0;
-}
-
 /* Questions */
 
 body.com_faqbookpro.view-questions .itemList tr.pinned td,

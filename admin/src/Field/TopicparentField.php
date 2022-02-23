@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -11,200 +11,393 @@ namespace Joomla\Component\FAQBookPro\Administrator\Field;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
-\JFormHelper::loadFieldClass('list');
-
-class TopicParentField extends \JFormFieldList
+class TopicParentField extends FormField
 {
 	public $type = 'TopicParent';
 
-	protected function getOptions()
+	protected function getInput()
 	{
-		$options = array();
-		$published = $this->element['published'] ? $this->element['published'] : array(0, 1);
+		$groups = array();
+		$published = $this->element['published'] ? (string) $this->element['published'] : array(0, 1);
+		$db = Factory::getDbo();
+		$app = Factory::getApplication();
+		$topicid = $app->isClient('administrator') ? $app->input->getInt('id', 0) : $app->input->getInt('topicid', 0);
+
+		if ($app->isClient('administrator') && $app->input->getCmd('option', '') == 'com_menus')
+		{
+			$topicid = 0;
+		}
+
 		$name = (string) $this->element['name'];
+		$parentid = $this->form->getValue($name, 0);		
+		$user = Factory::getUser();
 
-		// Let's get the id for the current item, either category or content item.
-		$jinput = \JFactory::getApplication()->input;
-
-		// For categories the old category is the category id or 0 for new category.
-		if ($this->element['parent'] || $jinput->get('option') == 'com_faqbookpro')
-		{
-			$oldCat = $jinput->get('id', 0);
-			$oldParent = $this->form->getValue($name, 0);
-		}
-		// For items the old category is the category they are in when opened or 0 if new.
-		else
-		{
-			$oldCat = $this->form->getValue($name, 0);
-		}
-
-		$db = \JFactory::getDbo();
+		// Get sections 
 		$query = $db->getQuery(true)
-			->select('DISTINCT a.id AS value, a.title AS text, a.level, a.published, a.lft, a.section_id, s.title AS section_title');
-		$subQuery = $db->getQuery(true)
-			->select('id,title,level,published,parent_id,lft,rgt,section_id')
-			->from('#__minitek_faqbook_topics')
-			->where('level > 0');
-
-		// Filter language
-		if (!empty($this->element['language']))
-		{
-			$subQuery->where('language = ' . $db->quote($this->element['language']));
-		}
+			->select('*')
+			->from($db->quoteName('#__minitek_faqbook_sections'));
 
 		// Filter on the published state
-		if (is_numeric($published))
+		if ($user->authorise('core.edit.state', 'com_faqbookpro'))
 		{
-			$subQuery->where('published = ' . (int) $published);
+			if (is_numeric($published))
+			{
+				$query->where($db->quoteName('state').' = ' . (int) $published);
+			}
+			elseif (is_array($published))
+			{
+				ArrayHelper::toInteger($published);
+				$query->where($db->quoteName('state').' IN (' . implode(',', $published) . ')');
+			}
+			else 
+			{
+				$published = explode(',', $published);
+				ArrayHelper::toInteger($published);
+				$query->where($db->quoteName('state').' IN (' . implode(',', $published) . ')');
+			}
 		}
-		elseif (is_array($published))
+		else 
 		{
-			ArrayHelper::toInteger($published);
-			$subQuery->where('published IN (' . implode(',', $published) . ')');
-		}
-
-		$query->from('(' . $subQuery->__toString() . ') AS a')
-			->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt');
-		$query->order('a.lft ASC');
-
-		// Left join for section titles
-		$query->join('LEFT', $db->quoteName('#__minitek_faqbook_sections') . ' AS s ON s.id = a.section_id');
-
-		// If parent isn't explicitly stated assume we want parents
-		if ($oldCat != 0 && ($this->element['parent'] == true || $jinput->get('option') == 'com_faqbookpro'))
-		{
-			// Prevent parenting to children of this item.
-			// To rearrange parents and children move the children up, not the parents down.
-			$query->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS p ON p.id = ' . (int) $oldCat)
-				->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
-
-			$rowQuery = $db->getQuery(true);
-			$rowQuery->select('a.id AS value, a.title AS text, a.level, a.parent_id')
-				->from('#__minitek_faqbook_topics AS a')
-				->where('a.id = ' . (int) $oldCat);
-			$db->setQuery($rowQuery);
-			$row = $db->loadObject();
+			$query->where($db->quoteName('state').' = ' . $db->quote(1));
 		}
 
-		// Get the options.
+		// Filter by section id in front-end
+		if ($app->isClient('site') && $app->input->getCmd('view', '') == 'myquestion')
+		{
+			$sectionid = $app->input->getInt('section', 0);
+
+			if ($user->authorise('core.edit.state', 'com_faqbookpro') != true)
+			{
+				$query->where($db->quoteName('id').' = ' . $db->quote($sectionid));
+			}
+		}
+		else 
+		{
+			$sectionid = $this->form->getValue('section_id', 0);
+		}
+
+		// Filter by language
+		if ($app->isClient('site'))
+		{
+			$query->where($db->quoteName('language').' IN('.$db->quote(Factory::getLanguage()->getTag()).', '.$db->quote('*').')');
+		}
+		
+		$query->order('title ASC');
+
 		$db->setQuery($query);
 
 		try
 		{
-			$options = $db->loadObjectList();
+			$sections = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
-			\JError::raiseWarning(500, $e->getMessage());
+			$app->enqueueMessage($e->getMessage(), 'error');
+
+			return;
 		}
 
-		// Pad the option text with spaces using depth level as a multiplier.
-		for ($i = 0, $n = count($options); $i < $n; $i++)
+		// Build the sections groups
+		foreach ($sections as $section)
 		{
-			if ($options[$i]->published == 1)
+			// Get the topics for this section 
+			$query = $db->getQuery(true)
+				->select('DISTINCT a.id AS value, a.title AS text, a.level, a.published, a.lft, a.qvisibility, a.section_id');
+
+			$subQuery = $db->getQuery(true)
+				->select('id, title, level, published, parent_id, lft, rgt, qvisibility, section_id')
+				->from($db->quoteName('#__minitek_faqbook_topics'))
+				->where($db->quoteName('level').' > 0')
+				->where($db->quoteName('section_id').' = '.$db->quote($section->id));
+
+			if ($app->isClient('site') && $topicid)
 			{
-				$options[$i]->text = str_repeat('- ', $options[$i]->level) . $options[$i]->text;
+				// If there is a topic in the url, select only this topic 
+				$subQuery->where($db->quoteName('id').' = '.$db->quote($topicid));
+			}
 
-				if ($options[$i]->section_title && \JFactory::getApplication()->isClient('administrator'))
+			// Filter on the published state
+			if (is_numeric($published))
+			{
+				$subQuery->where($db->quoteName('published').' = ' . (int) $published);
+			}
+			elseif (is_array($published))
+			{
+				ArrayHelper::toInteger($published);
+				$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
+			}
+			else 
+			{
+				$published = explode(',', $published);
+				ArrayHelper::toInteger($published);
+				$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
+			}
+
+			// Filter by language
+			if ($app->isClient('site'))
+			{
+				$subQuery->where($db->quoteName('language').' IN('.$db->quote(Factory::getLanguage()->getTag()).', '.$db->quote('*').')');
+			}
+
+			$query->from('(' . $subQuery->__toString() . ') AS a')
+				->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt')
+				->order('a.lft ASC');
+
+			// Prevent parenting to children of this topic
+			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
+			{
+				if ($topicid != 0)
 				{
-					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
+					$query->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS p ON p.id = ' . (int) $topicid)
+						->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
 				}
 			}
-			else
-			{
-				$options[$i]->text = str_repeat('- ', $options[$i]->level) . '[' . $options[$i]->text . ']';
 
-				if ($options[$i]->section_title && \JFactory::getApplication()->isClient('administrator'))
-				{
-					$options[$i]->text .= ' ('.$options[$i]->section_title.')';
-				}
-				
-				$options[$i]->text .= ']';
+			$db->setQuery($query);
+
+			try
+			{
+				$topics = $db->loadObjectList();
 			}
-		}
-
-		// Get the current user object.
-		$user = \JFactory::getUser();
-
-		// For new items we want a list of categories you are allowed to create in.
-		if ($oldCat == 0)
-		{
-			foreach ($options as $i => $option)
+			catch (\RuntimeException $e)
 			{
-				/* To take save or create in a category you need to have create rights for that category
-				 * unless the item is already in that category.
-				 * Unset the option if the user isn't authorised for it. In this field assets are always categories.
-				 */
-				if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $option->value) != true && $option->level != 0)
+				$app->enqueueMessage($e->getMessage(), 'error');
+
+				return;
+			}
+
+			// Stop if there are not topics in this section 
+			if ($app->isClient('site')
+				|| ($app->isClient('administrator') 
+					&& ($app->input->getCmd('view', '') == 'questions' || $app->input->getCmd('view', '') == 'question')))
+			{
+				if (empty($topics))
+					continue;
+			}
+
+			// Pad the topic text with spaces using depth level as a multiplier
+			for ($i = 0, $n = count($topics); $i < $n; $i++)
+			{
+				if ($topics[$i]->published == 1)
 				{
-					unset($options[$i]);
+					$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . $topics[$i]->text;
+				}
+				else
+				{
+					$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . '[' . $topics[$i]->text . ']';			
+					$topics[$i]->text .= ']';
 				}
 			}
-		}
-		// If you have an existing category id things are more complex.
-		else
-		{
-			/* If you are only allowed to edit in this category but not edit.state, you should not get any
-			 * option to change the category parent for a category or the category for a content item,
-			 * but you should be able to save in that category.
-			 */
-			foreach ($options as $i => $option)
+
+			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
 			{
-				if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $oldCat) != true && !isset($oldParent))
+				// For new items we want a list of topics you are allowed to create in.
+				if ($topicid == 0)
 				{
-					if ($option->value != $oldCat)
+					foreach ($topics as $i => $topic)
 					{
-						unset($options[$i]);
+						/* To take save or create in a topic you need to have create rights for that topic
+						* unless the item is already in that topic.
+						* Unset the option if the user isn't authorised for it. In this field assets are always topics.
+						*/
+						if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true && $topic->level != 0)
+						{
+							unset($topics[$i]);
+						}
 					}
 				}
-
-				if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $oldCat) != true
-					&& (isset($oldParent))
-					&& $option->value != $oldParent)
+				// If you have an existing topic id things are more complex.
+				else
 				{
-					unset($options[$i]);
-				}
-
-				// However, if you can edit.state you can also move this to another category for which you have
-				// create permission and you should also still be able to save in the current category.
-				if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $option->value) != true)
-					&& ($option->value != $oldCat && !isset($oldParent)))
-				{
+					/* If you are only allowed to edit in this topic but not edit.state, you should not get any
+					* option to change the topic parent for a topic or the topic for a content item,
+					* but you should be able to save in that topic.
+					*/
+					foreach ($topics as $i => $topic)
 					{
-						unset($options[$i]);
-					}
-				}
+						if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true && !isset($parentid))
+						{
+							if ($topic->value != $topicid)
+							{
+								unset($topic[$i]);
+							}
+						}
 
-				if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $option->value) != true)
-					&& (isset($oldParent))
-					&& $option->value != $oldParent)
-				{
-					{
-						unset($options[$i]);
+						if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true
+							&& (isset($parentid))
+							&& $topic->value != $parentid)
+						{
+							unset($topics[$i]);
+						}
+
+						// However, if you can edit.state you can also move this to another topic for which you have
+						// create permission and you should also still be able to save in the current topic.
+						if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+							&& ($topic->value != $topicid && !isset($parentid)))
+						{
+							{
+								unset($topics[$i]);
+							}
+						}
+
+						if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+							&& (isset($parentid))
+							&& $topic->value != $parentid)
+						{
+							{
+								unset($topics[$i]);
+							}
+						}
 					}
 				}
 			}
-		}
 
-		if (($this->element['parent'] == true || $jinput->get('option') == 'com_faqbookpro')
-			&& (isset($row) && !isset($options[0]))
-			&& isset($this->element['show_root']))
-		{
-			if ($row->parent_id == '1')
+			if ($app->isClient('site'))
 			{
-				$parent = new \stdClass;
-				$parent->text = \JText::_('JGLOBAL_ROOT_PARENT');
-				array_unshift($options, $parent);
+				// Remove topics where user has no permission to create 
+				foreach ($topics as $i => $topic)
+				{
+					if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+					{
+						unset($topics[$i]);
+					}
+				}
+			}
+	
+			// Filter by qvisibility and permissions
+			// Users without permissions to create private can not select/see topics of private only questions
+			foreach ($topics as $i => $topic)
+			{
+				if (!$user->authorise('core.private.create', 'com_faqbookpro.topic.' . $topic->value)
+					&& $topic->qvisibility == 2)
+				{
+					unset($topics[$i]);
+				}
 			}
 
-			array_unshift($options, \JHtml::_('select.option', '0', \JText::_('JGLOBAL_ROOT')));
+			// Initialize the group
+			$groups[$section->title] = array();
+			$groups[$section->title]['id'] = $section->id;
+			$groups[$section->title]['items'] = array();
+
+			// 'Add to section' option
+			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
+			{
+				$groups[$section->title]['items'][] = HTMLHelper::_(
+					'select.option', 'section.'.$section->id.':1', Text::_('COM_FAQBOOKPRO_FIELD_PARENT_OPTION_ADD_TO_SECTION').''.$section->title, 'value', 'text'
+				);
+			}
+		
+			// Build the topics
+			foreach ($topics as $topic)
+			{
+				$groups[$section->title]['items'][] = HTMLHelper::_(
+					'select.option', $topic->value, $topic->text, 'value', 'text'
+				);
+			}
+		}
+		
+		// Compute attributes for the grouped list
+		$attr = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
+		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
+		$attr .= $this->element['multiple'] && $this->element['multiple'] == 'true' ? ' multiple' : '';
+		$attr .= $this->element['onchange'] ? ' onchange="' . $this->element['onchange'] . '"' : '';
+		$attr .= $this->element['required'] ? ' required="required"' : '';
+
+		// Prepare HTML code
+		$html = array();
+
+		// Compute the current selected values
+		if ($app->input->getCmd('view', '') == 'customfield')
+		{
+			$selected = array();
+
+			if ($customfield_id = $app->input->get('id'))
+			{
+				$_topics = $this->getSelectedTopics($customfield_id);
+
+				foreach ($_topics as $topic)
+				{
+					$selected[] = $topic->topicid;
+				}
+			}
+		}
+		else 
+		{
+			if ($this->value == 1)
+				$selected = array('section.'.$sectionid.':1');
+			else 
+				$selected = array($this->value);
 		}
 
-		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), $options);
+		// Add - Select - option to array
+		if ($app->isClient('administrator'))
+		{
+			if ($app->input->getCmd('view', '') == 'questions' 
+				|| $app->input->getCmd('view', '') == 'question'
+				|| $app->input->getCmd('option', '') == 'com_menus') 
+			{
+				$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPIC'));
+			}
+			else if ($app->input->getCmd('view', '') == 'customfield') 
+			{
+				$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPICS'));
+			}
+			else if ($app->input->getCmd('view', '') == 'topic')
+			{
+				$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_PARENT'));
+			}
 
-		return $options;
+			// Remove - Select - option from end of array and add to the beginning or array
+			$remove = array_pop($groups); 
+			$select = array('0' => $remove);
+			$groups = $select + $groups;
+		}
+
+		if ($app->isClient('site') && $app->input->getCmd('view', '') == 'questions')
+		{
+			$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPIC'));
+
+			// Remove - Select - option from end of array and add to the beginning or array
+			$remove = array_pop($groups); 
+			$select = array('0' => $remove);
+			$groups = $select + $groups;
+		}
+
+		// Add a grouped list
+		$html[] = HTMLHelper::_(
+			'select.groupedlist', $groups, $this->name,
+			array('id' => $this->id, 'group.id' => 'id', 'list.attr' => $attr, 'list.select' => $selected)
+		);
+
+		if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'customfield')
+		{
+			$app->getDocument()->getWebAssetManager()
+				->usePreset('choicesjs')
+				->useScript('webcomponent.field-fancy-select');
+
+			return '<joomla-field-fancy-select>'.implode($html).'</joomla-field-fancy-select>';
+		}
+
+		return implode($html);
+	}
+
+	private function getSelectedTopics($customfield_id)
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select($db->quoteName('topicid'))
+			->from($db->quoteName('#__minitek_faqbook_customfields_topics'))
+			->where($db->quoteName('customfield_id').' = '.(int)$customfield_id);
+		$db->setQuery($query);
+		$topics = $db->loadObjectList();
+
+		return $topics;
 	}
 }

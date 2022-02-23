@@ -48,12 +48,12 @@
 
 		<field
 			name="topicid"
-			type="topicid"
+			type="topicparent"
+			class="form-select"
 			label="COM_FAQBOOKPRO_FIELD_PARENT_LABEL"
 			description="COM_FAQBOOKPRO_FIELD_PARENT_DESC"
 			required="true"
-		>
-		</field>
+		/>
 
 		<field
 			name="state"
