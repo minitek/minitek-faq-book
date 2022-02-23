@@ -211,6 +211,7 @@
 				label="COM_FAQBOOKPRO_FIELD_TOPNAV_SECTIONS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_TOPNAV_SECTIONS_DESC"
 				default="0"
+				showon="topnav:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -223,6 +224,7 @@
 				label="COM_FAQBOOKPRO_FIELD_TOPNAV_ROOT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_TOPNAV_ROOT_DESC"
 				published="1"
+				showon="topnav:1"
 			/>
 
 			<field
@@ -243,6 +245,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_LOAD_ALL_TOPICS_DESC"
+				showon="leftnav!:0"
 			>
 				<option value="0">COM_FAQBOOKPRO_FIELD_OPTION_ONLY_ENDPOINTS</option>
 				<option value="1">COM_FAQBOOKPRO_FIELD_OPTION_ALL_TOPICS</option>
@@ -255,6 +258,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LINK_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LINK_DESC"
+				showon="leftnav!:0"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -349,6 +353,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_DESC"
+				showon="show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -361,6 +366,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_DESC"
+				showon="show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -373,6 +379,7 @@
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_DESC"
+				showon="show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -387,6 +394,7 @@
 				step="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_DESC"
+				showon="show_topics_tree:1"
 			/>
 
 			<field
@@ -398,6 +406,7 @@
 				step="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_DESC"
+				showon="show_topics_tree:1"
 			/>
 
 			<field type="separator" text="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_SEPARATOR" />
@@ -408,6 +417,7 @@
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_DESC"
+				showon="show_section_questions:active"
 			>
 				<option value="0">JNO</option>
 				<option value="active">COM_FAQBOOKPRO_FIELD_OPTION_ACTIVE_TOPIC</option>
@@ -443,6 +453,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_HEADER_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_HEADER_DESC"
+				showon="show_popular_topics:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -457,6 +468,7 @@
 				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_COUNT_DESC"
+				showon="show_popular_topics:1"
 			/>
 
 			<field
@@ -466,6 +478,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_TITLE_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_TITLE_DESC"
+				showon="show_popular_topics:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -478,6 +491,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_DESC"
+				showon="show_popular_topics:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -492,6 +506,7 @@
 				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_TOPICS_DESCRIPTION_LIMIT_DESC"
+				showon="show_popular_topics:1"
 			/>
 
 			<field type="separator" text="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_SEPARATOR" />
@@ -515,6 +530,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_HEADER_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_HEADER_DESC"
+				showon="show_popular_questions:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -529,6 +545,7 @@
 				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_COUNT_DESC"
+				showon="show_popular_questions:1"
 			/>
 
 			<field
@@ -538,6 +555,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_DESC"
+				showon="show_popular_questions:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -552,6 +570,7 @@
 				filter="integer"
 				label="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_POPULAR_QUESTIONS_DESCRIPTION_LIMIT_DESC"
+				showon="show_popular_questions:1"
 			/>
 
 		</fieldset>
@@ -628,6 +647,7 @@
 				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_TITLE_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_TITLE_DESC"
 				default="1"
+				showon="show_subtopics:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -640,6 +660,7 @@
 				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_DESCRIPTION_DESC"
 				default="1"
+				showon="show_subtopics:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -652,6 +673,7 @@
 				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_IMAGE_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_IMAGE_DESC"
 				default="1"
+				showon="show_subtopics:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -664,6 +686,7 @@
 				label="COM_FAQBOOKPRO_FIELD_SUBTOPICS_FAQ_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SUBTOPICS_FAQ_DESC"
 				default="1"
+				showon="show_subtopics:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -684,7 +707,11 @@
 				default="static"
 			/>
 
-			<field type="separator" text="COM_FAQBOOKPRO_FIELD_STATIC_ORDERING_SEPARATOR" />
+			<field 
+				type="separator" 
+				text="COM_FAQBOOKPRO_FIELD_STATIC_ORDERING_SEPARATOR" 
+				showon="questions_ordering_type:static"
+			/>
 
 			<field
 				name="questions_ordering"
@@ -692,6 +719,7 @@
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DESC"
 				default="created"
+				showon="questions_ordering_type:static"
 			>
 				<option value="id">COM_FAQBOOKPRO_FIELD_OPTION_ID</option>
 				<option value="title">COM_FAQBOOKPRO_FIELD_OPTION_TITLE</option>
@@ -706,12 +734,17 @@
 				type="list"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_DIRECTION_LABEL"
 				default="DESC"
+				showon="questions_ordering_type:static"
 			>
 				<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
 				<option value="DESC">COM_FAQBOOKPRO_FIELD_OPTION_DESC</option>
 			</field>
 
-			<field type="separator" text="COM_FAQBOOKPRO_FIELD_DYNAMIC_ORDERING_SEPARATOR" />
+			<field 
+				type="separator" 
+				text="COM_FAQBOOKPRO_FIELD_DYNAMIC_ORDERING_SEPARATOR" 
+				showon="questions_ordering_type:dynamic"
+			/>
 
 			<field
 				name="active_tab"
@@ -719,6 +752,7 @@
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_LABEL"
 				default="recent"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -727,6 +761,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -735,6 +770,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -743,6 +779,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -751,6 +788,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -759,6 +797,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -767,6 +806,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -775,6 +815,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 			<field
@@ -783,6 +824,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_LABEL"
+				showon="questions_ordering_type:dynamic"
 			/>
 
 		</fieldset>
