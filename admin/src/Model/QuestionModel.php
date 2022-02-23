@@ -822,18 +822,4 @@ class QuestionModel extends AdminModel
 			return false;
 		}
 	}
-
-	public function dynamicQVisibility($topicId)
-	{
-		$db = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('t.qvisibility as qvisibility')
-			->from('#__minitek_faqbook_topics AS t')
-			->where('t.id = ' . $db->quote($topicId) . '');
-		$db->setQuery($query);
-
-		$qvisibility = $db->loadObject()->qvisibility;
-
-		return $qvisibility;
-	}
 }
