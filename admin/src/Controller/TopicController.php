@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -11,6 +11,7 @@ namespace Joomla\Component\FAQBookPro\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Controller\FormController;
@@ -52,7 +53,7 @@ class TopicController extends FormController
 	 */
 	protected function allowAdd($data = array())
 	{
-		$user = \JFactory::getUser();
+		$user = Factory::getUser();
 
 		return ($user->authorise('core.create', 'com_faqbookpro') || count(FAQBookProHelper::getAuthorisedTopics('core.create')));
 	}
@@ -70,7 +71,7 @@ class TopicController extends FormController
 	protected function allowEdit($data = array(), $key = 'parent_id')
 	{
 		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
-		$user = \JFactory::getUser();
+		$user = Factory::getUser();
 		$userId = $user->get('id');
 
 		// Check general edit permission first.
@@ -116,6 +117,28 @@ class TopicController extends FormController
 	}
 
 	/**
+	 * Method to run batch operations.
+	 *
+	 * @param   object|null  $model  The model.
+	 *
+	 * @return  boolean  True if successful, false otherwise and internal error is set.
+	 *
+	 * @since   4.1.7
+	 */
+	public function batch($model = null)
+	{
+		$this->checkToken();
+
+		/** @var \Joomla\Component\FAQBookPro\Administrator\Model\TopicModel $model */
+		$model = $this->getModel('Topic');
+
+		// Preset the redirect
+		$this->setRedirect('index.php?option=com_faqbookpro&view=topics');
+
+		return parent::batch($model);
+	}
+
+	/**
 	 * Function that allows child controller access to model data after the data has been saved.
 	 *
 	 * @param   JModelLegacy  $model      The data model object.
@@ -127,31 +150,18 @@ class TopicController extends FormController
 	 */
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = array())
 	{
-		$item = $model->getItem();
+		$id = $validData['id'];
+		
+		if (!$id)
+			return;
 
-		if (isset($item->params) && is_array($item->params))
-		{
-			$registry = new Registry;
-			$registry->loadArray($item->params);
-			$item->params = (string) $registry;
-		}
+		$section_id = $validData['section_id'];
+		$children = $model->getChildrenTopics($items = array(), $id);
 
-		if (isset($item->metadata) && is_array($item->metadata))
-		{
-			$registry = new Registry;
-			$registry->loadArray($item->metadata);
-			$item->metadata = (string) $registry;
-		}
-
-		// Change parent section recursively to all children topics
-		$id = $item->get('id');
-		$section_id = $item->get('section_id');
-
-		$children = $this->getChildren($items = array(), $id);
-
+		// Change parent section for all children topics
 		foreach ($children as $child)
 		{
-			$db = \JFactory::getDbo();
+			$db = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$fields = array(
 				$db->quoteName('section_id') . ' = ' . $db->quote($section_id)
@@ -165,50 +175,5 @@ class TopicController extends FormController
 		}
 
 		return;
-	}
-
-	public function dynamicSection()
-	{
-		if (!Session::checkToken('get'))
-		{
-			echo new \JsonResponse(null, Text::_('JINVALID_TOKEN'), true);
-		}
-		else
-		{
-			$jinput = \JFactory::getApplication()->input;
-			$topicId = $jinput->get('topicid');
-
-			if ($topicId == 1)
-			{
-				jexit('root');
-			}
-			else
-			{
-				$model = $this->getModel();
-				$data = $model->dynamicSection($topicId);
-			}
-		}
-	}
-
-	public function getChildren($items, $id)
-	{
-		$db = \JFactory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('t.id')
-			->from('#__minitek_faqbook_topics AS t')
-			->where('t.parent_id = ' . $db->quote($id) . '');
-		$db->setQuery($query);
-		$children = $db->loadObjectList();
-
-		if ($children)
-		{
-			foreach ($children as $child)
-			{
-				$items[] = $child;
-				$items = $this->getChildren($items, $child->id);
-			}
-		}
-
-		return $items;
 	}
 }

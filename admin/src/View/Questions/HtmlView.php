@@ -93,9 +93,6 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		// Get topics for batch operations
-		$this->topics = $model->getBatchTopics();
-
 		if ($this->getLayout() !== 'modal')
 		{
 			$this->addToolbar();
@@ -141,15 +138,6 @@ class HtmlView extends BaseHtmlView
 			$childBar->checkin('questions.checkin')->listCheck(true);
 		}
 
-		// Add a batch button
-		if ($canDo->get('core.create') && $canDo->get('core.edit') && $canDo->get('core.edit.state'))
-		{
-			$childBar->popupButton('batch')
-				->text('JTOOLBAR_BATCH')
-				->selector('collapseModal')
-				->listCheck(true);
-		}
-
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
 		{
 			$toolbar->delete('questions.delete')
@@ -160,6 +148,15 @@ class HtmlView extends BaseHtmlView
 		elseif ($canDo->get('core.edit.state'))
 		{
 			$childBar->trash('questions.trash')->listCheck(true);
+		}
+
+		// Add a batch button
+		if ($canDo->get('core.create') && $canDo->get('core.edit') && $canDo->get('core.edit.state'))
+		{
+			$childBar->popupButton('batch')
+				->text('JTOOLBAR_BATCH')
+				->selector('collapseModal')
+				->listCheck(true);
 		}
 
 		$toolbar->back()

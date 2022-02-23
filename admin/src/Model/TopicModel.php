@@ -16,6 +16,11 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Access\Rules;
+use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\UCM\UCMType;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\Event\Model\BeforeBatchEvent;
+use Joomla\String\StringHelper;
 
 /**
  * Model for a Topic.
@@ -31,6 +36,26 @@ class TopicModel extends AdminModel
 	 * @since  4.0.0
 	 */
 	protected $text_prefix = 'COM_FAQBOOKPRO';
+
+	/**
+	 * Batch copy/move command. If set to false,
+	 * the batch copy/move command is not supported
+	 *
+	 * @var    string
+	 * @since  4.1.7
+	 */
+	protected $batch_copymove = 'topic_id';
+
+	/**
+	 * Allowed batch commands
+	 *
+	 * @var    array
+	 * @since  4.1.7
+	 */
+	protected $batch_commands = array(
+		'assetgroup_id' => 'batchAccess',
+		'language_id' => 'batchLanguage'
+	);
 
 	/**
 	 * Method to test whether a record can be deleted.
@@ -481,6 +506,663 @@ class TopicModel extends AdminModel
 	}
 
 	/**
+	 * Batch copy topics to a new topic.
+	 *
+	 * @param   string   $value     The new parent value {section_id}.{topic_id}
+	 * @param   array    $pks       An array of row IDs.
+	 * @param   array    $contexts  An array of item contexts.
+	 *
+	 * @return  mixed    An array of new IDs on success, boolean false on failure.
+	 *
+	 * @since   4.1.7
+	 */
+	protected function batchCopy($value, $pks, $contexts)
+	{
+		// $value comes as {section_id}.{topic_id}
+		$parts = explode('.', $value);
+		
+		$sectionId = (int) $parts[0];
+
+		// We have section and topic
+		if (count($parts) > 1)
+		{
+			$parentId = (int) $parts[1];
+		}
+		// We only have section, therefore the new parent_id = 1 (root topic)
+		else 
+		{
+			$parentId = 1;
+		}
+		
+		$type = new UCMType;
+		$this->type = $type->getTypeByAlias($this->typeAlias);
+
+		$db = $this->getDbo();
+		$newIds = array();
+
+		// Check that the parent exists
+		if ($parentId)
+		{
+			if (!$this->table->load($parentId))
+			{
+				if ($error = $this->table->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+
+					return false;
+				}
+				else
+				{
+					// Non-fatal error
+					$this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+					$parentId = 0;
+				}
+			}
+
+			// Check that user has create permission for parent topic
+			if ($parentId == $this->table->getRootId())
+			{
+				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro');
+			}
+			else
+			{
+				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro.topic.' . $parentId);
+			}
+
+			if (!$canCreate)
+			{
+				// Error since user cannot create in parent topic
+				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
+
+				return false;
+			}
+		}
+
+		// If the parent is 0, set it to the ID of the root item in the tree
+		if (empty($parentId))
+		{
+			if (!$parentId = $this->table->getRootId())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+			// Make sure we can create in root
+			elseif (!$this->user->authorise('core.create', 'com_faqbookpro'))
+			{
+				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
+
+				return false;
+			}
+		}
+
+		// We need to log the parent ID
+		$parents = array();
+
+		// Calculate the emergency stop count as a precaution against a runaway loop bug
+		$query = $db->getQuery(true)
+			->select('COUNT(' . $db->quoteName('id') . ')')
+			->from($db->quoteName('#__minitek_faqbook_topics'));
+		$db->setQuery($query);
+
+		try
+		{
+			$count = $db->loadResult();
+		}
+		catch (\RuntimeException $e)
+		{
+			$this->setError($e->getMessage());
+
+			return false;
+		}
+
+		// Parent exists so let's proceed
+		while (!empty($pks) && $count > 0)
+		{
+			// Pop the first id off the stack
+			$pk = array_shift($pks);
+
+			$this->table->reset();
+
+			// Check that the row actually exists
+			if (!$this->table->load($pk))
+			{
+				if ($error = $this->table->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+
+					return false;
+				}
+				else
+				{
+					// Not fatal error
+					$this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					continue;
+				}
+			}
+
+			// Copy is a bit tricky, because we also need to copy the children
+			$lft = (int) $this->table->lft;
+			$rgt = (int) $this->table->rgt;
+			$query->clear()
+				->select($db->quoteName('id'))
+				->from($db->quoteName('#__minitek_faqbook_topics'))
+				->where($db->quoteName('lft') . ' > :lft')
+				->where($db->quoteName('rgt') . ' < :rgt')
+				->bind(':lft', $lft, ParameterType::INTEGER)
+				->bind(':rgt', $rgt, ParameterType::INTEGER);
+			$db->setQuery($query);
+			$childIds = $db->loadColumn();
+
+			// Add child ID's to the array only if they aren't already there.
+			foreach ($childIds as $childId)
+			{
+				if (!\in_array($childId, $pks))
+				{
+					$pks[] = $childId;
+				}
+			}
+
+			// Make a copy of the old ID, Parent ID and Asset ID
+			$oldId       = $this->table->id;
+			$oldParentId = $this->table->parent_id;
+			$oldAssetId  = $this->table->asset_id;
+
+			// Reset the id because we are making a copy.
+			$this->table->id = 0;
+
+			// If we a copying children, the Old ID will turn up in the parents list
+			// otherwise it's a new top level item
+			$this->table->parent_id = $parents[$oldParentId] ?? $parentId;
+
+			// Set the new location in the tree for the node.
+			$this->table->setLocation($this->table->parent_id, 'last-child');
+
+			// Set the new section_id
+			$this->table->section_id = $sectionId;
+
+			// @TODO: Deal with ordering?
+			// $this->table->ordering = 1;
+			$this->table->level = null;
+			$this->table->asset_id = null;
+			$this->table->lft = null;
+			$this->table->rgt = null;
+
+			// Alter the title & alias
+			[$title, $alias] = $this->generateNewTitle($this->table->parent_id, $this->table->alias, $this->table->title);
+			$this->table->title  = $title;
+			$this->table->alias  = $alias;
+
+			// Unpublish because we are making a copy
+			$this->table->published = 0;
+
+			// Store the row.
+			if (!$this->table->store())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+
+			// Get the new item ID
+			$newId = $this->table->get('id');
+
+			// Add the new ID to the array
+			$newIds[$pk] = $newId;
+
+			// Copy rules
+			$query->clear()
+				->update($db->quoteName('#__assets', 't'))
+				->join('INNER',
+					$db->quoteName('#__assets', 's'),
+					$db->quoteName('s.id') . ' = :oldid'
+				)
+				->bind(':oldid', $oldAssetId, ParameterType::INTEGER)
+				->set($db->quoteName('t.rules') . ' = ' . $db->quoteName('s.rules'))
+				->where($db->quoteName('t.id') . ' = :assetid')
+				->bind(':assetid', $this->table->asset_id, ParameterType::INTEGER);
+			$db->setQuery($query)->execute();
+
+			// Now we log the old 'parent' to the new 'parent'
+			$parents[$oldId] = $this->table->id;
+			$count--;
+		}
+
+		// Rebuild the hierarchy.
+		if (!$this->table->rebuild())
+		{
+			$this->setError($this->table->getError());
+
+			return false;
+		}
+
+		// Rebuild the tree path.
+		if (!$this->table->rebuildPath($this->table->id))
+		{
+			$this->setError($this->table->getError());
+
+			return false;
+		}
+
+		return $newIds;
+	}
+
+	/**
+	 * Batch move topics to a new topic.
+	 *
+	 * @param   string   $value     The new parent value {section_id}.{topic_id}
+	 * @param   array    $pks       An array of row IDs
+	 * @param   array    $contexts  An array of item contexts
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   4.1.7
+	 */
+	protected function batchMove($value, $pks, $contexts)
+	{
+		// $value comes as {section_id}.{topic_id}
+		$parts = explode('.', $value);
+		
+		$sectionId = (int) $parts[0];
+
+		// We have section and topic
+		if (count($parts) > 1)
+		{
+			$parentId = (int) $parts[1];
+		}
+		// We only have section, therefore the new parent_id = 1 (root topic)
+		else 
+		{
+			$parentId = 1;
+		}
+		
+		$type = new UCMType;
+		$this->type = $type->getTypeByAlias($this->typeAlias);
+
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+	
+		// Check that the parent exists
+		if ($parentId)
+		{
+			PluginHelper::importPlugin('content');
+			
+			if (!$this->table->load($parentId))
+			{
+				if ($error = $this->table->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+
+					return false;
+				}
+				else
+				{
+					// Non-fatal error
+					$this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+					$parentId = 0;
+				}
+			}
+	
+			// Check that user has create permission for parent topic
+			if ($parentId == $this->table->getRootId())
+			{
+				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro');
+			}
+			else
+			{
+				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro.topic.' . $parentId);
+			}
+			
+			if (!$canCreate)
+			{
+				// Error since user cannot create in parent topic
+				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
+
+				return false;
+			}
+		
+			// Check that user has edit permission for every topic being moved
+			// Note that the entire batch operation fails if any topic lacks edit permission
+			foreach ($pks as $pk)
+			{
+				if (!$this->user->authorise('core.edit', 'com_faqbookpro.topic.' . $pk))
+				{
+					// Error since user cannot edit this topic
+					$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_EDIT'));
+
+					return false;
+				}
+			}
+		}
+
+		// We are going to store all the children and just move the topic
+		$children = array();
+
+		// Parent exists so let's proceed
+		foreach ($pks as $pk)
+		{
+			// Check that the row actually exists
+			if (!$this->table->load($pk))
+			{
+				if ($error = $this->table->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+
+					return false;
+				}
+				else
+				{
+					// Not fatal error
+					$this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					continue;
+				}
+			}
+
+			// Set the new location in the tree for the node
+			$this->table->setLocation($parentId, 'last-child');
+
+			// Set the new section_id
+			$this->table->section_id = $sectionId;
+			
+			// Get children
+			$lft = (int) $this->table->lft;
+			$rgt = (int) $this->table->rgt;
+
+			// Add the child node ids to the children array
+			$query->clear()
+				->select($db->quoteName('id'))
+				->from($db->quoteName('#__minitek_faqbook_topics'))
+				->where($db->quoteName('lft') . ' BETWEEN :lft AND :rgt')
+				->bind(':lft', $lft, ParameterType::INTEGER)
+				->bind(':rgt', $rgt, ParameterType::INTEGER);
+			$db->setQuery($query);
+
+			try
+			{
+				$children = array_merge($children, (array) $db->loadColumn());
+			}
+			catch (\RuntimeException $e)
+			{
+				$this->setError($e->getMessage());
+
+				return false;
+			}
+
+			// Store the row
+			if (!$this->table->store())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+
+			// Rebuild the tree path
+			if (!$this->table->rebuildPath())
+			{
+				$this->setError($this->table->getError());
+
+				return false;
+			}
+
+			// Run event for each child
+			foreach ($children as $id)
+			{
+				$this->table->reset();
+				$this->table->load($id);
+				
+				// Set the new section_id
+				$this->table->section_id = $sectionId;
+
+				// Store the row
+				if (!$this->table->store())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+
+				Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.topic', &$this->table, false, array()));
+			}
+		}
+
+		// Process the child rows
+		if (!empty($children))
+		{
+			// Remove any duplicates and sanitize ids
+			$children = array_unique($children);
+			$children = ArrayHelper::toInteger($children);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Batch language changes for a group of rows.
+	 *
+	 * @param   string  $value     The new value matching a language.
+	 * @param   array   $pks       An array of row IDs.
+	 * @param   array   $contexts  An array of item contexts.
+	 *
+	 * @return  boolean  True if successful, false otherwise and internal error is set.
+	 *
+	 * @since   4.1.7
+	 */
+	protected function batchLanguage($value, $pks, $contexts)
+	{
+		$db = $this->getDbo();
+
+		PluginHelper::importPlugin('content');
+
+		// Initialize re-usable member properties, and re-usable local variables
+		$this->initBatch();
+
+		// Get all the children to change their language
+		$children = array();
+
+		foreach ($pks as $pk)
+		{
+			if ($this->user->authorise('core.edit', $contexts[$pk]))
+			{
+				$this->table->reset();
+				$this->table->load($pk);
+				$this->table->language = $value;
+
+				$event = new BeforeBatchEvent(
+					$this->event_before_batch,
+					['src' => $this->table, 'type' => 'language']
+				);
+				$this->dispatchEvent($event);
+
+				// Check the row.
+				if (!$this->table->check())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+
+				// Get children
+				$lft = (int) $this->table->lft;
+				$rgt = (int) $this->table->rgt;
+
+				// Add the child node ids to the children array
+				$query = $db->getQuery(true);
+				$query->clear();
+				$query->select($db->quoteName('id'))
+					->from($db->quoteName('#__minitek_faqbook_topics'))
+					->where($db->quoteName('lft') . ' BETWEEN :lft AND :rgt')
+					->bind(':lft', $lft, ParameterType::INTEGER)
+					->bind(':rgt', $rgt, ParameterType::INTEGER);
+				$db->setQuery($query);
+
+				try
+				{
+					$children = array_merge($children, (array) $db->loadColumn());
+				}
+				catch (\RuntimeException $e)
+				{
+					$this->setError($e->getMessage());
+
+					return false;
+				}
+
+				if (!$this->table->store())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+
+				// Update children
+				foreach ($children as $id)
+				{
+					$this->table->reset();
+					$this->table->load($id);
+					
+					// Set the new language
+					$this->table->language = $value;
+
+					// Store the row
+					if (!$this->table->store())
+					{
+						$this->setError($this->table->getError());
+
+						return false;
+					}
+
+					Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.topic', &$this->table, false, array()));
+				}
+			}
+			else
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+
+				return false;
+			}
+		}
+
+		// Clean the cache
+		$this->cleanCache();
+
+		return true;
+	}
+
+	/**
+	 * Batch access level changes for a group of rows.
+	 *
+	 * @param   integer  $value     The new value matching an Asset Group ID.
+	 * @param   array    $pks       An array of row IDs.
+	 * @param   array    $contexts  An array of item contexts.
+	 *
+	 * @return  boolean  True if successful, false otherwise and internal error is set.
+	 *
+	 * @since   4.1.7
+	 */
+	protected function batchAccess($value, $pks, $contexts)
+	{
+		$db = $this->getDbo();
+
+		PluginHelper::importPlugin('content');
+
+		// Initialize re-usable member properties, and re-usable local variables
+		$this->initBatch();
+
+		// Get all the children to change their language
+		$children = array();
+
+		foreach ($pks as $pk)
+		{
+			if ($this->user->authorise('core.edit', $contexts[$pk]))
+			{
+				$this->table->reset();
+				$this->table->load($pk);
+				$this->table->access = (int) $value;
+
+				$event = new BeforeBatchEvent(
+					$this->event_before_batch,
+					['src' => $this->table, 'type' => 'access']
+				);
+				$this->dispatchEvent($event);
+
+				// Check the row.
+				if (!$this->table->check())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+
+				// Get children
+				$lft = (int) $this->table->lft;
+				$rgt = (int) $this->table->rgt;
+
+				// Add the child node ids to the children array
+				$query = $db->getQuery(true);
+				$query->clear();
+				$query->select($db->quoteName('id'))
+					->from($db->quoteName('#__minitek_faqbook_topics'))
+					->where($db->quoteName('lft') . ' BETWEEN :lft AND :rgt')
+					->bind(':lft', $lft, ParameterType::INTEGER)
+					->bind(':rgt', $rgt, ParameterType::INTEGER);
+				$db->setQuery($query);
+
+				try
+				{
+					$children = array_merge($children, (array) $db->loadColumn());
+				}
+				catch (\RuntimeException $e)
+				{
+					$this->setError($e->getMessage());
+
+					return false;
+				}
+
+				if (!$this->table->store())
+				{
+					$this->setError($this->table->getError());
+
+					return false;
+				}
+
+				// Update children
+				foreach ($children as $id)
+				{
+					$this->table->reset();
+					$this->table->load($id);
+					
+					// Set the new access
+					$this->table->access = $value;
+
+					// Store the row
+					if (!$this->table->store())
+					{
+						$this->setError($this->table->getError());
+
+						return false;
+					}
+
+					Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.topic', &$this->table, false, array()));
+				}
+			}
+			else
+			{
+				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+
+				return false;
+			}
+		}
+
+		// Clean the cache
+		$this->cleanCache();
+
+		return true;
+	}
+
+	/**
 	 * Custom clean the cache of com_faqbookpro and faqbookpro modules
 	 *
 	 * @param   string   $group      Cache group name.
@@ -513,8 +1195,8 @@ class TopicModel extends AdminModel
 
 		while ($table->load(array('alias' => $alias, 'parent_id' => $parent_id)))
 		{
-			$title = \JString::increment($title);
-			$alias = \JString::increment($alias, 'dash');
+			$title = StringHelper::increment($title);
+			$alias = StringHelper::increment($alias, 'dash');
 		}
 
 		return array($title, $alias);
@@ -538,81 +1220,25 @@ class TopicModel extends AdminModel
 		}
 	}
 
-	public function getTopicsTree()
+	public function getChildrenTopics($items, $id)
 	{
-		$app = Factory::getApplication();
-		$clientID = $app->getClientId();
 		$db = Factory::getDBO();
-		$user = Factory::getUser();
-		$aid = (int)$user->get('aid');
-
-		$query = "SELECT id, title,  parent_id	FROM #__minitek_faqbook_topics";
-
-		if ($app->isSite())
-		{
-			$query .= " WHERE published=1 AND level>0 ";
-			$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).")";
-			
-			if ($app->getLanguageFilter())
-			{
-				$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
-			}
-		}
-
-		$query .= " ORDER BY parent_id ";
+		$query = $db->getQuery(true);
+		$query->select('t.id')
+			->from('#__minitek_faqbook_topics AS t')
+			->where('t.parent_id = ' . $db->quote($id) . '');
 		$db->setQuery($query);
+		$children = $db->loadObjectList();
 
-		$topics = $db->loadObjectList();
-		$tree = array();
-
-		return $this->buildTree($topics);
-	}
-
-	public function buildTree(array &$topics, $parent = 1)
-	{
-		$branch = array();
-
-		foreach ($topics as &$topic)
+		if ($children)
 		{
-			if ($topic->parent_id == $parent)
+			foreach ($children as $child)
 			{
-				$children = $this->buildTree($topics, $topic->id);
-
-				if ($children)
-				{
-					$topic->children = $children;
-				}
-
-				$branch[$topic->id] = $topic;
+				$items[] = $child;
+				$items = $this->getChildrenTopics($items, $child->id);
 			}
 		}
 
-		return $branch;
-	}
-
-	public function getTreePath($tree, $id)
-	{
-		if (array_key_exists($id, $tree))
-		{
-			return array($id);
-		}
-		else
-		{
-			foreach ($tree as $key => $root)
-			{
-				if (isset($root->children) && is_array($root->children))
-				{
-					$retry = $this->getTreePath($root->children, $id);
-
-					if ($retry)
-					{
-						$retry[] = $key;
-						return $retry;
-					}
-				}
-			}
-		}
-
-		return null;
+		return $items;
 	}
 }
