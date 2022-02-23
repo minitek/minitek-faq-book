@@ -14,15 +14,15 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
+use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\NavigationHelper;
 use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 $sectionId = $displayData['sectionId'];
 $visible = $displayData['visible'];
-$params = UtilitiesHelper::getParams('com_faqbookpro');
-$sectionModel = new SectionModel;
-$section = $sectionModel->getItem($sectionId);
+$section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+$section->load($sectionId);
 $sectionParams = json_decode($section->attribs, false);
 
 if (!isset($sectionParams->browse_topics))
@@ -32,6 +32,7 @@ if (!isset($sectionParams->browse_topics))
 
 $user = Factory::getUser();
 $userid = $user->id;
+$sectionModel = new SectionModel;
 $items = $sectionModel->getSectionTopics($sectionId);
 $app = Factory::getApplication();
 

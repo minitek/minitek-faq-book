@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\Component\FAQBookPro\Site\Model\TopicModel;
+use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 
@@ -137,6 +138,8 @@ class HtmlView extends BaseHtmlView
 
 		// Questions
 		if ($this->topic_params->show_section_questions && $this->tab != 'topics') {
+			$topicModel = new TopicModel;
+			
 			// Questions theme
 			$this->questions_params->questions_theme = 'faq';
 
@@ -186,9 +189,9 @@ class HtmlView extends BaseHtmlView
 					$this->sectionParams->topicid = $this->topicId;
 				}
 
-				// Get topic model
-				$topicModel = new TopicModel;
-				$this->topic = $topicModel->getItem($this->sectionParams->topicid);
+				// Get topic params
+				$this->topic = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+				$this->topic->load($this->sectionParams->topicid);
 				$this->topic->issubtopic = false;
 				$topicParams = json_decode($this->topic->params, false);
 
@@ -503,8 +506,6 @@ class HtmlView extends BaseHtmlView
 
 	public function prepareQuestion($question)
 	{
-		$topicModel = new TopicModel;
-
 		// Image
 		$images = json_decode($question->images, false);
 		$question->image = isset($images->image) ? $images->image : false;
@@ -572,14 +573,19 @@ class HtmlView extends BaseHtmlView
 
 		// Parent topics
 		if ($this->sectionParams->questions_topic == 2) {
+			$topicModel = new TopicModel;
 			$question->topics = $topicModel->getTopicParentTopics($question->topicid, $topics = array());
 			$parents = array();
 
 			if (count($question->topics)) {
+				$table = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+
 				foreach ($question->topics as $key => $topic) {
+					$table->reset();
+					$table->load($topic);
 					$parent = array();
 					$parent['id'] = $topic;
-					$parent['title'] = $topicModel->getItem($topic)->title;
+					$parent['title'] = $table->title;
 					$parents[] = $parent;
 				}
 			}

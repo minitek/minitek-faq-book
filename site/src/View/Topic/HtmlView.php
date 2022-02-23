@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
-use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\MVC\View\GenericDataException;
 
 /**
@@ -58,8 +58,8 @@ class HtmlView extends BaseHtmlView
 		$this->topic = $this->item;
 		$this->topic->issubtopic = false;
 		$this->sectionId = $this->topic->section_id;
-		$sectionModel = new SectionModel;
-		$this->section = $sectionModel->getItem($this->sectionId);
+		$this->section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+		$this->section->load($this->sectionId);
 		$this->sectionParams = json_decode($this->section->attribs, false);
 		$this->params = UtilitiesHelper::getParams('com_faqbookpro');
 		$topicParams = json_decode($this->topic->params, false);
@@ -438,10 +438,14 @@ class HtmlView extends BaseHtmlView
 			$parents = array();
 
 			if (count($question->topics)) {
+				$table = $this->model->getTable();
+
 				foreach ($question->topics as $key => $topic) {
+					$table->reset();
+					$table->load($topic);
 					$parent = array();
 					$parent['id'] = $topic;
-					$parent['title'] = $this->model->getItem($topic)->title;
+					$parent['title'] = $table->title;
 					$parents[] = $parent;
 				}
 			}
