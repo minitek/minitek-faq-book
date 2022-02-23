@@ -162,6 +162,11 @@ class HtmlView extends BaseHtmlView
 			$childBar->trash('questions.trash')->listCheck(true);
 		}
 
+		$toolbar->back()
+			->text('COM_FAQBOOKPRO_DASHBOARD')
+			->icon('fa fa-' . (Factory::getApplication()->getLanguage()->isRtl() ? 'arrow-right' : 'arrow-left'))
+			->url('index.php?option=com_faqbookpro');
+
 		if ($canDo->get('core.admin') || $canDo->get('core.options'))
 		{
 			$toolbar->preferences('com_faqbookpro');

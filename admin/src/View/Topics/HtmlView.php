@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -160,6 +160,11 @@ class HtmlView extends BaseHtmlView
 		{
 			$childBar->trash('topics.trash')->listCheck(true);
 		}
+
+		$toolbar->back()
+			->text('COM_FAQBOOKPRO_DASHBOARD')
+			->icon('fa fa-' . (Factory::getApplication()->getLanguage()->isRtl() ? 'arrow-right' : 'arrow-left'))
+			->url('index.php?option=com_faqbookpro');
 
 		if ($canDo->get('core.admin') || $canDo->get('core.options'))
 		{
