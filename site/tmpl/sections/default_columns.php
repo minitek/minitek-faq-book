@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
 
 $column_class = $this->params->get('sections_column_class', 'col-12 col-lg-6');
 $card_class = $this->params->get('sections_card_class', 'shadow-sm');
@@ -37,18 +38,17 @@ $card_class = $this->params->get('sections_card_class', 'shadow-sm');
 			$i = 0;
 			foreach ($this->sections as $key=>$section)
 			{
-				$sectionParams = json_decode($section->attribs, false);
-				$section_class = (isset($sectionParams->section_class)) ? $sectionParams->section_class : '';
-				$section_image = (isset($sectionParams->section_image)) ? $sectionParams->section_image : false;
+				$sectionParams = new Registry($section->attribs);
 
-				?><div class="fb_column <?php echo $column_class; ?> <?php echo $section_class; ?>">
+				?><div class="fb_column <?php echo $column_class; ?> <?php echo $sectionParams->get('section_class', ''); ?>">
 					<div class="card h-100 <?php echo $card_class; ?>">
 						<div class="card-body"><?php
 
-							if ($section_image && $this->params->get('sections_image', true))
+							if ($sectionParams->get('section_image', 0) && $this->params->get('sections_image', true))
 							{
 								?><a href="<?php echo Route::_(RouteHelper::getSectionRoute($section->id)); ?>" class="fb_column_image">
-									<img src="<?php echo $section_image; ?>" alt="<?php echo $section->title; ?>" /></a><?php
+									<img src="<?php echo $sectionParams->get('section_image', 0); ?>" alt="<?php echo $section->title; ?>" />
+								</a><?php
 							}
 
 							if ($this->params->get('sections_title', true))

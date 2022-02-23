@@ -18,18 +18,13 @@ use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\NavigationHelper;
 use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
 
 $sectionId = $displayData['sectionId'];
 $visible = $displayData['visible'];
 $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 $section->load($sectionId);
-$sectionParams = json_decode($section->attribs, false);
-
-if (!isset($sectionParams->browse_topics))
-{
-  $sectionParams->browse_topics = false;
-}
-
+$sectionParams = new Registry($section->attribs);
 $user = Factory::getUser();
 $userid = $user->id;
 $sectionModel = new SectionModel;
@@ -50,17 +45,12 @@ $is_minimized = $app->getUserState( 'com_faqbookpro.minimized_leftnav', false );
 $fb_minimized = '';
 $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-left"></i></a>';
 $section_title_html = '';
+$visible_class = $visible ? '' : 'leftnav-hidden';
 
-if ((!$is_minimized && $sectionParams->leftnav == '2') || $is_minimized == 'on')
+if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized == 'on')
 {
   $fb_minimized = 'fb-minimized';
   $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-right"></i></a>';
-}
-
-$visible_class = '';
-if (!$visible)
-{
-  $visible_class = 'leftnav-hidden';
 }
 
 ?><div class="fbLeftNavigation_core fb-hidden <?php echo $fb_minimized; ?> <?php echo $visible_class; ?>"><?php
@@ -75,7 +65,6 @@ if (!$visible)
   </div><?php
 
   // Module position fb-nav-top
-  jimport('joomla.application.module.helper');
   $modules_top = ModuleHelper::getModules('fb-nav-top');
 
   if (count($modules_top))
@@ -92,9 +81,10 @@ if (!$visible)
     <ul class="NavLeftUL_parent"><?php
 
       // Browse Topics
-      if ($sectionParams->browse_topics && isset($topics_tree) && $topics_tree)
+      if ($sectionParams->get('browse_topics', 1) && isset($topics_tree) && $topics_tree)
       {
         $browse_topics_class = '';
+
         if ($app->input->get('view', '') == 'section' && $app->input->get('tab', '') == 'topics')
         {
           $browse_topics_class = 'li_selected';
@@ -117,7 +107,6 @@ if (!$visible)
 
     <div class="fbLeftNavigation_wrap">
       <ul id="NavLeftUL" class="NavLeftUL_parent level0"><?php
-
         // Topics
         if (isset($topics_tree) && $topics_tree)
         {
@@ -126,7 +115,6 @@ if (!$visible)
             echo $topic_tree;
           }
         }
-
       ?></ul>
     </div>
   </div><?php

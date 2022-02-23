@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -60,9 +60,9 @@ class HtmlView extends BaseHtmlView
 		$this->sectionId = $this->topic->section_id;
 		$this->section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 		$this->section->load($this->sectionId);
-		$this->sectionParams = json_decode($this->section->attribs, false);
+		$this->sectionParams = new Registry($this->section->attribs);
 		$this->params = UtilitiesHelper::getParams('com_faqbookpro');
-		$topicParams = json_decode($this->topic->params, false);
+		$topicParams = new Registry($this->topic->params);
 		$this->topic_params = new \stdClass(); // Store topic params
 		$this->questions_params = new \stdClass(); // Store question params
 
@@ -72,34 +72,23 @@ class HtmlView extends BaseHtmlView
 		// Get Navigation
 		if (!$ajax) {
 			// Get Top Navigation
-			if (isset($this->sectionParams->topnav) && $this->sectionParams->topnav) {
-				$this->topnavigation = true;
-			} else {
-				$this->topnavigation = false;
-			}
+			$this->topnavigation = $this->sectionParams->get('topnav', 1);
 
 			// Get Left Navigation
-			$leftnav = $this->sectionParams->leftnav;
-			$this->leftnavigation = false;
-			if ($leftnav) {
-				$this->leftnavigation = true;
-			}
+			$this->leftnavigation = $this->sectionParams->get('leftnav', 1);
 		}
 
 		// Load Endpoint Topics / All Topics
-		$this->loadAllTopics = 1;
-		if (isset($this->sectionParams->load_all_topics)) {
-			$this->loadAllTopics = $this->sectionParams->load_all_topics;
-		}
+		$this->loadAllTopics = $this->sectionParams->get('load_all_topics', 1);
 
 		// Get page
 		$this->page = $app->input->get('page', '1');
 
 		// Ordering type
-		$this->topic_params->ordering_type = 'static';
+		$this->topic_params->ordering_type = $this->sectionParams->get('questions_ordering_type', 'static');
 
 		// Get active tab
-		$active_tab = 'recent';
+		$active_tab = $this->topic_params->ordering_type == 'dynamic' ? $this->sectionParams->get('active_tab', 'recent') : 'recent';
 		$this->tab = $app->input->get('tab', $active_tab);
 
 		// Ordering
@@ -107,18 +96,12 @@ class HtmlView extends BaseHtmlView
 			$ordering = $this->tab;
 			$ordering_dir = 'DESC';
 		} else if ($this->topic_params->ordering_type == 'static') {
-			$ordering = $this->params->get('questions_ordering', 'ordering'); // old value
-			$ordering_dir = $this->params->get('questions_ordering_dir', 'DESC'); // old value
-			if (isset($this->sectionParams->questions_ordering)) {
-				$ordering = $this->sectionParams->questions_ordering;
-			}
-			if (isset($this->sectionParams->questions_ordering_dir)) {
-				$ordering_dir = $this->sectionParams->questions_ordering_dir;
-			}
+			$ordering = $this->sectionParams->get('questions_ordering', 'created');
+			$ordering_dir = $this->sectionParams->get('questions_ordering_dir', 'DESC');
 		}
 
 		// Group method
-		$this->topic_params->merge_topics = false;
+		$this->topic_params->merge_topics = $this->sectionParams->get('questions_group_method', 0);
 
 		// Reset qvisibility
 		if (!isset($this->topic->qvisibility)) {
@@ -126,92 +109,57 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Show topic title
-		$this->topic_params->show_topic_title = true;
-		if (isset($this->sectionParams->topic_title)) {
-			$this->topic_params->show_topic_title = $this->sectionParams->topic_title;
-		}
+		$this->topic_params->show_topic_title = $this->sectionParams->get('topic_title', 1);
 
 		// Show topic description
-		$this->topic_params->show_topic_description = true;
-		if (isset($this->sectionParams->topic_description)) {
-			$this->topic_params->show_topic_description = $this->sectionParams->topic_description;
-		}
+		$this->topic_params->show_topic_description =  $this->sectionParams->get('topic_description', 1);
 
 		// Show topic image
-		$this->topic_params->show_topic_image = false;
-		if (isset($this->sectionParams->topic_image)) {
-			$this->topic_params->show_topic_image = $this->sectionParams->topic_image;
-			$this->topic->image = isset($topicParams->image) ? $topicParams->image : false;
-			$this->topic->image_alt = isset($topicParams->image_alt) ? $topicParams->image_alt : false;
-		}
+		$this->topic_params->show_topic_image = $this->sectionParams->get('topic_image', 0);
+		$this->topic->image = $topicParams->get('image', 0);
+		$this->topic->image_alt = $topicParams->get('image_alt', 0);
 
 		// Topic questions
 		$this->topic_params->show_section_questions = 'active';
 		$this->topic_params->topicid = $this->topicId;
-
-		if (!isset($topicParams->enable_questions)) {
-			$this->topic_params->show_topic_questions = true;
-		} else {
-			$this->topic_params->show_topic_questions = $topicParams->enable_questions;
-		}
+		$this->topic_params->show_topic_questions = $topicParams->get('enable_questions', 1);
 
 		if ($this->topic_params->show_topic_questions) {
 			$this->topic->questions = $this->model->getTopicQuestions($this->topicId, $ordering, $ordering_dir, $this->page, $this->topic_params->merge_topics);
 		}
 
 		// Questions theme
-		$this->questions_params->questions_theme = 'faq';
+		$this->questions_params->questions_theme = $this->sectionParams->get('questions_theme', 'faq');
 
 		// Questions opened
-		$this->questions_params->questions_opened = false;
-		if (isset($topicParams->questions_opened) && $topicParams->questions_opened != '') {
-			$this->questions_params->questions_opened = $topicParams->questions_opened;
+		if ($topicParams->get('questions_opened', '') != '') {
+			$this->questions_params->questions_opened = $topicParams->get('questions_opened', '');
 		} else {
-			if (!isset($this->sectionParams->section_questions_opened)) {
-				$this->questions_params->questions_opened = $this->params->get('questions_opened', false); // old value
-			} else {
-				$this->questions_params->questions_opened = $this->sectionParams->section_questions_opened;
-			}
+			$this->questions_params->questions_opened = $this->sectionParams->get('section_questions_opened', 0);
 		}
 
 		// Subtopics
-		$this->topic_params->show_subtopics = true;
-		if (isset($this->sectionParams->show_subtopics)) {
-			$this->topic_params->show_subtopics = $this->sectionParams->show_subtopics;
-		}
+		$this->topic_params->show_subtopics = $this->sectionParams->get('show_subtopics', 1);
 
 		if (!$this->topic_params->merge_topics && $this->topic_params->show_subtopics) {
 			// Show subtopic title
-			$this->topic_params->show_subtopics_title = true;
-			if (isset($this->sectionParams->subtopics_title)) {
-				$this->topic_params->show_subtopics_title = $this->sectionParams->subtopics_title;
-			}
+			$this->topic_params->show_subtopics_title = $this->sectionParams->get('subtopics_title', 1);
 
 			// Show subtopic description
-			$this->topic_params->show_subtopics_description = true;
-			if (isset($this->sectionParams->subtopics_description)) {
-				$this->topic_params->show_subtopics_description = $this->sectionParams->subtopics_description;
-			}
+			$this->topic_params->show_subtopics_description = $this->sectionParams->get('subtopics_description', 1);
 
 			// Show subtopic image
-			$this->topic_params->show_subtopics_image = false;
-			if (isset($this->sectionParams->subtopics_image)) {
-				$this->topic_params->show_subtopics_image = $this->sectionParams->subtopics_image;
-			}
+			$this->topic_params->show_subtopics_image = $this->sectionParams->get('subtopics_image', 0);
 
 			// Show subtopic questions
-			$this->topic_params->show_subtopics_questions = true;
-			if (isset($this->sectionParams->subtopics_questions)) {
-				$this->topic_params->show_subtopics_questions = $this->sectionParams->subtopics_questions;
-			}
-
+			$this->topic_params->show_subtopics_questions = $this->sectionParams->get('subtopics_questions', 1);
 			$this->topic->subtopics = $this->model->getTopicChildren($this->topicId);
 
 			foreach ($this->topic->subtopics as $key => $subtopic) {
 				$subtopic->issubtopic = true;
-				$subtopicParams = json_decode($subtopic->params, false);
-				$subtopic->image = isset($subtopicParams->image) ? $subtopicParams->image : false;
-				$subtopic->image_alt = isset($subtopicParams->image_alt) ? $subtopicParams->image_alt : false;
+				$subtopicParams = new Registry($subtopic->params);
+				$subtopic->image = $subtopicParams->get('image', 0);
+				$subtopic->image_alt = $subtopicParams->get('image_alt', 0);
 
 				// Reset qvisibility
 				if (!isset($subtopic->qvisibility)) {
@@ -220,17 +168,13 @@ class HtmlView extends BaseHtmlView
 
 				// Questions opened
 				$subtopic->questions_opened = $this->questions_params->questions_opened;
-				if (isset($subtopicParams->questions_opened) && $subtopicParams->questions_opened != '') {
-					$subtopic->questions_opened = $subtopicParams->questions_opened;
+				if ($subtopicParams->get('questions_opened', '') != '') {
+					$subtopic->questions_opened = $subtopicParams->get('questions_opened', '');
 				}
 
 				// Questions
 				if ($this->topic_params->show_subtopics_questions) {
-					if (!isset($subtopicParams->enable_questions)) {
-						$subtopicParams->enable_questions = true;
-					}
-
-					if ($subtopicParams->enable_questions) {
+					if ($subtopicParams->get('enable_questions', 1)) {
 						$subtopic->questions = $this->model->getTopicQuestions($subtopic->id, $ordering, $ordering_dir, $this->page, $this->topic_params->merge_topics);
 					}
 
@@ -244,10 +188,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Show questions link
-		$this->questions_params->questions_link = true;
-		if (isset($this->sectionParams->questions_link)) {
-			$this->questions_params->questions_link = $this->sectionParams->questions_link;
-		}
+		$this->questions_params->questions_link = false;
 
 		// Show answers
 		$this->questions_params->questions_answers = false;
@@ -256,42 +197,22 @@ class HtmlView extends BaseHtmlView
 		$this->questions_params->questions_state_labels = false;
 
 		// Show image
-		$this->questions_params->questions_image = false;
-		if (isset($this->sectionParams->questions_image)) {
-			$this->questions_params->questions_image = $this->sectionParams->questions_image;
-		}
+		$this->questions_params->questions_image = $this->sectionParams->get('questions_image', 0);
 
 		// Show introtext
-		if (!isset($this->sectionParams->questions_introtext)) {
-			$this->questions_params->questions_introtext = $this->params->get('questions_text', true); // old value
-		} else {
-			$this->questions_params->questions_introtext = $this->sectionParams->questions_introtext;
-		}
+		$this->questions_params->questions_introtext = $this->sectionParams->get('questions_introtext', 1);
 
 		// Show views
-		$this->questions_params->questions_views = false;
-		if (isset($this->sectionParams->questions_views)) {
-			$this->questions_params->questions_views = $this->sectionParams->questions_views;
-		}
+		$this->questions_params->questions_views = $this->sectionParams->get('questions_views', 0);
 
 		// Show date
-		if (!isset($this->sectionParams->questions_date)) {
-			$this->questions_params->questions_date = $this->params->get('questions_date', true); // old value
-		} else {
-			$this->questions_params->questions_date = $this->sectionParams->questions_date;
-		}
+		$this->questions_params->questions_date = $this->sectionParams->get('questions_date', 1);
 
 		// Show author
-		$this->questions_params->questions_author = false;
-		if (isset($this->sectionParams->questions_author)) {
-			$this->questions_params->questions_author = $this->sectionParams->questions_author;
-		}
+		$this->questions_params->questions_author = $this->sectionParams->get('questions_author', 1);
 
 		// Show topic
-		$this->questions_params->questions_topic = false;
-		if (isset($this->sectionParams->questions_topic)) {
-			$this->questions_params->questions_topic = $this->sectionParams->questions_topic;
-		}
+		$this->questions_params->questions_topic = $this->sectionParams->get('questions_topic', 2);
 
 		// Prepare questions
 		if (isset($this->topic->questions) && $this->topic->questions) {
@@ -309,7 +230,7 @@ class HtmlView extends BaseHtmlView
 				'page_view' => $app->input->get('view', false),
 				'sectionId' => $this->sectionId,
 				'topicId' => $this->topicId,
-				'leftnav' => $leftnav,
+				'leftnav' => $this->sectionParams->get('leftnav', 1),
 				'loadAllTopics' => $this->loadAllTopics,
 				'active_tab' => $active_tab
 			));
@@ -366,10 +287,7 @@ class HtmlView extends BaseHtmlView
 		$question->image_alt = isset($images->image_alt) ? $images->image_alt : false;
 
 		// Introtext
-		if (!isset($this->sectionParams->questions_introtext_limit)) {
-			$this->sectionParams->questions_introtext_limit = $this->params->get('questions_text_limit', '20'); // use old value
-		}
-		$introtext_limit = $this->sectionParams->questions_introtext_limit;
+		$introtext_limit = $this->sectionParams->get('questions_introtext_limit', 20);
 		$question->introtext = preg_replace('/\{.*\}/', '', $question->content);
 		$question->introtext = preg_replace('/\[.*\]/', '', $question->introtext);
 		if ($introtext_limit) {
@@ -393,18 +311,14 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Author name
-		if (!isset($this->sectionParams->questions_author)) {
-			$this->sectionParams->questions_author = $this->params->get('questions_author', true); // old value
-			$this->sectionParams->questions_author_name = $this->params->get('questions_author_name', 'username'); // old value
-		}
 		if ($question->created_by) {
 			// Check whether user exists
 			$userExists = UtilitiesHelper::userExists($question->created_by);
 			$question->created_by = $userExists ? $question->created_by : false;
 
-			if ($this->sectionParams->questions_author_name === 'name') {
+			if ($this->sectionParams->get('questions_author_name', 'username') === 'name') {
 				$question->author_name = Factory::getUser($question->created_by)->name;
-			} else if ($this->sectionParams->questions_author_name === 'username') {
+			} else if ($this->sectionParams->get('questions_author_name', 'username') === 'username') {
 				$question->author_name = Factory::getUser($question->created_by)->username;
 			}
 		} else if ($question->created_by_name) {
@@ -433,7 +347,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Parent topics
-		if (isset($this->sectionParams->questions_topic) && $this->sectionParams->questions_topic == 2) {
+		if ($this->sectionParams->get('questions_topic', 2) == 2) {
 			$question->topics = $this->model->getTopicParentTopics($question->topicid, $topics = array());
 			$parents = array();
 

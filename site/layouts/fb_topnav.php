@@ -2,7 +2,7 @@
 
 /**
  * @title        Minitek FAQ Book
- * @copyright    Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright    Copyright (C) 2011-2022 Minitek, All rights reserved.
  * @license      GNU General Public License version 3 or later.
  * @author url	 https://www.minitek.gr/
  * @developers	 Minitek.gr
@@ -16,6 +16,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
 
 $sectionId = $displayData['sectionId'];
 $params = UtilitiesHelper::getParams('com_faqbookpro');
@@ -29,11 +30,10 @@ if ($sectionId)
   $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
   $section->load($sectionId);
   $sectionTitle = $section->title;
-  $sectionParams = json_decode($section->attribs, false);
+  $sectionParams = new Registry($section->attribs);
   $menu = $app->getMenu();
   $activeMenu = $menu->getActive();
-  $topnav_sections = isset($sectionParams->topnav_sections) ? $sectionParams->topnav_sections : false;
-  $home_itemid = isset($sectionParams->topnav_root) ? $sectionParams->topnav_root : $activeMenu->id;
+  $home_itemid = $sectionParams->get('topnav_root', '') ? $sectionParams->get('topnav_root', '') : $activeMenu->id;
   $home_menuitem = $menu->getItem($home_itemid);
   $home_title = $home_menuitem->title;
 }
@@ -52,7 +52,7 @@ else
     <div class="fbTopNavigation_wrap">
       <ul class="fbTopNavigation_root fb-hidden-phone"><?php
         // Sections link
-        if (($view != 'profile' || $sectionId) && $topnav_sections) 
+        if (($view != 'profile' || $sectionId) && $sectionParams->get('topnav_sections', 0)) 
         {
           ?><li class="NavTopUL_home"><a class="NavTopUL_link NavTopUL_sections" href="<?php echo Route::_(RouteHelper::getSectionsRoute($home_itemid)); ?>">
             <i class="fas fa-home NavTopUL_homeIcon"></i><?php echo $home_title; ?></a></li>
@@ -65,7 +65,7 @@ else
           ?><li id="top_liid_home" class="NavTopUL_item NavTopUL_section NavTopUL_firstChild <?php echo $class; ?>">
             <a class="NavTopUL_link" href="<?php echo Route::_(RouteHelper::getSectionRoute($sectionId)); ?>" onclick="return false;"><?php
 
-              if ($topnav_sections) 
+              if ($sectionParams->get('topnav_sections', 0)) 
               {
                 ?><i class="fas fa-caret-right NavTopUL_homeIcon"></i><?php echo $sectionTitle;
               } 
@@ -96,7 +96,7 @@ else
 
     <div class="NavTopUL_buttons"><?php
       // Menu button
-      if ((isset($sectionParams->leftnav) && $sectionParams->leftnav) || !$sectionId) 
+      if ($view != 'profile' && ($sectionParams->get('leftnav', 1) || !$sectionId)) 
       {
         ?><a href="#" onclick="return false;" class="show_menu btn btn-outline-primary btn-mfb"><i class="fas fa-bars"></i></a><?php
       }

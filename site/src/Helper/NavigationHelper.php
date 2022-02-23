@@ -16,6 +16,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Model\TopicModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
 
 /**
  * FAQ Book Component Navigation Helper.
@@ -27,7 +28,7 @@ abstract class NavigationHelper
 	public static function getTopicsTree($item, $level = 1)
 	{
 		$topicModel = new TopicModel;
-		$topicParams = json_decode($item->params, false);
+		$topicParams = new Registry($item->params);
   		$output = '';
 		$subitems = $topicModel->getTopicChildren($item->id);
 
@@ -54,9 +55,9 @@ abstract class NavigationHelper
 			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
-			if (isset($topicParams->topic_icon_class) && $topicParams->topic_icon_class)
+			if ($topicParams->get('topic_icon_class', ''))
 			{
-				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->topic_icon_class.'"></i>';
+				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->get('topic_icon_class', '').'"></i>';
 			}
 
 			$output .= $item->title;
@@ -100,9 +101,9 @@ abstract class NavigationHelper
 			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
-			if (isset($topicParams->topic_icon_class) && $topicParams->topic_icon_class)
+			if ($topicParams->get('topic_icon_class', ''))
 			{
-				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->topic_icon_class.'"></i>';
+				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->get('topic_icon_class', '').'"></i>';
 			}
 
 			$icon = '<div class="NavLeftUL_endpointIcon">'.
