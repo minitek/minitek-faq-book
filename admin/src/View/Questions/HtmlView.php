@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -118,7 +118,7 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		ToolbarHelper::title(Text::_('COM_FAQBOOKPRO_QUESTIONS_TITLE'), 'question');
+		ToolbarHelper::title(Text::_('COM_FAQBOOKPRO_QUESTIONS_TITLE'), 'question-circle');
 
 		if ($canDo->get('core.create') || count(FAQBookProHelper::getAuthorisedTopics('core.create')) > 0 )
 		{
