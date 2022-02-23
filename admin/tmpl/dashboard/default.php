@@ -38,7 +38,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=sections'); ?>">
-								<div class="mt-1 mb-3"><i class="icon icon-list-2"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-list-2"></i></div>
 								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_SECTIONS'); ?></div>
 							</a>
 						</div>
@@ -49,7 +49,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=topics'); ?>">
-								<div class="mt-1 mb-3"><i class="icon icon-folder"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-folder"></i></div>
 								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_TOPICS'); ?></div>
 							</a>
 						</div>
@@ -60,7 +60,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="<?php echo Route::_('index.php?option=com_faqbookpro&view=questions'); ?>">
-								<div class="mt-1 mb-3"><i class="icon icon-question-circle"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-question-circle"></i></div>
 								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTIONS'); ?></div>
 							</a>
 						</div>
@@ -71,7 +71,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-comment"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-comment"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWERS'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -85,7 +85,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-comment"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-comment"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ANSWER_TEMPLATES'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -99,7 +99,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-envelope"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-envelope"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_EMAIL_TEMPLATES'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -113,7 +113,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-edit"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-edit"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CUSTOM_FIELDS'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -127,7 +127,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-cubes"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-bookmark"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_QUESTION_TYPES'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -141,7 +141,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="#" class="disabled" onclick="return: false;">
-								<div class="mt-1 mb-3"><i class="icon icon-attachment"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-attachment"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_ATTACHMENTS'); ?>
 									<span class="badge bg-danger">Pro</span>
@@ -155,7 +155,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_faqbookpro&path=&return=' . base64_encode(URI::getInstance()->toString())); ?>">
-								<div class="mt-1 mb-3"><i class="icon icon-cog"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-cog"></i></div>
 								<div><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_CONFIGURATION'); ?></div>
 							</a>
 						</div>
@@ -166,7 +166,7 @@ $localVersion = FAQBookProHelper::localVersion();
 					<div class="card border h-100 py-2">
 						<div class="card-body">
 							<a href="https://extensions.joomla.org/extensions/extension/directory-a-documentation/faq/minitek-faq-book/" target="_blank">
-								<div class="mt-1 mb-3"><i class="icon icon-star" style="color: #ffcb52;"></i></div>
+								<div class="pt-1 pb-3"><i class="icon icon-thumbs-up"></i></div>
 								<div>
 									<?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_LIKE_THIS_EXTENSION'); ?><br>
 									<div class="small">
