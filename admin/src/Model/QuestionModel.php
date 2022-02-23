@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Administrator\Model\AnswerModel;
+use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * Model for a Question.
@@ -43,6 +44,25 @@ class QuestionModel extends AdminModel
 	 * @since  4.0.0
 	 */
 	public $typeAlias = 'com_faqbookpro.question';
+
+	/**
+	 * Batch copy/move command. If set to false,
+	 * the batch copy/move command is not supported
+	 *
+	 * @var    string
+	 * @since  4.1.7
+	 */
+	protected $batch_copymove = 'topic_id';
+
+	/**
+	 * Allowed batch commands
+	 *
+	 * @var    array
+	 * @since  4.1.7
+	 */
+	protected $batch_commands = array(
+		'assetgroup_id' => 'batchAccess'
+	);
 
 	protected function checkTopicId($topicId)
 	{
@@ -75,173 +95,6 @@ class QuestionModel extends AdminModel
 		}
 
 		return array($title, $alias);
-	}
-
-	/**
-	 * Method to perform batch operations on an item or a set of items.
-	 *
-	 * @param   array  $commands  An array of commands to perform.
-	 * @param   array  $pks       An array of item ids.
-	 * @param   array  $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  Returns true on success, false on failure.
-	 *
-	 * @since   12.2
-	 */
-	public function batch($commands, $pks, $contexts)
-	{
-		// Sanitize ids.
-		$pks = array_unique($pks);
-		ArrayHelper::toInteger($pks);
-
-		// Remove any values of zero.
-		if (array_search(0, $pks, true))
-		{
-			unset($pks[array_search(0, $pks, true)]);
-		}
-
-		if (empty($pks))
-		{
-			$this->setError(Text::_('JGLOBAL_NO_ITEM_SELECTED'));
-
-			return false;
-		}
-
-		$done = false;
-
-		// Set some needed variables.
-		$this->user = Factory::getUser();
-		$this->table = $this->getTable();
-		$this->tableClassName = get_class($this->table);
-		$this->contentType = new UcmType;
-		$this->type = $this->contentType->getTypeByTable($this->tableClassName);
-		$this->batchSet = true;
-
-		if ($this->type == false)
-		{
-			$type = new UcmType;
-			$this->type = $type->getTypeByAlias($this->typeAlias);
-
-		}
-		if ($this->type === false)
-		{
-			$type = new UcmType;
-			$this->type = $type->getTypeByAlias($this->typeAlias);
-			$typeAlias = $this->type->type_alias;
-		}
-		else
-		{
-			$typeAlias = $this->type->type_alias;
-		}
-
-		if (!empty($commands['topic_id']))
-		{
-			$cmd = ArrayHelper::getValue($commands, 'move_copy', 'c');
-
-			if ($cmd == 'c')
-			{
-				$result = $this->batchCopy($commands['topic_id'], $pks, $contexts);
-
-				if (is_array($result))
-				{
-					$pks = $result;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			elseif ($cmd == 'm' && !$this->batchMove($commands['topic_id'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!empty($commands['assetgroup_id']))
-		{
-			if (!$this->batchAccess($commands['assetgroup_id'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!empty($commands['language_id']))
-		{
-			if (!$this->batchLanguage($commands['language_id'], $pks, $contexts))
-			{
-				return false;
-			}
-
-			$done = true;
-		}
-
-		if (!$done)
-		{
-			$this->setError(Text::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
-
-			return false;
-		}
-
-		// Clear the cache
-		$this->cleanCache();
-
-		return true;
-	}
-
-	/**
-	 * Batch access level changes for a group of rows.
-	 *
-	 * @param   integer  $value     The new value matching an Asset Group ID.
-	 * @param   array    $pks       An array of row IDs.
-	 * @param   array    $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  True if successful, false otherwise and internal error is set.
-	 *
-	 * @since   12.2
-	 */
-	protected function batchAccess($value, $pks, $contexts)
-	{
-		if (empty($this->batchSet))
-		{
-			// Set some needed variables.
-			$this->user = Factory::getUser();
-			$this->table = $this->getTable();
-			$this->tableClassName = get_class($this->table);
-			$this->contentType = new UcmType;
-			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
-		}
-
-		foreach ($pks as $pk)
-		{
-			if ($this->user->authorise('core.edit', $contexts[$pk]))
-			{
-				$this->table->reset();
-				$this->table->load($pk);
-				$this->table->access = (int) $value;
-
-				if (!$this->table->store())
-				{
-					$this->setError($this->table->getError());
-
-					return false;
-				}
-			}
-			else
-			{
-				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-
-				return false;
-			}
-		}
-
-		// Clean the cache
-		$this->cleanCache();
-
-		return true;
 	}
 
 	/**
@@ -288,7 +141,6 @@ class QuestionModel extends AdminModel
 				{
 					// Not fatal error
 					$this->setError(Text::sprintf('COM_FAQBOOKPRO_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-
 					continue;
 				}
 			}
@@ -320,7 +172,6 @@ class QuestionModel extends AdminModel
 			if (!$this->table->check())
 			{
 				$this->setError($this->table->getError());
-
 				return false;
 			}
 
@@ -328,7 +179,6 @@ class QuestionModel extends AdminModel
 			if (!$this->table->store())
 			{
 				$this->setError($this->table->getError());
-
 				return false;
 			}
 
@@ -343,58 +193,6 @@ class QuestionModel extends AdminModel
 		$this->cleanCache();
 
 		return $newIds;
-	}
-
-	/**
-	 * Batch language changes for a group of rows.
-	 *
-	 * @param   string  $value     The new value matching a language.
-	 * @param   array   $pks       An array of row IDs.
-	 * @param   array   $contexts  An array of item contexts.
-	 *
-	 * @return  boolean  True if successful, false otherwise and internal error is set.
-	 *
-	 * @since   11.3
-	 */
-	protected function batchLanguage($value, $pks, $contexts)
-	{
-		if (empty($this->batchSet))
-		{
-			// Set some needed variables.
-			$this->user = Factory::getUser();
-			$this->table = $this->getTable();
-			$this->tableClassName = get_class($this->table);
-			$this->contentType = new UcmType;
-			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
-		}
-
-		foreach ($pks as $pk)
-		{
-			if ($this->user->authorise('core.edit', $contexts[$pk]))
-			{
-				$this->table->reset();
-				$this->table->load($pk);
-				$this->table->language = $value;
-
-				if (!$this->table->store())
-				{
-					$this->setError($this->table->getError());
-
-					return false;
-				}
-			}
-			else
-			{
-				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-
-				return false;
-			}
-		}
-
-		// Clean the cache
-		$this->cleanCache();
-
-		return true;
 	}
 
 	/**
@@ -416,7 +214,7 @@ class QuestionModel extends AdminModel
 			$this->user = Factory::getUser();
 			$this->table = $this->getTable();
 			$this->tableClassName = get_class($this->table);
-			$this->contentType = new UcmType;
+			$this->contentType = new UCMType;
 			$this->type = $this->contentType->getTypeByTable($this->tableClassName);
 		}
 
@@ -426,6 +224,8 @@ class QuestionModel extends AdminModel
 		{
 			return false;
 		}
+
+		PluginHelper::importPlugin('content');
 
 		// Parent exists so we proceed
 		foreach ($pks as $pk)
@@ -451,7 +251,6 @@ class QuestionModel extends AdminModel
 				{
 					// Not fatal error
 					$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-					
 					continue;
 				}
 			}
@@ -474,6 +273,9 @@ class QuestionModel extends AdminModel
 
 				return false;
 			}
+
+			// Run event for moved item
+			Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.question', &$this->table, false, array()));
 		}
 
 		// Clean the cache

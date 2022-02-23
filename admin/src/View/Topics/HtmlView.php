@@ -161,6 +161,17 @@ class HtmlView extends BaseHtmlView
 			$childBar->trash('topics.trash')->listCheck(true);
 		}
 
+		// Add a batch button
+		if ($canDo->get('core.create')
+			&& $canDo->get('core.edit')
+			&& $canDo->get('core.edit.state'))
+		{
+			$childBar->popupButton('batch')
+				->text('JTOOLBAR_BATCH')
+				->selector('collapseModal')
+				->listCheck(true);
+		}
+
 		$toolbar->back()
 			->text('COM_FAQBOOKPRO_DASHBOARD')
 			->icon('fa fa-' . (Factory::getApplication()->getLanguage()->isRtl() ? 'arrow-right' : 'arrow-left'))

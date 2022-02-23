@@ -15,7 +15,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Table\Table;
-use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 use Joomla\Database\ParameterType;
 
 /**
@@ -25,8 +24,6 @@ use Joomla\Database\ParameterType;
  */
 class QuestionsModel extends ListModel
 {
-	protected static $items = array();
-
 	/**
 	 * Constructor.
 	 *
@@ -371,50 +368,5 @@ class QuestionsModel extends ListModel
 		}
 
 		return $items;
-	}
-
-	public function getBatchTopics($config = array('filter.published' => array(0, 1)))
-	{
-		$hash = md5('com_faqbookpro.' . serialize($config));
-
-		if (!isset(static::$items[$hash]))
-		{
-			$config = (array) $config;
-			$db = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('a.id, a.title, a.level')
-				->from('#__minitek_faqbook_topics AS a')
-				->where('a.parent_id > 0');
-
-			// Filter on the published state
-			if (isset($config['filter.published']))
-			{
-				if (is_numeric($config['filter.published']))
-				{
-					$query->where('a.published = ' . (int) $config['filter.published']);
-				}
-				elseif (is_array($config['filter.published']))
-				{
-					ArrayHelper::toInteger($config['filter.published']);
-					$query->where('a.published IN (' . implode(',', $config['filter.published']) . ')');
-				}
-			}
-
-			$query->order('a.lft');
-			$db->setQuery($query);
-			$items = $db->loadObjectList();
-
-			// Assemble the list options.
-			static::$items[$hash] = array();
-
-			foreach ($items as &$item)
-			{
-				$repeat = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
-				$item->title = str_repeat('- ', $repeat) . $item->title;
-				static::$items[$hash][] = \JHtml::_('select.option', $item->id, $item->title);
-			}
-		}
-
-		return static::$items[$hash];
 	}
 }
