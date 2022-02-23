@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -13,6 +13,7 @@ namespace Joomla\Component\FAQBookPro\Site\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\CMS\Table\Table;
 
 /**
@@ -24,6 +25,7 @@ class SectionsModel extends BaseDatabaseModel
 {
 	public static function getSections($sections = false)
 	{
+		$params = UtilitiesHelper::getParams('com_faqbookpro');
 		$db = Factory::getDbo();
 		$user = Factory::getUser();
 		$query = $db->getQuery(true);
@@ -41,7 +43,11 @@ class SectionsModel extends BaseDatabaseModel
 		// Filter by language
 		$query->where('language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 
-		$query->order('ordering');
+		// Ordering 
+		$ordering = $params->get('sections_ordering', 'ordering');
+		$ordering_dir = $params->get('sections_ordering_dir', 'ASC');
+		$query->order($ordering.' '.$ordering_dir);
+
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
