@@ -21,6 +21,29 @@
 			/>
 
 			<field
+				name="sections_ordering"
+				type="list"
+				default="ordering"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_ORDERING_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_ORDERING_DESC"
+			>
+				<option value="title">COM_FAQBOOKPRO_CONFIG_OPTION_TITLE</option>
+				<option value="created_time">COM_FAQBOOKPRO_CONFIG_OPTION_DATE_CREATED</option>
+				<option value="ordering">COM_FAQBOOKPRO_CONFIG_OPTION_ORDERING</option>
+			</field>
+
+			<field
+				name="sections_ordering_dir"
+				type="list"
+				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_ORDERING_DIRECTION_LABEL"
+				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_ORDERING_DIRECTION_DESC"
+				default="ASC"
+			>
+				<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
+				<option value="DESC">COM_FAQBOOKPRO_FIELD_OPTION_DESC</option>
+			</field>
+
+			<field
 				name="sections_top_navigation"
 				type="radio"
 				layout="joomla.form.field.radio.switcher"
