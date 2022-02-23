@@ -67,6 +67,12 @@ class TopicParentField extends FormField
 			$query->where($db->quoteName('state').' = ' . $db->quote(1));
 		}
 
+		// Filter by section id in back-end
+		if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'section' && $app->input->getInt('id', 0))
+		{
+			$query->where($db->quoteName('id').' = ' . $db->quote($app->input->getInt('id', 0)));
+		}
+
 		// Filter by section id in front-end
 		if ($app->isClient('site') && $app->input->getCmd('view', '') == 'myquestion')
 		{
@@ -103,203 +109,208 @@ class TopicParentField extends FormField
 			return;
 		}
 
-		// Build the sections groups
-		foreach ($sections as $section)
+		if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'section' && !$app->input->getInt('id', 0))
+		{}
+		else 
 		{
-			// Get the topics for this section 
-			$query = $db->getQuery(true)
-				->select('DISTINCT a.id AS value, a.title AS text, a.level, a.published, a.lft, a.qvisibility, a.section_id');
-
-			$subQuery = $db->getQuery(true)
-				->select('id, title, level, published, parent_id, lft, rgt, qvisibility, section_id')
-				->from($db->quoteName('#__minitek_faqbook_topics'))
-				->where($db->quoteName('level').' > 0')
-				->where($db->quoteName('section_id').' = '.$db->quote($section->id));
-
-			if ($app->isClient('site') && $topicid)
+			// Build the sections groups
+			foreach ($sections as $section)
 			{
-				// If there is a topic in the url, select only this topic 
-				$subQuery->where($db->quoteName('id').' = '.$db->quote($topicid));
-			}
+				// Get the topics for this section 
+				$query = $db->getQuery(true)
+					->select('DISTINCT a.id AS value, a.title AS text, a.level, a.published, a.lft, a.qvisibility, a.section_id');
 
-			// Filter on the published state
-			if (is_numeric($published))
-			{
-				$subQuery->where($db->quoteName('published').' = ' . (int) $published);
-			}
-			elseif (is_array($published))
-			{
-				ArrayHelper::toInteger($published);
-				$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
-			}
-			else 
-			{
-				$published = explode(',', $published);
-				ArrayHelper::toInteger($published);
-				$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
-			}
+				$subQuery = $db->getQuery(true)
+					->select('id, title, level, published, parent_id, lft, rgt, qvisibility, section_id')
+					->from($db->quoteName('#__minitek_faqbook_topics'))
+					->where($db->quoteName('level').' > 0')
+					->where($db->quoteName('section_id').' = '.$db->quote($section->id));
 
-			// Filter by language
-			if ($app->isClient('site'))
-			{
-				$subQuery->where($db->quoteName('language').' IN('.$db->quote(Factory::getLanguage()->getTag()).', '.$db->quote('*').')');
-			}
-
-			$query->from('(' . $subQuery->__toString() . ') AS a')
-				->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt')
-				->order('a.lft ASC');
-
-			// Prevent parenting to children of this topic
-			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
-			{
-				if ($topicid != 0)
+				if ($app->isClient('site') && $topicid)
 				{
-					$query->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS p ON p.id = ' . (int) $topicid)
-						->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
+					// If there is a topic in the url, select only this topic 
+					$subQuery->where($db->quoteName('id').' = '.$db->quote($topicid));
 				}
-			}
 
-			$db->setQuery($query);
-
-			try
-			{
-				$topics = $db->loadObjectList();
-			}
-			catch (\RuntimeException $e)
-			{
-				$app->enqueueMessage($e->getMessage(), 'error');
-
-				return;
-			}
-
-			// Stop if there are not topics in this section 
-			if ($app->isClient('site')
-				|| ($app->isClient('administrator') 
-					&& ($app->input->getCmd('view', '') == 'questions' || $app->input->getCmd('view', '') == 'question')))
-			{
-				if (empty($topics))
-					continue;
-			}
-
-			// Pad the topic text with spaces using depth level as a multiplier
-			for ($i = 0, $n = count($topics); $i < $n; $i++)
-			{
-				if ($topics[$i]->published == 1)
+				// Filter on the published state
+				if (is_numeric($published))
 				{
-					$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . $topics[$i]->text;
+					$subQuery->where($db->quoteName('published').' = ' . (int) $published);
 				}
-				else
+				elseif (is_array($published))
 				{
-					$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . '[' . $topics[$i]->text . ']';			
-					$topics[$i]->text .= ']';
+					ArrayHelper::toInteger($published);
+					$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
 				}
-			}
-
-			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
-			{
-				// For new items we want a list of topics you are allowed to create in.
-				if ($topicid == 0)
+				else 
 				{
-					foreach ($topics as $i => $topic)
+					$published = explode(',', $published);
+					ArrayHelper::toInteger($published);
+					$subQuery->where($db->quoteName('published').' IN (' . implode(',', $published) . ')');
+				}
+
+				// Filter by language
+				if ($app->isClient('site'))
+				{
+					$subQuery->where($db->quoteName('language').' IN('.$db->quote(Factory::getLanguage()->getTag()).', '.$db->quote('*').')');
+				}
+
+				$query->from('(' . $subQuery->__toString() . ') AS a')
+					->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt')
+					->order('a.lft ASC');
+
+				// Prevent parenting to children of this topic
+				if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
+				{
+					if ($topicid != 0)
 					{
-						/* To take save or create in a topic you need to have create rights for that topic
-						* unless the item is already in that topic.
-						* Unset the option if the user isn't authorised for it. In this field assets are always topics.
+						$query->join('LEFT', $db->quoteName('#__minitek_faqbook_topics') . ' AS p ON p.id = ' . (int) $topicid)
+							->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
+					}
+				}
+
+				$db->setQuery($query);
+
+				try
+				{
+					$topics = $db->loadObjectList();
+				}
+				catch (\RuntimeException $e)
+				{
+					$app->enqueueMessage($e->getMessage(), 'error');
+
+					return;
+				}
+
+				// Stop if there are not topics in this section 
+				if ($app->isClient('site')
+					|| ($app->isClient('administrator') 
+						&& ($app->input->getCmd('view', '') == 'questions' || $app->input->getCmd('view', '') == 'question')))
+				{
+					if (empty($topics))
+						continue;
+				}
+
+				// Pad the topic text with spaces using depth level as a multiplier
+				for ($i = 0, $n = count($topics); $i < $n; $i++)
+				{
+					if ($topics[$i]->published == 1)
+					{
+						$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . $topics[$i]->text;
+					}
+					else
+					{
+						$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . '[' . $topics[$i]->text . ']';			
+						$topics[$i]->text .= ']';
+					}
+				}
+
+				if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
+				{
+					// For new items we want a list of topics you are allowed to create in.
+					if ($topicid == 0)
+					{
+						foreach ($topics as $i => $topic)
+						{
+							/* To take save or create in a topic you need to have create rights for that topic
+							* unless the item is already in that topic.
+							* Unset the option if the user isn't authorised for it. In this field assets are always topics.
+							*/
+							if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true && $topic->level != 0)
+							{
+								unset($topics[$i]);
+							}
+						}
+					}
+					// If you have an existing topic id things are more complex.
+					else
+					{
+						/* If you are only allowed to edit in this topic but not edit.state, you should not get any
+						* option to change the topic parent for a topic or the topic for a content item,
+						* but you should be able to save in that topic.
 						*/
-						if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true && $topic->level != 0)
+						foreach ($topics as $i => $topic)
 						{
-							unset($topics[$i]);
+							if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true && !isset($parentid))
+							{
+								if ($topic->value != $topicid)
+								{
+									unset($topic[$i]);
+								}
+							}
+
+							if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true
+								&& (isset($parentid))
+								&& $topic->value != $parentid)
+							{
+								unset($topics[$i]);
+							}
+
+							// However, if you can edit.state you can also move this to another topic for which you have
+							// create permission and you should also still be able to save in the current topic.
+							if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+								&& ($topic->value != $topicid && !isset($parentid)))
+							{
+								{
+									unset($topics[$i]);
+								}
+							}
+
+							if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+								&& (isset($parentid))
+								&& $topic->value != $parentid)
+							{
+								{
+									unset($topics[$i]);
+								}
+							}
 						}
 					}
 				}
-				// If you have an existing topic id things are more complex.
-				else
+
+				if ($app->isClient('site'))
 				{
-					/* If you are only allowed to edit in this topic but not edit.state, you should not get any
-					* option to change the topic parent for a topic or the topic for a content item,
-					* but you should be able to save in that topic.
-					*/
+					// Remove topics where user has no permission to create 
 					foreach ($topics as $i => $topic)
 					{
-						if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true && !isset($parentid))
-						{
-							if ($topic->value != $topicid)
-							{
-								unset($topic[$i]);
-							}
-						}
-
-						if ($user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $topicid) != true
-							&& (isset($parentid))
-							&& $topic->value != $parentid)
+						if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
 						{
 							unset($topics[$i]);
 						}
-
-						// However, if you can edit.state you can also move this to another topic for which you have
-						// create permission and you should also still be able to save in the current topic.
-						if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
-							&& ($topic->value != $topicid && !isset($parentid)))
-						{
-							{
-								unset($topics[$i]);
-							}
-						}
-
-						if (($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
-							&& (isset($parentid))
-							&& $topic->value != $parentid)
-						{
-							{
-								unset($topics[$i]);
-							}
-						}
 					}
 				}
-			}
-
-			if ($app->isClient('site'))
-			{
-				// Remove topics where user has no permission to create 
+		
+				// Filter by qvisibility and permissions
+				// Users without permissions to create private can not select/see topics of private only questions
 				foreach ($topics as $i => $topic)
 				{
-					if ($user->authorise('core.create', 'com_faqbookpro.topic.' . $topic->value) != true)
+					if (!$user->authorise('core.private.create', 'com_faqbookpro.topic.' . $topic->value)
+						&& $topic->qvisibility == 2)
 					{
 						unset($topics[$i]);
 					}
 				}
-			}
-	
-			// Filter by qvisibility and permissions
-			// Users without permissions to create private can not select/see topics of private only questions
-			foreach ($topics as $i => $topic)
-			{
-				if (!$user->authorise('core.private.create', 'com_faqbookpro.topic.' . $topic->value)
-					&& $topic->qvisibility == 2)
+
+				// Initialize the group
+				$groups[$section->title] = array();
+				$groups[$section->title]['id'] = $section->id;
+				$groups[$section->title]['items'] = array();
+
+				// 'Add to section' option
+				if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
 				{
-					unset($topics[$i]);
+					$groups[$section->title]['items'][] = HTMLHelper::_(
+						'select.option', 'section.'.$section->id.':1', Text::_('COM_FAQBOOKPRO_FIELD_PARENT_OPTION_ADD_TO_SECTION').''.$section->title, 'value', 'text'
+					);
 				}
-			}
-
-			// Initialize the group
-			$groups[$section->title] = array();
-			$groups[$section->title]['id'] = $section->id;
-			$groups[$section->title]['items'] = array();
-
-			// 'Add to section' option
-			if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
-			{
-				$groups[$section->title]['items'][] = HTMLHelper::_(
-					'select.option', 'section.'.$section->id.':1', Text::_('COM_FAQBOOKPRO_FIELD_PARENT_OPTION_ADD_TO_SECTION').''.$section->title, 'value', 'text'
-				);
-			}
-		
-			// Build the topics
-			foreach ($topics as $topic)
-			{
-				$groups[$section->title]['items'][] = HTMLHelper::_(
-					'select.option', $topic->value, $topic->text, 'value', 'text'
-				);
+			
+				// Build the topics
+				foreach ($topics as $topic)
+				{
+					$groups[$section->title]['items'][] = HTMLHelper::_(
+						'select.option', $topic->value, $topic->text, 'value', 'text'
+					);
+				}
 			}
 		}
 		
@@ -341,6 +352,7 @@ class TopicParentField extends FormField
 		{
 			if ($app->input->getCmd('view', '') == 'questions' 
 				|| $app->input->getCmd('view', '') == 'question'
+				|| $app->input->getCmd('view', '') == 'section'
 				|| $app->input->getCmd('option', '') == 'com_menus') 
 			{
 				$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPIC'));

@@ -417,7 +417,6 @@
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SHOW_ACTIVE_TOPIC_DESC"
-				showon="show_section_questions:active"
 			>
 				<option value="0">JNO</option>
 				<option value="active">COM_FAQBOOKPRO_FIELD_OPTION_ACTIVE_TOPIC</option>
@@ -426,9 +425,11 @@
 
 			<field
 				name="topicid"
-				type="topicid"
+				type="topicparent"
 				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TOPIC_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_ACTIVE_TOPIC_DESC"
+				class="form-select"
+				showon="show_section_questions:active"
 			>
 			</field>
 
