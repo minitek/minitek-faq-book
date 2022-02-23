@@ -153,34 +153,6 @@ class QuestionController extends FormController
 		return parent::batch($model);
 	}
 
-	public function dynamicQVisibility()
-	{
-		Session::checkToken('get') or jexit(Text::_('JINVALID_TOKEN'));
-
-		$jinput = Factory::getApplication()->input;
-		$topicId = $jinput->get('topicid');
-
-		if ($topicId > 1)
-		{
-			$model = $this->getModel();
-			$data = $model->dynamicQVisibility($topicId);
-
-			if (is_numeric($data))
-			{
-				echo $data;
-				Factory::getApplication()->close();
-			}
-			else
-			{
-				jexit('error-qvisibility-1');
-			}
-		}
-		else
-		{
-			jexit('error-qvisibility-2');
-		}
-	}
-
 	/**
 	 * Method to edit an existing record.
 	 *
