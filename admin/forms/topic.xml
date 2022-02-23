@@ -311,6 +311,7 @@
 				label="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_DESC"
 				default=""
+				showon="enable_questions:1"
 			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
@@ -324,6 +325,7 @@
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_TITLE"
 				default=""
+				showon="enable_questions:1"
 			/>
 
 			<field
@@ -333,6 +335,7 @@
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
 				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_TITLE"
 				default=""
+				showon="enable_questions:1"
 			/>
 
 		</fieldset>

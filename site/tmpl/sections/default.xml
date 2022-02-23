@@ -78,7 +78,11 @@
 				<option value="forum">COM_FAQBOOKPRO_CONFIG_OPTION_FORUM</option>
 			</field>
 
-			<field type="separator" text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR" />
+			<field 
+				type="separator" 
+				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR" 
+				showon="sections_layout:columns"
+			/>
 
 			<field
 				name="sections_column_class"
@@ -86,6 +90,7 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMN_CLASS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMN_CLASS_DESC"
 				default="col-12 col-lg-6"
+				showon="sections_layout:columns"
 			/>
 
 			<field
@@ -94,6 +99,7 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CARD_CLASS_DESC"
 				default="shadow-sm"
+				showon="sections_layout:columns"
 			/>
 
 			<field
@@ -103,6 +109,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_IMAGE_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -115,6 +122,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TITLE_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -127,6 +135,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -139,6 +148,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -151,6 +161,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -163,6 +174,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
+				showon="sections_layout:columns"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -176,9 +188,14 @@
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CUSTOM_CONTENT_DESC"
 				filter="JComponentHelper::filterText"
 				buttons="false"
+				showon="sections_layout:columns"
 			/>
 
-			<field type="separator" text="COM_FAQBOOKPRO_CONFIG_SECTIONS_FORUM_LAYOUT_SEPARATOR" />
+			<field 
+				type="separator" 
+				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_FORUM_LAYOUT_SEPARATOR" 
+				showon="sections_layout:forum"
+			/>
 
 			<field
 				name="sections_forum_section_count"
@@ -187,6 +204,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_COUNT_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -199,6 +217,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_DESCRIPTION_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -211,6 +230,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_HEADERS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_HEADERS_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -223,6 +243,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_SECTION_TOPICS_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -234,6 +255,7 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPIC_TEXT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPIC_TEXT_DESC"
 				default="Topic"
+				showon="sections_layout:forum"
 			/>
 
 			<field
@@ -243,6 +265,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_COUNT_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -255,6 +278,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_ICON_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -267,6 +291,7 @@
 				default="0"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_IMAGE_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -279,6 +304,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_TOPICS_DESCRIPTION_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -291,6 +317,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -303,6 +330,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CHILDREN_TOPICS_COUNT_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -315,6 +343,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_LAST_QUESTION_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -326,6 +355,7 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_TEXT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_TEXT_DESC"
 				default="Latest question"
+				showon="sections_layout:forum"
 			/>
 
 			<field
@@ -334,6 +364,7 @@
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_NO_QUESTIONS_TEXT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_NO_QUESTIONS_TEXT_DESC"
 				default="No questions"
+				showon="sections_layout:forum"
 			/>
 
 			<field
@@ -343,6 +374,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_DATE_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -355,6 +387,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_QUESTION_AUTHOR_DESC"
+				showon="sections_layout:forum"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
