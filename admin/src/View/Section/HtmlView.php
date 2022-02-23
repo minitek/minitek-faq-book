@@ -105,6 +105,12 @@ class HtmlView extends BaseHtmlView
 				}
 			}
 
+			// If checked out, we can still save
+			if ($canDo->get('core.create'))
+			{
+				ToolbarHelper::save2copy('section.save2copy');
+			}
+
 			ToolbarHelper::cancel('section.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
