@@ -92,13 +92,18 @@ class BatchTopicIdField
 			}
 
 			// Initialize the group
-			$groups[$section->title] = array();
-			$groups[$section->title]['items'] = array();
+			$title = $section->title;
+
+			if (array_key_exists($title, $groups))
+				$title .= ' ['.$section->alias.']';
+
+			$groups[$title] = array();
+			$groups[$title]['items'] = array();
 
 			if ($app->input->getCmd('view', '') == 'topics')
 			{
 				// 'Add to this section' option
-				$groups[$section->title]['items'][] = HTMLHelper::_(
+				$groups[$title]['items'][] = HTMLHelper::_(
 					'select.option', $section->id, Text::_('COM_FAQBOOKPRO_FIELD_PARENT_OPTION_ADD_TO_SECTION').''.$section->title, 'value', 'text'
 				);
 			}
@@ -108,7 +113,7 @@ class BatchTopicIdField
 				// Build the topics
 				foreach ($topics as $topic)
 				{
-					$groups[$section->title]['items'][] = HTMLHelper::_(
+					$groups[$title]['items'][] = HTMLHelper::_(
 						'select.option', $topic->value, $topic->text, 'value', 'text'
 					);
 				}
@@ -118,7 +123,7 @@ class BatchTopicIdField
 				// Build the topics
 				foreach ($topics as $topic)
 				{
-					$groups[$section->title]['items'][] = HTMLHelper::_(
+					$groups[$title]['items'][] = HTMLHelper::_(
 						'select.option', $topic->section_id.'.'.$topic->value, $topic->text, 'value', 'text'
 					);
 				}
