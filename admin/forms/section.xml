@@ -303,6 +303,31 @@
 				description="COM_FAQBOOKPRO_FIELD_SECTION_IMAGE_DESC"
 			/>
 
+			<field
+				name="topics_ordering"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_TOPICS_ORDERING_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPICS_ORDERING_DESC"
+				default="lft"
+			>
+				<option value="title">COM_FAQBOOKPRO_FIELD_OPTION_TITLE</option>
+				<option value="created_time">COM_FAQBOOKPRO_FIELD_OPTION_CREATED</option>
+				<option value="modified_time">COM_FAQBOOKPRO_FIELD_OPTION_MODIFIED</option>
+				<option value="lft">COM_FAQBOOKPRO_FIELD_OPTION_ORDERING</option>
+				<option value="hits">COM_FAQBOOKPRO_FIELD_OPTION_HITS</option>
+			</field>
+
+			<field
+				name="topics_ordering_dir"
+				type="list"
+				label="COM_FAQBOOKPRO_FIELD_TOPICS_ORDERING_DIRECTION_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOPICS_ORDERING_DIRECTION_DESC"
+				default="ASC"
+			>
+				<option value="ASC">COM_FAQBOOKPRO_FIELD_OPTION_ASC</option>
+				<option value="DESC">COM_FAQBOOKPRO_FIELD_OPTION_DESC</option>
+			</field>
+
 			<field type="separator" text="COM_FAQBOOKPRO_FIELD_TOPICS_TREE_SEPARATOR" />
 
 			<field

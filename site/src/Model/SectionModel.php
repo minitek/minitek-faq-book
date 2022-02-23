@@ -170,7 +170,12 @@ class SectionModel extends BaseDatabaseModel
 		// Filter by language
 		$query->where('c.language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 
-		$query->order('c.lft');
+		// Ordering
+		$section = $this->getItem($sectionId);
+		$sectionParams = json_decode($section->attribs, false);
+		$ordering = isset($sectionParams->topics_ordering) ? 'c.'.$sectionParams->topics_ordering : 'c.lft';
+		$ordering_dir = isset($sectionParams->topics_ordering_dir) ? $sectionParams->topics_ordering_dir : 'ASC';
+		$query->order($ordering.' '.$ordering_dir);
 
 		// Get the results
 		$db->setQuery($query);

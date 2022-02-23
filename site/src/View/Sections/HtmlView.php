@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -56,7 +56,7 @@ class HtmlView extends BaseHtmlView
 
 			foreach ($section->topics as $topic) {
 				$topic->q_count = $this->model->getTopicQuestionsCount($topic->id);
-				$topic->children = $this->model->getChildrenTopics($topic->id);
+				$topic->children = $this->model->getChildrenTopics($topic);
 				$topic->lastpost = $this->model->getTopicLastQuestion($topic->id);
 				if ($topic->lastpost) {
 					$topic->lastpost->time_since = UtilitiesHelper::getTimeSince($topic->lastpost->created);

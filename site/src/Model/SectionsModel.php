@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Registry\Registry;
 
 /**
  * FAQ Book Component Sections Model
@@ -61,7 +62,7 @@ class SectionsModel extends BaseDatabaseModel
 		}
 	}
 
-	public static function getChildrenTopics($topicId)
+	public static function getChildrenTopics($topic)
 	{
 		$db = Factory::getDbo();
 		$user = Factory::getUser();
@@ -69,9 +70,17 @@ class SectionsModel extends BaseDatabaseModel
 		$query->select('*')
 			->from('#__minitek_faqbook_topics');
 		$query->where('published = 1');
-		$query->where('parent_id = '.$db->quote($topicId));
+		$query->where('parent_id = '.$db->quote($topic->id));
 		$query->where('access IN (' . implode(',', $user->getAuthorisedViewLevels()) . ')');
-		$query->order('lft');
+
+		// Ordering
+		$section_table = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+		$section_table->load($topic->section_id);
+		$sectionParams = new Registry($section_table->attribs);
+		$ordering = $sectionParams->get('topics_ordering', 'lft');
+		$ordering_dir = $sectionParams->get('topics_ordering_dir', 'ASC');
+		$query->order($ordering.' '.$ordering_dir);
+
 		$db->setQuery($query);
 		$rows = $db->loadObjectList();
 
