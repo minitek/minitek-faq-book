@@ -73,19 +73,7 @@
 
 		<field
 			name="section_id"
-			type="faqbooksections"
-			label="COM_FAQBOOKPRO_FIELD_SECTION_LABEL"
-			description="COM_FAQBOOKPRO_FIELD_SECTION_DESC"
-			required="true"
-		>
-			<option value="">COM_FAQBOOKPRO_OPTION_SELECT_SECTION</option>
-		</field>
-
-		<field
-			name="section_id_duplicate"
-			type="text"
-			class="readonly"
-			readonly="true"
+			type="hidden"
 		/>
 
 		<field
@@ -93,9 +81,9 @@
 			type="topicparent"
 			label="COM_FAQBOOKPRO_FIELD_PARENT_LABEL"
 			description="COM_FAQBOOKPRO_FIELD_PARENT_DESC"
-		>
-			<option value="1">JGLOBAL_ROOT_PARENT</option>
-		</field>
+			class="form-select"
+			required="true"
+		/>
 
 		<field
 			name="lft"

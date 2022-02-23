@@ -13,10 +13,11 @@
 
 			<field
 				name="fb_sections"
-				type="fbsections"
+				type="sectionid"
 				default=""
 				label="COM_FAQBOOKPRO_CONFIG_INCLUDE_SECTIONS_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_INCLUDE_SECTIONS_DESC"
+				multiple="true"
 			/>
 
 			<field

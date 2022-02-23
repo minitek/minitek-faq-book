@@ -297,6 +297,11 @@ class TopicModel extends AdminModel
 			$isNew = false;
 		}
 
+		// If there is no parent topic, parent_id has the format 'section.section_id.1'
+		// We must clean this up and set it to '1'
+		if (substr( $data['parent_id'], 0, 7 ) === "section")
+			$data['parent_id'] = 1;
+
 		// Set the new parent id if parent id not matched OR while New/Save as Copy .
 		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0)
 		{
@@ -513,22 +518,6 @@ class TopicModel extends AdminModel
 		}
 
 		return array($title, $alias);
-	}
-
-	public function dynamicSection($topicId)
-	{
-		$db = Factory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select('t.id, t.title, t.section_id, s.id as section_id, s.title as section_title, s.alias as section_alias')
-			->from('#__minitek_faqbook_topics AS t')
-			->where('t.id = ' . $db->quote($topicId) . '')
-			->join('LEFT', $db->quoteName('#__minitek_faqbook_sections') . ' AS s ON s.id = t.section_id');
-		$db->setQuery($query);
-
-		$row = $db->loadObject();
-		$row = json_encode($row);
-
-		jexit($row);
 	}
 
 	public static function getTopic($id)

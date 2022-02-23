@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -54,17 +54,6 @@ $input = Factory::getApplication()->input;
 						</div>
 						<div class="control-group">
 							<div class="control-label">
-								<?php echo $this->form->getLabel('section_id'); ?>
-							</div>
-							<div class="controls">
-								<?php echo $this->form->getInput('section_id'); ?>
-							</div>
-							<div class="controls" id="section_id_duplicate" style="display: none;">
-								<?php echo $this->form->getInput('section_id_duplicate'); ?>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="control-label">
 								<?php echo $this->form->getLabel('published'); ?>
 							</div>
 							<div class="controls">
@@ -85,6 +74,14 @@ $input = Factory::getApplication()->input;
 							</div>
 							<div class="controls">
 								<?php echo $this->form->getInput('language'); ?>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="control-label">
+								<?php echo $this->form->getLabel('section_id'); ?>
+							</div>
+							<div class="controls">
+								<?php echo $this->form->getInput('section_id'); ?>
 							</div>
 						</div>
 					</fieldset>

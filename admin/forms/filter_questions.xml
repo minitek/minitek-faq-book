@@ -20,19 +20,17 @@
 
 		<field
 			name="topic_id"
-			type="topicid"
+			type="topicparent"
 			onchange="this.form.submit();"
-			multiple="true"
-			layout="joomla.form.field.list-fancy-select"
+			class="form-select"
 			published="0,1,2"
-			hint="COM_FAQBOOKPRO_OPTION_SELECT_TOPIC"
 		/>
 
 		<field
 			name="sectionid"
-			type="faqbooksections"
+			type="sectionid"
 			onchange="this.form.submit();"
-			>
+		>
 			<option value="">COM_FAQBOOKPRO_OPTION_SELECT_SECTION</option>
 		</field>
 
@@ -48,7 +46,7 @@
 			onchange="this.form.submit();"
 		>
 			<option value="">JOPTION_SELECT_MAX_LEVELS</option>
-    </field>
+    	</field>
 
 		<field
 			name="pinned"

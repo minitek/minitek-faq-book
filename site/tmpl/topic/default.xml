@@ -15,12 +15,11 @@
 
 				<field
 					name="id"
-					type="topicid"
+					type="topicparent"
 					label="COM_FAQBOOKPRO_CONFIG_TOPIC_ID_LABEL"
-					description="COM_FAQBOOKPRO_CONFIG_TOPIC_ID_DESC"
+					class="form-select"
 					required="true"
-				>
-				</field>
+				/>
 
 			</fieldset>
 
