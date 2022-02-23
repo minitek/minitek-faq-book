@@ -78,20 +78,13 @@ class HtmlView extends BaseHtmlView
 				if ($topic->children) {
 					foreach ($topic->children as $child) {
 						$child->q_count = $this->model->getTopicQuestionsCount($child->id);
-
-						$childParams = json_decode($child->params, false);
-						$child->icon_class = 'folder';
-						if (isset($childParams->topic_icon_class)) {
-							$child->icon_class = $childParams->topic_icon_class;
-						}
+						$childParams = new Registry($child->params);
+						$child->icon_class = $childParams->get('topic_icon_class', '');
 					}
 				}
 
-				$topicParams = json_decode($topic->params, false);
-				$topic->icon_class = 'folder';
-				if (isset($topicParams->topic_icon_class)) {
-					$topic->icon_class = $topicParams->topic_icon_class;
-				}
+				$topicParams = new Registry($topic->params);
+				$topic->icon_class = $topicParams->get('topic_icon_class', '');
 			}
 		}
 

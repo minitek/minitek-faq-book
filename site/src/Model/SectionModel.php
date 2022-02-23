@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Registry\Registry;
 
 /**
  * FAQ Book Component Section Model
@@ -172,10 +173,9 @@ class SectionModel extends BaseDatabaseModel
 
 		// Ordering
 		$section = $this->getItem($sectionId);
-		$sectionParams = json_decode($section->attribs, false);
-		$ordering = isset($sectionParams->topics_ordering) ? 'c.'.$sectionParams->topics_ordering : 'c.lft';
-		$ordering_dir = isset($sectionParams->topics_ordering_dir) ? $sectionParams->topics_ordering_dir : 'ASC';
-		$query->order($ordering.' '.$ordering_dir);
+		$sectionParams = new Registry($section->attribs);
+		$ordering = 'c.'.$sectionParams->get('topics_ordering', 'lft');
+		$ordering_dir = $sectionParams->get('topics_ordering_dir', 'ASC');
 
 		// Get the results
 		$db->setQuery($query);

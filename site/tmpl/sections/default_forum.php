@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -14,6 +14,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
 
 ?><div class="fbContent_sections"><?php
 
@@ -35,11 +36,9 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 		?><div class="fb_forums"><?php
 			foreach ($this->sections as $key=>$section)
 			{
-				$sectionParams = json_decode($section->attribs, false);
-				$section_class = (isset($sectionParams->section_class)) ? $sectionParams->section_class : '';
-				$section_image = (isset($sectionParams->section_image)) ? $sectionParams->section_image : false;
+				$sectionParams = new Registry($section->attribs);
 
-				?><div class="fb_forum <?php echo $section_class; ?>">
+				?><div class="fb_forum <?php echo $sectionParams->get('section_class', ''); ?>">
 					<div class="fb_forum_header"><?php
 						if ($this->params->get('sections_title', true))
 						{
