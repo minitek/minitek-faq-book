@@ -292,14 +292,19 @@ class TopicParentField extends FormField
 				}
 
 				// Initialize the group
-				$groups[$section->title] = array();
-				$groups[$section->title]['id'] = $section->id;
-				$groups[$section->title]['items'] = array();
+				$title = $section->title;
+
+				if (array_key_exists($title, $groups))
+					$title .= ' ['.$section->alias.']';
+
+				$groups[$title] = array();
+				$groups[$title]['id'] = $section->id;
+				$groups[$title]['items'] = array();
 
 				// 'Add to section' option
 				if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'topic')
 				{
-					$groups[$section->title]['items'][] = HTMLHelper::_(
+					$groups[$title]['items'][] = HTMLHelper::_(
 						'select.option', 'section.'.$section->id.':1', Text::_('COM_FAQBOOKPRO_FIELD_PARENT_OPTION_ADD_TO_SECTION').''.$section->title, 'value', 'text'
 					);
 				}
@@ -307,7 +312,7 @@ class TopicParentField extends FormField
 				// Build the topics
 				foreach ($topics as $topic)
 				{
-					$groups[$section->title]['items'][] = HTMLHelper::_(
+					$groups[$title]['items'][] = HTMLHelper::_(
 						'select.option', $topic->value, $topic->text, 'value', 'text'
 					);
 				}
@@ -372,7 +377,7 @@ class TopicParentField extends FormField
 			$groups = $select + $groups;
 		}
 
-		if ($app->isClient('site') && $app->input->getCmd('view', '') == 'questions')
+		if ($app->isClient('site') && ($app->input->getCmd('view', '') == 'questions' || $app->input->getCmd('view', '') == 'myquestion'))
 		{
 			$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPIC'));
 
