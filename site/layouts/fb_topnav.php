@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
-use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
+use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 $sectionId = $displayData['sectionId'];
@@ -26,8 +26,8 @@ $tab = $app->input->get('tab', '');
 
 if ($sectionId) 
 {
-  $sectionModel = new SectionModel;
-  $section = $sectionModel->getItem($sectionId);
+  $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+  $section->load($sectionId);
   $sectionTitle = $section->title;
   $sectionParams = json_decode($section->attribs, false);
   $menu = $app->getMenu();

@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Model\TopicModel;
-use Joomla\Component\FAQBookPro\Site\Model\SectionModel;
+use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 /**
@@ -27,7 +27,6 @@ abstract class NavigationHelper
 	public static function getTopicsTree($item, $level = 1)
 	{
 		$topicModel = new TopicModel;
-		$sectionModel = new SectionModel;
 		$topicParams = json_decode($item->params, false);
   		$output = '';
 		$subitems = $topicModel->getTopicChildren($item->id);
@@ -74,9 +73,19 @@ abstract class NavigationHelper
 			$back_href = $item->parent_id > 1 
 				? Route::_(RouteHelper::getTopicRoute($item->parent_id)) 
 				: Route::_(RouteHelper::getSectionRoute($item->section_id));
-			$data_title = $item->parent_id > 1 
-				? $topicModel->getItem($item->parent_id)->title 
-				: $sectionModel->getItem($item->section_id)->title;
+
+			if ($item->parent_id > 1 )
+			{
+				$parent = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+				$parent->load($item->parent_id);
+				$data_title = $parent->title;
+			}
+			else 
+			{
+				$section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+				$section->load($item->section_id);
+				$data_title = $section->title;
+			}
 			
 			$output .= '<li data-parent="'.$item->parent_id.'" class="NavLeftUL_backItem">';
 			$output .= '<a href="'.$back_href.'" class="NavLeftUL_anchor" rel="nofollow" onclick="return false;" data-title="'.$data_title.'">';
