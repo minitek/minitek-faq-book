@@ -460,6 +460,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$topicModel = new TopicModel;
 		$topicParams = json_decode($item->params, false);
+		
 		$output = '';
 		$subitems = $topicModel->getTopicChildren($item->id);
 

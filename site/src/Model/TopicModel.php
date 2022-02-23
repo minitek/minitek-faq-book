@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Table\Table;
+use Joomla\Registry\Registry;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 
@@ -280,86 +281,12 @@ class TopicModel extends BaseDatabaseModel
 
 	public static function addHit($id)
 	{
-    $db = Factory::getDBO();
-		$query = " UPDATE `#__minitek_faqbook_topics` "
-			." SET hits = hits + 1 "
-			." WHERE id = ".$db->Quote($id)." ";
-  	$db->setQuery($query);
-  	$db->execute();
-	}
-
-	public function getAllTopics()
-	{
-		$app = Factory::getApplication();
 		$db = Factory::getDBO();
-		$user = Factory::getUser();
-		$query = "SELECT id, title, parent_id	FROM #__minitek_faqbook_topics";
-
-		if ($app->isSite())
-		{
-			$query .= " WHERE published=1 AND level>0 ";
-			$query .= " AND access IN(".implode(',', $user->getAuthorisedViewLevels()).")";
-
-			if ($app->getLanguageFilter())
-			{
-				$query .= " AND language IN(".$db->Quote(JFactory::getLanguage()->getTag()).", ".$db->Quote('*').")";
-			}
-		}
-
-		$query .= " ORDER BY parent_id ";
+			$query = " UPDATE `#__minitek_faqbook_topics` "
+				." SET hits = hits + 1 "
+				." WHERE id = ".$db->Quote($id)." ";
 		$db->setQuery($query);
-		$topics = $db->loadObjectList();
-		$tree = array();
-
-		return $this->buildTree($topics);
-	}
-
-	public function buildTree(array &$topics, $parent = 1)
-	{
-		$branch = array();
-
-		foreach ($topics as &$topic)
-		{
-			if ($topic->parent_id == $parent)
-			{
-				$children = $this->buildTree($topics, $topic->id);
-
-				if ($children)
-				{
-					$topic->children = $children;
-				}
-
-				$branch[$topic->id] = $topic;
-			}
-		}
-
-		return $branch;
-	}
-
-	public function getTreePath($tree, $id)
-	{
-		if (array_key_exists($id, $tree))
-		{
-			return array($id);
-		}
-		else
-		{
-			foreach ($tree as $key => $root)
-			{
-				if (isset($root->children) && is_array($root->children))
-				{
-					$retry = $this->getTreePath($root->children, $id);
-
-					if ($retry)
-					{
-						$retry[] = $key;
-						return $retry;
-					}
-				}
-			}
-		}
-
-		return null;
+		$db->execute();
 	}
 
 	/* Get first-level children topics in topic */
@@ -386,7 +313,17 @@ class TopicModel extends BaseDatabaseModel
 		$query->where('c.access IN (' . implode(',', $user->getAuthorisedViewLevels()) . ')');
 		$query->where('c.published = 1');
 		$query->where('c.parent_id=' . (int) $topicId);
-		$query->order('c.lft');
+
+		// Ordering
+		$topic_table = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+		$topic_table->load($topicId);
+		$sectionId = $topic_table->section_id;
+		$section_table = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+		$section_table->load($sectionId);
+		$sectionParams = new Registry($section_table->attribs);
+		$ordering = 'c.'.$sectionParams->get('topics_ordering', 'lft');
+		$ordering_dir = $sectionParams->get('topics_ordering_dir', 'ASC');
+		$query->order($ordering.' '.$ordering_dir);
 
 		// Get the results
 		$db->setQuery($query);
