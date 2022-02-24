@@ -150,6 +150,10 @@ class BatchTopicIdField
 			array('id' => 'batch-topic-id', 'group.id' => 'id', 'list.attr' => $attr)
 		);
 
-		return implode($html);
+		$app->getDocument()->getWebAssetManager()
+			->usePreset('choicesjs')
+			->useScript('webcomponent.field-fancy-select');
+
+		return '<joomla-field-fancy-select class="w-100">'.implode($html).'</joomla-field-fancy-select>';
 	}
 }

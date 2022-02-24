@@ -393,7 +393,7 @@ class TopicParentField extends FormField
 			array('id' => $this->id, 'group.id' => 'id', 'list.attr' => $attr, 'list.select' => $selected)
 		);
 
-		if ($app->isClient('administrator') && $app->input->getCmd('view', '') == 'customfield')
+		if ($app->isClient('administrator'))
 		{
 			$app->getDocument()->getWebAssetManager()
 				->usePreset('choicesjs')
