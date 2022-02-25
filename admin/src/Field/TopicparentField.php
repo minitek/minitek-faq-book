@@ -201,7 +201,6 @@ class TopicParentField extends FormField
 					else
 					{
 						$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . '[' . $topics[$i]->text . ']';			
-						$topics[$i]->text .= ']';
 					}
 				}
 
@@ -317,6 +316,17 @@ class TopicParentField extends FormField
 					);
 				}
 			}
+
+			// Add attributes to each option of each group
+			foreach ($groups as $group)
+			{
+				$_section_id = $group['id'];
+
+				foreach ($group['items'] as $item)
+				{
+					$item->attr = array('data-section' => $_section_id);
+				}
+			}
 		}
 		
 		// Compute attributes for the grouped list
@@ -377,23 +387,28 @@ class TopicParentField extends FormField
 			$groups = $select + $groups;
 		}
 
+		// Remove - Select - option from end of array and add to the beginning or array
 		if ($app->isClient('site') && ($app->input->getCmd('view', '') == 'questions' || $app->input->getCmd('view', '') == 'myquestion'))
 		{
 			$groups[]['items'][] = HTMLHelper::_('select.option', '', Text::_('COM_FAQBOOKPRO_OPTION_SELECT_TOPIC'));
-
-			// Remove - Select - option from end of array and add to the beginning or array
 			$remove = array_pop($groups); 
 			$select = array('0' => $remove);
 			$groups = $select + $groups;
 		}
-
-		// Add a grouped list
-		$html[] = HTMLHelper::_(
-			'select.groupedlist', $groups, $this->name,
-			array('id' => $this->id, 'group.id' => 'id', 'list.attr' => $attr, 'list.select' => $selected)
+		
+		// List attributes 
+		$attributes = array(
+			'id' => $this->id, // id for select field
+			'list.attr' => $attr, // attributes for list
+			'list.select' => $selected, // value of the selected element
+			'group.id' => 'id', // id for optgroup
+			'option.attr' => 'attr' // attributes for options
 		);
 
-		if ($app->isClient('administrator'))
+		// Add a grouped list
+		$html[] = HTMLHelper::_('select.groupedlist', $groups, $this->name, $attributes);
+
+		if ($app->isClient('administrator') && $app->input->get('view', '') != 'topic')
 		{
 			$app->getDocument()->getWebAssetManager()
 				->usePreset('choicesjs')
