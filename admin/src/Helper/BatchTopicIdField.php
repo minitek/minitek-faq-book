@@ -87,7 +87,6 @@ class BatchTopicIdField
 				else
 				{
 					$topics[$i]->text = str_repeat('- ', $topics[$i]->level) . '[' . $topics[$i]->text . ']';			
-					$topics[$i]->text .= ']';
 				}
 			}
 
