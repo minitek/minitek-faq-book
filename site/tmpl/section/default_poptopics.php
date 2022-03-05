@@ -31,7 +31,7 @@ if (count($this->popular_topics))
 					if ($this->popular_topics_title)
 					{
 						?><h5>
-							<a href="<?php echo Route::_(RouteHelper::getTopicRoute($item->id)); ?>" class="<?php echo $anchor_class; ?>" id="fid<?php echo $item->id; ?>">
+							<a href="<?php echo Route::_(RouteHelper::getTopicRoute($item->id, false, false, $item->language)); ?>" class="<?php echo $anchor_class; ?>" id="fid<?php echo $item->id; ?>">
 								<?php echo $item->title; ?>
 							</a>
 						</h5><?php

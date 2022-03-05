@@ -142,6 +142,7 @@ class HtmlView extends BaseHtmlView
 				$this->topic->questions = $this->model->getSectionQuestions($this->sectionId, $ordering, $ordering_dir, $this->page);
 				$this->topic->issubtopic = false;
 				$this->topic->qvisibility = 0;
+				$this->topic->language = $this->section->language;
 			}
 			// Active topic
 			else if ($this->topic_params->show_section_questions == 'active' && $this->sectionParams->get('topicid', 0)) {
@@ -372,18 +373,18 @@ class HtmlView extends BaseHtmlView
 		}
 
 		$output .= '<li ' . $style . '>';
-		$output .= '<a href="' . Route::_(RouteHelper::getTopicRoute($item->id)) . '">';
+		$output .= '<a href="' . Route::_(RouteHelper::getTopicRoute($item->id, false, false, $item->language)) . '">';
 		if ($level < 2) {
 			if ($images && $topic_image = $topicParams->get('image', 0)) {
 				$topic_image_alt = $topicParams->get('image_alt', 0);
 				$output .= '<img src="' . Uri::root() . $topic_image . '" alt="' . $topic_image_alt . '">';
 			} else if ($icons && $topicParams->get('topic_icon_class', '')) {
-				$output .= '<i class="fas fa-' . $topicParams->get('topic_icon_class', '') . '"></i>&nbsp;&nbsp;';
+				$output .= '<i class="' . $topicParams->get('topic_icon_class', '') . '"></i>&nbsp;&nbsp;';
 			}
 		}
 		if ($level > 1) {
 			if ($icons && $topicParams->get('topic_icon_class', '')) {
-				$output .= '<i class="fas fa-' . $topicParams->get('topic_icon_class', '') . '"></i>&nbsp;&nbsp;';
+				$output .= '<i class="' . $topicParams->get('topic_icon_class', '') . '"></i>&nbsp;&nbsp;';
 			} else {
 				// $output .= '&#45; ';
 			}

@@ -1,10 +1,10 @@
 <?php
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
+* @title        Minitek FAQ Book
+* @copyright    Copyright (C) 2011-2022 Minitek, All rights reserved.
+* @license      GNU General Public License version 3 or later.
+* @author url   https://www.minitek.gr/
+* @developers   Minitek.gr
 */
 
 namespace Joomla\Component\FAQBookPro\Site\Helper;
@@ -24,7 +24,7 @@ abstract class RouteHelper
 {
 	protected static $lookup = array();
 
-	public static function getSectionsRoute($Itemid = 0, $language = 0)
+	public static function getSectionsRoute($Itemid = 0, $language = false)
 	{
 		$link = 'index.php?option=com_faqbookpro&view=sections';
 
@@ -57,7 +57,7 @@ abstract class RouteHelper
 		return $link;
 	}
 
-	public static function getSectionRoute($sectionid, $tab = false, $language = 0)
+	public static function getSectionRoute($sectionid, $tab = false, $qtype = false, $language = false)
 	{
 		$id = (int) $sectionid;
 
@@ -67,13 +67,16 @@ abstract class RouteHelper
 		}
 		else
 		{
+			$link = 'index.php?option=com_faqbookpro&view=section&id='.$id;
+
 			if ($tab)
 			{
-				$link = 'index.php?option=com_faqbookpro&view=section&tab='.$tab.'&id='.$id;
+				$link .= '&tab='.$tab;
 			}
-			else
+
+			if ($qtype)
 			{
-				$link = 'index.php?option=com_faqbookpro&view=section&id='.$id;
+				$link .= '&qtype='.$qtype;
 			}
 
 			$needles = array(
@@ -81,23 +84,30 @@ abstract class RouteHelper
 				'tab' => $tab
 			);
 
-			if ($language && $language != "*" && Multilanguage::isEnabled())
+			if ($language && Multilanguage::isEnabled())
 			{
-				$db = Factory::getDbo();
-				$query = $db->getQuery(true)
-					->select('a.sef AS sef')
-					->select('a.lang_code AS lang_code')
-					->from('#__languages AS a');
-				$db->setQuery($query);
-				$langs = $db->loadObjectList();
-
-				foreach ($langs as $lang)
+				if ($language != "*")
 				{
-					if ($language == $lang->lang_code)
+					$db = Factory::getDbo();
+					$query = $db->getQuery(true)
+						->select('a.sef AS sef')
+						->select('a.lang_code AS lang_code')
+						->from('#__languages AS a');
+					$db->setQuery($query);
+					$langs = $db->loadObjectList();
+
+					foreach ($langs as $lang)
 					{
-						$link .= '&lang='.$lang->sef;
-						$needles['language'] = $language;
+						if ($language == $lang->lang_code)
+						{
+							$link .= '&lang='.$lang->sef;
+							$needles['language'] = $language;
+						}
 					}
+				}	
+				else 
+				{
+					$needles['language'] = $language;
 				}
 			}
 
@@ -110,7 +120,7 @@ abstract class RouteHelper
 		return $link;
 	}
 
-	public static function getTopicRoute($topicid, $tab = false, $language = 0)
+	public static function getTopicRoute($topicid, $tab = false, $qtype = false, $language = false)
 	{
 		$id = (int) $topicid;
 
@@ -120,13 +130,16 @@ abstract class RouteHelper
 		}
 		else
 		{
+			$link = 'index.php?option=com_faqbookpro&view=topic&id='.$id;
+
 			if ($tab)
 			{
-				$link = 'index.php?option=com_faqbookpro&view=topic&tab='.$tab.'&id='.$id;
+				$link .= '&tab='.$tab;
 			}
-			else
+
+			if ($qtype)
 			{
-				$link = 'index.php?option=com_faqbookpro&view=topic&id='.$id;
+				$link .= '&qtype='.$qtype;
 			}
 
 			$needles = array(
@@ -134,24 +147,36 @@ abstract class RouteHelper
 				'tab' => $tab
 			);
 
-			if ($language && $language != "*" && Multilanguage::isEnabled())
+			if ($language && Multilanguage::isEnabled())
 			{
-				$db = Factory::getDbo();
-				$query = $db->getQuery(true)
-					->select('a.sef AS sef')
-					->select('a.lang_code AS lang_code')
-					->from('#__languages AS a');
-				$db->setQuery($query);
-				$langs = $db->loadObjectList();
-
-				foreach ($langs as $lang)
+				if ($language != "*")
 				{
-					if ($language == $lang->lang_code)
+					$db = Factory::getDbo();
+					$query = $db->getQuery(true)
+						->select('a.sef AS sef')
+						->select('a.lang_code AS lang_code')
+						->from('#__languages AS a');
+					$db->setQuery($query);
+					$langs = $db->loadObjectList();
+
+					foreach ($langs as $lang)
 					{
-						$link .= '&lang='.$lang->sef;
-						$needles['language'] = $language;
+						if ($language == $lang->lang_code)
+						{
+							$link .= '&lang='.$lang->sef;
+							$needles['language'] = $language;
+						}
 					}
 				}
+				else 
+				{
+					$needles['language'] = $language;
+				}
+			}
+			else if (Multilanguage::isEnabled())
+			{
+				$language = self::getTopic($id)->language;
+				$needles['language'] = $language;
 			}
 
 			if ($item = self::_findItem($needles))
@@ -172,25 +197,15 @@ abstract class RouteHelper
 		$application = Factory::getApplication();
 		$menus = $application->getMenu('site', array());
 		$language = isset($needles['language']) ? $needles['language'] : '*';
-		$items = $menus->getItems('component_id', $component->id);
+		$items = $menus->getItems(array('component_id', 'language'), array($component->id, $language));
 		$match = null;
-
+		
 		foreach ($needles as $needle => $id)
 		{
 			if (count($items))
 			{
 				foreach ($items as $item)
-				{
-					if ($needle == 'myquestion')
-					{
-						if ((@$item->query['view'] == $needle) && (@$item->query['section'] == $id))
-						{
-							$match = $item;
-							$match_id = $match->id;
-							break;
-						}
-					}
-
+				{					
 					if ((@$item->query['view'] == $needle) && (@$item->query['id'] == $id))
 					{
 						$match = $item;
@@ -209,7 +224,7 @@ abstract class RouteHelper
 			{
 				break;
 			}
-
+			
 			if (is_null($match))
 			{
 				// Try to detect any parent topic menu item for children topics without menu items
@@ -219,16 +234,16 @@ abstract class RouteHelper
 					{
 						self::$tree = self::getAllTopics();
 					}
-
+					
 					$parents = self::getTreePath(self::$tree, $id);
-
+					
 					if (is_array($parents))
 					{
 						foreach ($parents as $topicID)
 						{
 							if ($topicID != $id)
 							{
-								$match = self::_findItem(array('topic' => $topicID));
+								$match = self::_findItem(array('topic' => $topicID, 'language' => $language));
 
 								if (!is_null($match))
 								{
@@ -238,21 +253,14 @@ abstract class RouteHelper
 							}
 						}
 					}
+
 					// Try to detect any parent section menu item for topics without menu items
 					if (is_null($match))
 					{
 						$topicSection = self::getTopic($id)->section_id;
-						$match = self::_findItem(array('section' => $topicSection));
+						$match = self::_findItem(array('section' => $topicSection, 'language' => $language));
 						$match_id = $match;
 					}
-				}
-
-				// Try to detect any parent topic menu item for questions without menu items
-				if ($needle == 'question')
-				{
-					$questionTopic = self::getQuestion($id)->topicid;
-					$match = self::_findItem(array('topic' => $questionTopic));
-					$match_id = $match;
 				}
 			}
 		}
@@ -277,24 +285,6 @@ abstract class RouteHelper
 			$default = $menus->getDefault($language);
 
 			return !empty($default->id) ? $default->id : null;
-		}
-	}
-
-	private static function getQuestion($id)
-	{
-		$db = Factory::getDBO();
-		$query = 'SELECT * FROM '. $db->quoteName( '#__minitek_faqbook_questions' );
-		$query .= ' WHERE ' . $db->quoteName( 'id' ) . ' = '. $db->quote($id).' ';
-		$db->setQuery($query);
-		$row = $db->loadObject();
-
-		if ($row)
-		{
-			return $row;
-		}
-		else
-		{
-			return false;
 		}
 	}
 

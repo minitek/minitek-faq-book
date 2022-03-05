@@ -38,7 +38,7 @@ $canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->topic->id);
 
 				if ($this->topic_params->show_topic_title)
 				{
-					?><a id="topicPermalink_<?php echo $this->topic->id; ?>" class="fbTopic_permalink" href="<?php echo Route::_(RouteHelper::getTopicRoute($this->topic->id)); ?>">
+					?><a id="topicPermalink_<?php echo $this->topic->id; ?>" class="fbTopic_permalink" href="<?php echo Route::_(RouteHelper::getTopicRoute($this->topic->id, false, false, $this->topic->language)); ?>">
 				  	<?php echo $this->topic->title; ?>
 					</a><?php
 				}
