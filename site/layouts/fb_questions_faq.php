@@ -142,7 +142,7 @@ if (isset($this->topic->questions) && $this->topic->questions)
 						if ($this->questions_params->questions_topic)
 						{
 							?><div class="qListItem_topic">
-								<a href="<?php echo Route::_(RouteHelper::getTopicRoute($question->topicid, '')); ?>">
+								<a href="<?php echo Route::_(RouteHelper::getTopicRoute($question->topicid, false, false, $this->topic->language)); ?>">
 									<span><?php echo $question->topic_title; ?></span>
 								</a><?php
 								if ($this->questions_params->questions_topic == 2)
@@ -151,7 +151,7 @@ if (isset($this->topic->questions) && $this->topic->questions)
 									{
 										foreach ($question->parents as $parent)
 										{
-											?><a href="<?php echo Route::_(RouteHelper::getTopicRoute($parent['id'], '')); ?>">
+											?><a href="<?php echo Route::_(RouteHelper::getTopicRoute($parent['id'])); ?>">
 												<span><?php echo $parent['title']; ?></span>
 											</a><?php
 										}

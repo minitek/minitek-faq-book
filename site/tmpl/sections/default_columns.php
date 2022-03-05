@@ -77,7 +77,7 @@ $card_class = $this->params->get('sections_card_class', 'shadow-sm');
 									foreach ($section->topics as $topic)
 									{
 										?><div class="fb_column_topic">
-											<a href="<?php echo Route::_(RouteHelper::getTopicRoute($topic->id)); ?>"><?php
+											<a href="<?php echo Route::_(RouteHelper::getTopicRoute($topic->id, false, false, $topic->language)); ?>"><?php
 												if ($topic->icon_class)
 												{
 													?><i class="fas fa-<?php echo $topic->icon_class; ?>"></i><?php
