@@ -264,6 +264,19 @@
 				<option value="1">JSHOW</option>
 			</field>
 
+			<field
+				name="leftnav_icons"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="1"
+				label="COM_FAQBOOKPRO_FIELD_LEFTNAV_ICONS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_LEFTNAV_ICONS_DESC"
+				showon="leftnav!:0"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
 		</fieldset>
 
 		<fieldset name="options">
@@ -353,7 +366,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_TOPIC_TREE_HEADER_DESC"
-				showon="show_topics_tree:1"
+				showon="browse_topics:1[OR]show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -366,7 +379,7 @@
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_ICONS_DESC"
-				showon="show_topics_tree:1"
+				showon="browse_topics:1[OR]show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -379,7 +392,7 @@
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_IMAGES_DESC"
-				showon="show_topics_tree:1"
+				showon="browse_topics:1[OR]show_topics_tree:1"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -394,7 +407,7 @@
 				step="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_LEVELS_DESC"
-				showon="show_topics_tree:1"
+				showon="browse_topics:1[OR]show_topics_tree:1"
 			/>
 
 			<field
@@ -406,7 +419,7 @@
 				step="1"
 				label="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_BROWSE_TOPICS_COLS_DESC"
-				showon="show_topics_tree:1"
+				showon="browse_topics:1[OR]show_topics_tree:1"
 			/>
 
 			<field type="separator" text="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_SEPARATOR" />

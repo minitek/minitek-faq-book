@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
  */
 abstract class NavigationHelper
 {
-	public static function getTopicsTree($item, $level = 1)
+	public static function getTopicsTree($item, $show_icons, $level = 1)
 	{
 		$topicModel = new TopicModel;
 		$topicParams = new Registry($item->params);
@@ -52,12 +52,12 @@ abstract class NavigationHelper
 			}
 
 			$output .= '<li id="liid'.$item->id.'" class="NavLeftUL_item NavLeftUL_topic '.$item_class.'">';
-			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
+			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id, false, false, $item->language)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
-			if ($topicParams->get('topic_icon_class', ''))
+			if ($show_icons && $topicParams->get('topic_icon_class', ''))
 			{
-				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->get('topic_icon_class', '').'"></i>';
+				$output .= '<i class="NavLeftUL_topicIcon '.$topicParams->get('topic_icon_class', '').'"></i>';
 			}
 
 			$output .= $item->title;
@@ -68,7 +68,7 @@ abstract class NavigationHelper
 
 			foreach ($subitems as $subitem)
 			{
-		  		$output .= self::getTopicsTree($subitem, $level + 1);
+				$output .= self::getTopicsTree($subitem, $show_icons, $level + 1);
 			}
 
 			$back_href = $item->parent_id > 1 
@@ -98,12 +98,12 @@ abstract class NavigationHelper
 		else
 		{
 	  		$output .= '<li id="liid'.$item->id.'" class="NavLeftUL_item NavLeftUL_topic NavLeftUL_endpoint">';
-			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id)).'" class="NavLeftUL_anchor" onclick="return false;">';
+			$output .= '<a href="'.Route::_(RouteHelper::getTopicRoute($item->id, false, false, $item->language)).'" class="NavLeftUL_anchor" onclick="return false;">';
 			$output .= '<span class="topicTitle">';
 
-			if ($topicParams->get('topic_icon_class', ''))
+			if ($show_icons && $topicParams->get('topic_icon_class', ''))
 			{
-				$output .= '<i class="NavLeftUL_topicIcon fas fa-'.$topicParams->get('topic_icon_class', '').'"></i>';
+				$output .= '<i class="NavLeftUL_topicIcon '.$topicParams->get('topic_icon_class', '').'"></i>';
 			}
 
 			$icon = '<div class="NavLeftUL_endpointIcon">'.
