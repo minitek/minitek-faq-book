@@ -25,6 +25,7 @@ $visible = $displayData['visible'];
 $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 $section->load($sectionId);
 $sectionParams = new Registry($section->attribs);
+$show_icons = $sectionParams->get('leftnav_icons', 1);
 $user = Factory::getUser();
 $userid = $user->id;
 $sectionModel = new SectionModel;
@@ -35,7 +36,7 @@ if ($items)
 {
   foreach ($items as $item)
   {
-    $topicsTree = NavigationHelper::getTopicsTree($item);
+    $topicsTree = NavigationHelper::getTopicsTree($item, $show_icons);
     $topics_tree[] = $topicsTree;
   }
 }
