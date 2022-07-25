@@ -1,5 +1,6 @@
 # Minitek FAQ Book
-A powerful Q&A and discussion forum for Joomla.
+
+A Q&A and discussion forum for Joomla.
 
 [Read more...](https://www.minitek.gr/joomla/extensions/minitek-faq-book)
 
