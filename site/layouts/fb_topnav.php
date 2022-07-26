@@ -63,7 +63,7 @@ else
         if ($sectionId) 
         {
           ?><li id="top_liid_home" class="NavTopUL_item NavTopUL_section NavTopUL_firstChild <?php echo $class; ?>">
-            <a class="NavTopUL_link" href="<?php echo Route::_(RouteHelper::getSectionRoute($sectionId)); ?>" onclick="return false;"><?php
+             <a class="NavTopUL_link" href="<?php echo Route::_(RouteHelper::getSectionRoute($sectionId, false, false, $section->language)); ?>" onclick="return false;"><?php
 
               if ($sectionParams->get('topnav_sections', 0)) 
               {
