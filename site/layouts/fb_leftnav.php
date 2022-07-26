@@ -21,7 +21,6 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 
 $sectionId = $displayData['sectionId'];
-$visible = $displayData['visible'];
 $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 $section->load($sectionId);
 $sectionParams = new Registry($section->attribs);
@@ -46,7 +45,6 @@ $is_minimized = $app->getUserState( 'com_faqbookpro.minimized_leftnav', false );
 $fb_minimized = '';
 $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-left"></i></a>';
 $section_title_html = '';
-$visible_class = $visible ? '' : 'leftnav-hidden';
 
 if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized == 'on')
 {
@@ -54,7 +52,7 @@ if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized 
   $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-right"></i></a>';
 }
 
-?><div class="fbLeftNavigation_core fb-hidden <?php echo $fb_minimized; ?> <?php echo $visible_class; ?>"><?php
+?><div class="fbLeftNavigation_core fb-hidden <?php echo $fb_minimized; ?>"><?php
 
   // Toggle left navigation
   ?><div class="fbLeftNavigation_toggle">
