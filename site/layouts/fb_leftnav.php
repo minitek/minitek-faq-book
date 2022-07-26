@@ -55,7 +55,7 @@ if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized 
 
 	// Toggle left navigation
 	?><div class="fbLeftNavigation_toggle">
-		<ul class="NavLeftUL_parent">
+		<ul class="NavLeftUL_wrap">
 			<li class="NavLeftUL_item"><?php
 				echo $minimized_icon;
 			?></li>
@@ -76,7 +76,7 @@ if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized 
 	}
 
 	?><div class="fbLeftNavigation_topics">
-		<ul class="NavLeftUL_parent"><?php
+		<ul class="NavLeftUL_wrap"><?php
 
 			// Browse Topics
 			if ($sectionParams->get('browse_topics', 1) && !empty($items))
@@ -104,7 +104,7 @@ if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized 
 		?></ul>
 
 		<div class="fbLeftNavigation_wrap">
-			<ul id="NavLeftUL" class="NavLeftUL_parent level0"><?php
+			<ul id="NavLeftUL" class="NavLeftUL_wrap level0"><?php
 				if (!empty($items))
 				{
 					foreach ($items as $item)
