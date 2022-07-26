@@ -47,7 +47,7 @@ $select = $topics_field->getInput();
 
 					<div id="batch-move-copy" class="control-group radio">
 						<fieldset id="batch-copy-move-id">
-							<legend><?php echo Text::_('COM_FAQBOOKPRO_BATCH_MOVE'); ?></legend><?php
+							<legend><?php echo Text::_('COM_FAQBOOKPRO_BATCH_ACTION_TO_PERFORM'); ?></legend><?php
 							echo HTMLHelper::_('select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm'); 
 						?></fieldset>
 					</div>
