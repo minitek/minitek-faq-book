@@ -152,10 +152,14 @@
 
                     if (text !== undefined) {
                         if (nodes.fbTopNavigation_root) {
-                            nodes.fbTopNavigation_root.innerHTML +=
-                                '<li class="NavTopUL_item NavTopUL_topics NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                            let li = document.createElement("li");
+                            li.classList =
+                                "NavTopUL_item NavTopUL_topics NavTopUL_lastChild";
+                            li.innerHTML =
+                                '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
                                 text +
-                                "</a></li>";
+                                "</a>";
+                            nodes.fbTopNavigation_root.appendChild(li);
 
                             if (nodes.top_liid_home)
                                 query("#top_liid_home").classList.remove(
@@ -183,31 +187,25 @@
             });
         }
 
-        var top_li_count = 0;
+        if (nodes.fbLeftNavigation_core) {
+            var top_li_count = 0;
 
-        // Calculate leftnav left value with topnav enabled
-        if (nodes.fbTopNavigation_root) {
-            var NavTopUL_parents =
-                nodes.fbTopNavigation_root.querySelectorAll(
-                    "li.NavTopUL_parent"
-                );
+            // Calculate leftnav left value with topnav enabled
+            if (nodes.fbTopNavigation_root) {
+                var NavTopUL_parents =
+                    nodes.fbTopNavigation_root.querySelectorAll(
+                        "li.NavTopUL_parent"
+                    );
 
-            if (NavTopUL_parents) top_li_count = NavTopUL_parents.length;
-        }
-
-        // Calculate leftnav left value with topnav disabled
-        if (top_li_count === 0) {
-            if (nodes.fbLeftNavigation_wrap) {
+                if (NavTopUL_parents) top_li_count = NavTopUL_parents.length;
+            } else {
                 top_li_count =
                     parseInt(nodes.fbLeftNavigation_wrap.style.left, 10) || "0";
 
                 if (top_li_count < 0)
                     top_li_count = Math.abs(top_li_count) / 100;
             }
-        }
 
-        // Leftnav is enabled
-        if (nodes.fbLeftNavigation_core) {
             var slide_count = parseInt(top_li_count, 10);
             var wrap = nodes.fbLeftNavigation_wrap;
             var distance = slide_count * 100;
@@ -221,7 +219,7 @@
 
                 animation.onfinish = function () {
                     wrap.style.left = new_left + "%";
-                    var NavLeftUL_parent_ul = queryAll(".NavLeftUL_parent ul");
+                    var NavLeftUL_parent_ul = queryAll(".NavLeftUL_wrap ul");
 
                     if (NavLeftUL_parent_ul) {
                         NavLeftUL_parent_ul.forEach(function (a) {
@@ -235,13 +233,10 @@
                         );
 
                     loadHome(href, tab, url, text);
-
                     wrap.classList.remove("wrap_animated");
                 };
             }
-        }
-        // Leftnav is disabled
-        else {
+        } else {
             if (tab != "topics" && nodes.top_liid_home)
                 query("#top_liid_home").classList.add("NavTopUL_lastChild");
 
@@ -268,7 +263,6 @@
 
             if (nodes.fbContent_root)
                 nodes.fbContent_root.style.display = "none";
-
             if (nodes.fb_loader) nodes.fb_loader.style.display = "block";
 
             ajax_request = Joomla.request({
@@ -285,10 +279,15 @@
                 },
                 onSuccess: (response, xhr) => {
                     query("#" + this_liid).classList.remove("li_loading");
-
                     clearNavigationItems(["li_selected"]);
 
-                    query("#" + this_liid).classList.add("li_selected");
+                    var liid_topicId = query("#" + this_liid);
+
+                    getParents(liid_topicId, ".NavLeftUL_topic").forEach(
+                        function (a) {
+                            a.classList.add("li_selected");
+                        }
+                    );
 
                     if (nodes.fbContent_root) {
                         nodes.fbContent_root.innerHTML = response;
@@ -363,9 +362,9 @@
         nodes.show_menu_btn = query("a.show_menu");
         nodes.fbLeftNavigation_core = query(".fbLeftNavigation_core");
         nodes.fbLeftNavigation_wrap = query(".fbLeftNavigation_wrap");
-        nodes.NavLeftUL_parents = queryAll(".NavLeftUL_parent");
+        nodes.NavLeftUL_parents = queryAll(".NavLeftUL_wrap");
         nodes.NavLeftUL_items = queryAll(".NavLeftUL_item");
-        nodes.NavLeftUL_anchors = queryAll("a.NavLeftUL_anchor");
+        nodes.NavLeftUL_anchors = queryAll(".NavLeftUL_anchor");
         nodes.fbContent_core = query(".fbContent_core");
         nodes.fbContent_root = query(".fbContent_root");
         nodes.fb_loader = query(".fb_loader");
@@ -429,9 +428,8 @@
             if (liid_topicId.classList.contains("NavLeftUL_endpoint"))
                 var parent_ul = liid_topicId.parentNode;
             else
-                var parent_ul = liid_topicId.querySelector(
-                    "ul.NavLeftUL_sublist"
-                );
+                var parent_ul =
+                    liid_topicId.querySelector(".NavLeftUL_sublist");
 
             var vheight = parseFloat(parent_ul.clientHeight);
 
@@ -450,7 +448,6 @@
             page_view == "myquestion" ||
             page_view == "myanswer"
         ) {
-            // Fix left navigation topics height
             if (nodes.fbLeftNavigation_wrap)
                 nodes.fbLeftNavigation_wrap.style.height = "auto";
         }
@@ -459,28 +456,79 @@
     document.addEventListener("DOMContentLoaded", function () {
         getStaticNodes();
 
+        // Remove lastchild class from section li
+        if (!leftnav && nodes.fbTopNavigation_root) {
+            nodes.fbTopNavigation_root
+                .querySelector("li.NavTopUL_section")
+                .classList.remove("NavTopUL_firstChild");
+
+            nodes.fbTopNavigation_root
+                .querySelector("li.NavTopUL_section")
+                .classList.add("NavTopUL_lastChild");
+        }
+
         // Topic / Question view
         if (leftnav && (page_view == "topic" || page_view == "question")) {
             var liid_topicId = query("#liid" + topicId);
 
-            // Active left navigation li
-            liid_topicId.classList.add("li_selected");
+            getParents(liid_topicId, ".NavLeftUL_topic").forEach(function (a) {
+                a.classList.add("li_selected");
+            });
 
-            // Active left navigation ul parents
-            getParents(liid_topicId, "ul.NavLeftUL_sublist").forEach(function (
+            if (nodes.fbTopNavigation_wrap) {
+                let parents = getParents(
+                    liid_topicId,
+                    ".NavLeftUL_item"
+                ).reverse();
+
+                // Add parent topics to top navigation
+                parents.forEach(function (a, index) {
+                    var this_title = query("#" + a.id).querySelector(
+                        ".topicTitle"
+                    ).textContent;
+
+                    let li = document.createElement("li");
+                    li.id = "top_" + a.id;
+                    li.classList = "NavTopUL_item NavTopUL_topic";
+
+                    if (
+                        query("#" + a.id).classList.contains("NavLeftUL_parent")
+                    )
+                        li.classList += " NavTopUL_parent";
+
+                    if (
+                        query("#" + a.id).classList.contains(
+                            "NavLeftUL_endpoint"
+                        )
+                    )
+                        li.classList += " NavTopUL_endpoint";
+
+                    if (index + 1 == parents.length)
+                        li.classList += " NavTopUL_lastChild";
+
+                    li.innerHTML =
+                        '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                        this_title +
+                        "</a>";
+                    nodes.fbTopNavigation_root.appendChild(li);
+                });
+            }
+
+            // Active left navigation parents
+            getParents(liid_topicId, ".NavLeftUL_sublist").forEach(function (
                 a
             ) {
                 a.classList.add("NavLeftUL_expanded");
             });
 
-            if (liid_topicId.querySelector("ul.NavLeftUL_sublist"))
+            if (liid_topicId.querySelector(".NavLeftUL_sublist"))
                 liid_topicId
-                    .querySelector("ul.NavLeftUL_sublist")
+                    .querySelector(".NavLeftUL_sublist")
                     .classList.add("NavLeftUL_expanded");
 
             var parent_ul_class = liid_topicId.parentNode.getAttribute("class");
 
-            if (parent_ul_class != "NavLeftUL_parent") {
+            if (parent_ul_class != "NavLeftUL_wrap") {
                 var ul_level = parent_ul_class.split(" ")[1];
                 var ul_level_num = ul_level.substring(
                     ul_level.lastIndexOf("level") + 5
@@ -496,118 +544,10 @@
                 nodes.fbLeftNavigation_wrap.style.left = "-" + move_ul + "%";
 
                 if (nodes.fbTopNavigation_wrap) {
-                    // Active top navigation li
-                    var parents_num = parseInt(ul_level_num, 10);
-                    var first_parent_text =
-                        liid_topicId.parentNode.parentNode.querySelector(
-                            ".NavLeftUL_anchor span.topicTitle"
-                        ).textContent;
-                    var first_parent_id;
-
-                    if (liid_topicId.parentNode.parentNode.nodeName == "LI")
-                        first_parent_id = liid_topicId.parentNode.parentNode.id;
-
                     if (nodes.fbTopNavigation_root)
                         nodes.fbTopNavigation_root
                             .querySelector("li.NavTopUL_firstChild")
                             .classList.remove("NavTopUL_lastChild");
-
-                    if (first_parent_id) {
-                        // Add top navigation li's
-                        var $id = query("#" + first_parent_id);
-                        var $li = $id;
-
-                        function findParents() {
-                            $id = $id.parentNode.parentNode;
-
-                            if ($li.parentNode.parentNode.nodeName == "LI") {
-                                $li = $li.parentNode.parentNode;
-                                var prev_parent_text = $id.querySelector(
-                                    ".NavLeftUL_anchor span.topicTitle"
-                                ).textContent;
-                                var prev_parent_id = $li.id;
-                            }
-
-                            // Add topic to breadcrumbs
-                            var _previous = query("li.NavTopUL_firstChild");
-                            var _li = document.createElement("li");
-                            _li.id = "top_" + prev_parent_id;
-                            _li.classList.add(
-                                "NavTopUL_item",
-                                "NavTopUL_topic",
-                                "NavTopUL_parent"
-                            );
-                            _li.innerHTML =
-                                '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                                prev_parent_text +
-                                "</a>";
-
-                            insertAfter(_previous, _li);
-                        }
-
-                        // Only for level1+ ul's
-                        if (ul_level_num > 0) {
-                            for (var i = 1; i < parents_num; i++) {
-                                findParents();
-                            }
-
-                            // Add lastChild parent li in top navigation
-                            // Endpoint topic - add class NavTopUL_lastChild
-                            if (
-                                nodes.fbTopNavigation_root &&
-                                liid_topicId.classList.contains(
-                                    "NavLeftUL_endpoint"
-                                )
-                            ) {
-                                nodes.fbTopNavigation_root.innerHTML +=
-                                    '<li id="top_' +
-                                    first_parent_id +
-                                    '" class="NavTopUL_item NavTopUL_topic NavTopUL_parent NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                                    first_parent_text +
-                                    "</a></li>";
-                            }
-                            // Not endpoint topic - don't add class NavTopUL_lastChild
-                            else {
-                                if (nodes.fbTopNavigation_root) {
-                                    nodes.fbTopNavigation_root.innerHTML +=
-                                        '<li id="top_' +
-                                        first_parent_id +
-                                        '" class="NavTopUL_item NavTopUL_topic NavTopUL_parent"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                                        first_parent_text +
-                                        "</a></li>";
-                                }
-                            }
-                        }
-                    }
-
-                    // Add lastChild li in top navigation
-                    var last_topic_text = liid_topicId.querySelector(
-                        ".NavLeftUL_anchor span.topicTitle"
-                    ).textContent;
-
-                    // Endpoint topic - don't add class NavTopUL_parent
-                    if (
-                        nodes.fbTopNavigation_root &&
-                        liid_topicId.classList.contains("NavLeftUL_endpoint")
-                    ) {
-                        nodes.fbTopNavigation_root.innerHTML +=
-                            '<li id="top_liid' +
-                            topicId +
-                            '" class="NavTopUL_item NavTopUL_topic NavTopUL_endpoint NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                            last_topic_text +
-                            "</a></li>";
-                    }
-                    // Endpoint topic - add class NavTopUL_parent
-                    else {
-                        if (nodes.fbTopNavigation_root) {
-                            nodes.fbTopNavigation_root.innerHTML +=
-                                '<li id="top_liid' +
-                                topicId +
-                                '" class="NavTopUL_item NavTopUL_topic NavTopUL_parent NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                                last_topic_text +
-                                "</a></li>";
-                        }
-                    }
                 }
             }
         }
@@ -645,8 +585,9 @@
                                 var _this = e.target.parentNode;
                             else var _this = e.target;
 
-                            var this_liid = _this.closest("li").id;
-                            var endpoint_liid = _this.closest("li").id;
+                            var this_liid = _this.closest(".NavLeftUL_item").id;
+                            var endpoint_liid =
+                                _this.closest(".NavLeftUL_item").id;
                             var endpoint_id = endpoint_liid.split("id").pop(1);
                             var href = _this.href;
                             var topic_title =
@@ -656,19 +597,22 @@
                             if (query(".NavTopUL_topics"))
                                 query(".NavTopUL_topics").remove();
 
-                            // Slide menu only if not endpoint
+                            // Not an endpoint
                             if (
                                 !_this
-                                    .closest("li")
+                                    .closest(".NavLeftUL_item")
                                     .classList.contains("NavLeftUL_endpoint")
                             ) {
                                 query("#" + this_liid)
-                                    .querySelector("ul")
+                                    .querySelector(".NavLeftUL_sublist")
                                     .classList.add("NavLeftUL_expanded");
 
                                 // Fix left navigation topics height
                                 var parent_li = _this.parentNode;
-                                var child_ul = parent_li.querySelector("ul");
+                                var child_ul =
+                                    parent_li.querySelector(
+                                        ".NavLeftUL_sublist"
+                                    );
 
                                 if (child_ul) {
                                     var eheight = parseFloat(
@@ -695,35 +639,70 @@
                                     wrap.style.left = new_left + "%";
 
                                     if (nodes.fbTopNavigation_root) {
+                                        // Remove last child class
                                         nodes.fbTopNavigation_root
                                             .querySelectorAll("li")
                                             .forEach(function (a) {
-                                                // Remove last child class
                                                 a.classList.remove(
                                                     "NavTopUL_lastChild"
                                                 );
+                                            });
 
-                                                // Remove last endpoint
+                                        var liid_topicId = query(
+                                            "#" + this_liid
+                                        );
+
+                                        let parents = getParents(
+                                            liid_topicId,
+                                            ".NavLeftUL_item"
+                                        ).reverse();
+
+                                        // Remove all topics after home in topnav
+                                        if (nodes.fbTopNavigation_root) {
+                                            var top_lis =
+                                                nodes.fbTopNavigation_root.querySelectorAll(
+                                                    "li"
+                                                );
+
+                                            top_lis.forEach(function (a) {
                                                 if (
+                                                    (a.id &&
+                                                        a.id !=
+                                                            "top_liid_home") ||
                                                     a.classList.contains(
-                                                        "NavTopUL_endpoint"
+                                                        "NavTopUL_topics"
                                                     )
                                                 )
                                                     a.remove();
                                             });
+                                        }
 
-                                        // Add topic to breadcrumbs
-                                        var this_title = query(
-                                            "#" + this_liid
-                                        ).querySelector(
-                                            ".topicTitle"
-                                        ).textContent;
-                                        nodes.fbTopNavigation_root.innerHTML +=
-                                            '<li id="top_' +
-                                            this_liid +
-                                            '" class="NavTopUL_item NavTopUL_topic NavTopUL_parent NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
-                                            this_title +
-                                            "</a></li>";
+                                        // Add parent topics
+                                        parents.forEach(function (a, index) {
+                                            var this_title = query(
+                                                "#" + a.id
+                                            ).querySelector(
+                                                ".topicTitle"
+                                            ).textContent;
+
+                                            let li =
+                                                document.createElement("li");
+                                            li.id = "top_" + a.id;
+                                            li.classList =
+                                                "NavTopUL_item NavTopUL_topic NavTopUL_parent";
+
+                                            if (index + 1 == parents.length)
+                                                li.classList +=
+                                                    " NavTopUL_lastChild";
+
+                                            li.innerHTML =
+                                                '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                                                this_title +
+                                                "</a>";
+                                            nodes.fbTopNavigation_root.appendChild(
+                                                li
+                                            );
+                                        });
                                     }
 
                                     if (nodes.fbTopNavigation_wrap)
@@ -741,32 +720,88 @@
                                     wrap.classList.remove("wrap_animated");
                                 };
                             } else {
-                                var this_title = query(
-                                    "#" + this_liid
-                                ).querySelector(".topicTitle").textContent;
-
-                                // Remove lastchild class from section li
                                 if (nodes.fbTopNavigation_root) {
+                                    var this_title = query(
+                                        "#" + this_liid
+                                    ).querySelector(".topicTitle").textContent;
+
+                                    // Remove lastchild class from section li
                                     nodes.fbTopNavigation_root
                                         .querySelector("li.NavTopUL_section")
                                         .classList.remove("NavTopUL_lastChild");
 
-                                    // Remove last endpoint
-                                    nodes.fbTopNavigation_root
-                                        .querySelectorAll(
-                                            "li.NavTopUL_endpoint"
-                                        )
-                                        .forEach(function (a) {
-                                            a.remove();
-                                        });
+                                    let parent =
+                                        _this.closest(".NavLeftUL_parent");
 
-                                    // Add endpoint topic to breadcrumbs
-                                    nodes.fbTopNavigation_root.innerHTML +=
-                                        '<li id="top_' +
-                                        this_liid +
-                                        '" class="NavTopUL_item NavTopUL_topic NavTopUL_endpoint NavTopUL_lastChild"><a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                                    if (parent) {
+                                        var liid_topicId = query(
+                                            "#" + parent.id
+                                        );
+
+                                        var parents = getParents(
+                                            liid_topicId,
+                                            ".NavLeftUL_item"
+                                        ).reverse();
+                                    }
+
+                                    // Remove all topics after home in topnav
+                                    if (nodes.fbTopNavigation_root) {
+                                        var top_lis =
+                                            nodes.fbTopNavigation_root.querySelectorAll(
+                                                "li"
+                                            );
+
+                                        top_lis.forEach(function (a) {
+                                            if (
+                                                (a.id &&
+                                                    a.id != "top_liid_home") ||
+                                                a.classList.contains(
+                                                    "NavTopUL_topics"
+                                                )
+                                            )
+                                                a.remove();
+                                        });
+                                    }
+
+                                    // Add parent topics
+                                    if (typeof parents !== "undefined") {
+                                        parents.forEach(function (a, index) {
+                                            var this_title = query(
+                                                "#" + a.id
+                                            ).querySelector(
+                                                ".topicTitle"
+                                            ).textContent;
+
+                                            let li =
+                                                document.createElement("li");
+                                            li.id = "top_" + a.id;
+                                            li.classList =
+                                                "NavTopUL_item NavTopUL_topic NavTopUL_parent";
+
+                                            if (index + 1 == parents.length)
+                                                li.classList +=
+                                                    " NavTopUL_lastChild";
+
+                                            li.innerHTML =
+                                                '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                                                this_title +
+                                                "</a>";
+                                            nodes.fbTopNavigation_root.appendChild(
+                                                li
+                                            );
+                                        });
+                                    }
+
+                                    // Add endpoint topic to top menu
+                                    let li = document.createElement("li");
+                                    li.id = "top_" + this_liid;
+                                    li.classList =
+                                        "NavTopUL_item NavTopUL_topic NavTopUL_endpoint NavTopUL_lastChild";
+                                    li.innerHTML =
+                                        '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
                                         this_title +
-                                        "</a></li>";
+                                        "</a>";
+                                    nodes.fbTopNavigation_root.appendChild(li);
 
                                     if (nodes.fbTopNavigation_wrap)
                                         nodes.fbTopNavigation_wrap.classList.remove(
@@ -824,7 +859,7 @@
                             animation.onfinish = function () {
                                 wrap.style.left = new_left + "%";
                                 _this
-                                    .closest("ul")
+                                    .closest(".NavLeftUL_sublist")
                                     .classList.remove("NavLeftUL_expanded");
 
                                 if (nodes.fbTopNavigation_root) {
@@ -899,7 +934,6 @@
                     !e.target.classList.contains("NavTopUL_sections")
                 ) {
                     e.preventDefault();
-
                     var _this = e.target;
 
                     if (
@@ -916,7 +950,6 @@
                         return;
                     }
 
-                    // Topic links
                     if (
                         _this.parentNode.classList.contains(
                             "NavTopUL_parent"
@@ -927,6 +960,7 @@
                             nodes.fbTopNavigation_root.querySelectorAll(
                                 ".NavTopUL_parent"
                             );
+
                         var top_li_count = NavTopUL_parents.length;
                         var li_index = [].slice
                             .call(NavTopUL_parents)
@@ -944,17 +978,20 @@
                             });
 
                         _this.parentNode.classList.add("NavTopUL_lastChild");
-
                         var li_id = _this.parentNode.id.split("_").pop(0);
                         var leftnav_li = query("#" + li_id);
 
                         // Fix left navigation topics height
-                        var child_ul = leftnav_li.querySelector("ul");
-                        var eheight = parseFloat(child_ul.clientHeight);
+                        var child_ul =
+                            leftnav_li.querySelector(".NavLeftUL_sublist");
 
-                        if (nodes.fbLeftNavigation_wrap)
-                            nodes.fbLeftNavigation_wrap.style.height =
-                                eheight + "px";
+                        if (child_ul) {
+                            var eheight = parseFloat(child_ul.clientHeight);
+
+                            if (nodes.fbLeftNavigation_wrap)
+                                nodes.fbLeftNavigation_wrap.style.height =
+                                    eheight + "px";
+                        }
 
                         var wrap = nodes.fbLeftNavigation_wrap;
                         var distance = slide_count * 100;
@@ -984,8 +1021,7 @@
                                 )
                                     leftnav_li
                                         .querySelector("ul")
-                                        .querySelector("ul")
-                                        .classList.remove("NavLeftUL_expanded");
+                                        .querySelector("ul");
 
                                 if (nodes.fbTopNavigation_wrap)
                                     nodes.fbTopNavigation_wrap.classList.add(
@@ -1005,7 +1041,6 @@
                                     href,
                                     topic_title
                                 );
-
                                 wrap.classList.remove("wrap_animated");
                             };
                         }
