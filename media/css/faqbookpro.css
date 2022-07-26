@@ -98,10 +98,6 @@ a.NavTopUL_link .fas {
 
 /* Left Navigation */
 
-.leftnav-hidden {
-  display: none !important;
-}
-
 .fbLeftNavigation_core {
   width: 280px !important;
   overflow: hidden;

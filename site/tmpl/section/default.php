@@ -27,11 +27,13 @@ endif;
 		echo $topnav->render($data);
 	}
 
-	$data = array();
-	$data['sectionId'] = $this->sectionId;
-	$data['visible'] = $this->leftnavigation;
-	$leftnav = new FileLayout('fb_leftnav');
-	echo $leftnav->render($data);
+	if ($this->leftnavigation)
+	{
+		$data = array();
+		$data['sectionId'] = $this->sectionId;
+		$leftnav = new FileLayout('fb_leftnav');
+		echo $leftnav->render($data);
+	}
 
 	?><div class="fbContent_core">
 		<div class="fb_loader"><?php
