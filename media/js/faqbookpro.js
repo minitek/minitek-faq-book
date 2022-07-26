@@ -9,7 +9,7 @@
     var sectionId = options.sectionId;
     var topicId = options.topicId;
     var leftnav = parseInt(options.leftnav, 10) ? true : false;
-    var loadAllTopics = options.loadAllTopics;
+    var loadAllTopics = parseInt(options.loadAllTopics, 10) ? true : false;
     var active_tab = options.active_tab;
     var duration = 300;
     var ajax_request;
@@ -82,7 +82,6 @@
                 tab;
 
         if (nodes.fbContent_root) nodes.fbContent_root.style.display = "none";
-
         if (nodes.fb_loader) nodes.fb_loader.style.display = "block";
 
         ajax_request = Joomla.request({
@@ -253,7 +252,7 @@
     // Load topic endpoint
     function loadEndpoint(id, this_liid, href, topic_title) {
         if (
-            loadAllTopics == 1 ||
+            loadAllTopics ||
             query("#" + this_liid).classList.contains("NavLeftUL_endpoint")
         ) {
             // Check if there is a pending ajax request
@@ -904,7 +903,7 @@
                     var _this = e.target;
 
                     if (
-                        loadAllTopics == 0 &&
+                        !loadAllTopics &&
                         _this.parentNode.classList.contains("NavTopUL_parent")
                     )
                         return;

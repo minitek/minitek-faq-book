@@ -240,6 +240,15 @@
 			</field>
 
 			<field
+				name="leftnav_type"
+				type="profeature"
+				class="info"
+				default="0"
+				label="COM_FAQBOOKPRO_FIELD_LEFTNAV_TYPE_LABEL"
+				title="COM_FAQBOOKPRO_FIELD_LEFTNAV_TYPE_DESC"
+			/>
+
+			<field
 				name="load_all_topics"
 				type="list"
 				default="1"
