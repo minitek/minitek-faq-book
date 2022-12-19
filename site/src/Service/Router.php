@@ -242,7 +242,7 @@ class Router extends RouterView
 
 			if (isset($query['id'])) {
 				// If Itemid is for sections page, we don't have a menu item for section or topic, therefore we need the section segment
-				if ($menuItem->query['view'] == 'sections') {
+				if (isset($menuItem->query['view']) && $menuItem->query['view'] == 'sections') {
 					// Get the section alias
 					$db = Factory::getDbo();
 					$dbQuery = $db->getQuery(true)
@@ -265,7 +265,7 @@ class Router extends RouterView
 				$path = $db->loadResult();
 
 				// If Itemid is for parent topic, we must remove the parent topic path from the topic path
-				if ($menuItem->query['view'] == 'topic') {
+				if (isset($menuItem->query['view']) && $menuItem->query['view'] == 'topic') {
 					// Get the parent topic path
 					$db = Factory::getDbo();
 					$dbQuery = $db->getQuery(true)

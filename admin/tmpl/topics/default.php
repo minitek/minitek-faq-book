@@ -17,6 +17,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 
 HTMLHelper::_('behavior.multiselect');
 
@@ -26,6 +28,8 @@ $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
 $ordering = ($listOrder == 'a.lft');
 $saveOrder = ($listOrder == 'a.lft' && strtolower($listDirn) == 'asc');
+$parse = parse_url(Uri::root());
+$domain = $parse['scheme'].'://'.$parse['host'];
 
 if ($saveOrder && !empty($this->items)) {
 	$saveOrderingUrl = 'index.php?option=com_faqbookpro&task=topics.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
@@ -92,6 +96,7 @@ if ($saveOrder && !empty($this->items)) {
 								$canCheckin = $user->authorise('core.admin',      'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
 								$canEditOwn = $user->authorise('core.edit.own',   'com_faqbookpro.topic.' . $item->id) && $item->created_user_id == $userId;
 								$canChange  = $user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $item->id) && $canCheckin;
+								$topicUrl = $domain.Route::link('site', RouteHelper::getTopicRoute($item->id, false, false, $item->language));
 
 								// Get the parents of item for sorting
 								if ($item->level > 1) {
@@ -151,7 +156,8 @@ if ($saveOrder && !empty($this->items)) {
 													<?php echo $this->escape($item->title); ?></a>
 											<?php else : ?>
 												<?php echo $this->escape($item->title); ?>
-											<?php endif; ?>
+											<?php endif;
+											?>&nbsp;<small><a href="<?php echo $topicUrl; ?>" target="_blank"> </a></small>
 										</div>
 										</td>
 
