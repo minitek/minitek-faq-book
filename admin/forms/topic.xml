@@ -120,9 +120,8 @@
 			name="created_time"
 			type="calendar"
 			label="JGLOBAL_CREATED_DATE"
-			class="inputbox"
-			size="22"
-			format="%Y-%m-%d %H:%M:%S"
+			translateformat="true"
+			showtime="true"
 			filter="user_utc"
 		/>
 
