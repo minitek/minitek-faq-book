@@ -28,7 +28,7 @@ $this->topic_params = $displayData['topic_params'];
 $this->questions_params = $displayData['questions_params'];
 $canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->topic->id);
 
-?><div class="fbTopic" id="fbTopic_<?php echo $this->topic->id; ?>"><?php
+?><div class="fbTopic" id="fbTopic_<?php echo $this->topic->id; ?>" data-topic-title="<?php echo $this->topic->title; ?>"><?php
 	if ($this->topic_params->show_section_questions == 'active' && $this->topic_params->topicid)
 	{
 		// Topic Title

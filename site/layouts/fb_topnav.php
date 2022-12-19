@@ -27,25 +27,21 @@ $tab = $app->input->get('tab', '');
 
 if ($sectionId) 
 {
-  $section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
-  $section->load($sectionId);
-  $sectionTitle = $section->title;
-  $sectionParams = new Registry($section->attribs);
-  $menu = $app->getMenu();
-  $activeMenu = $menu->getActive();
-  $home_itemid = $sectionParams->get('topnav_root', '') ? $sectionParams->get('topnav_root', '') : $activeMenu->id;
-  $home_menuitem = $menu->getItem($home_itemid);
-  $home_title = $home_menuitem->title;
+	$section = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
+	$section->load($sectionId);
+	$sectionTitle = $section->title;
+	$sectionParams = new Registry($section->attribs);
+	$menu = $app->getMenu();
+	$activeMenu = $menu->getActive();
+	$home_itemid = $sectionParams->get('topnav_root', '') ? $sectionParams->get('topnav_root', '') : $activeMenu->id;
+	$home_menuitem = $menu->getItem($home_itemid);
+	$home_title = $home_menuitem->title;
 }
 
 if ($view == 'section' && $tab != 'topics') 
-{
-  $class = 'NavTopUL_lastChild';
-} 
+	$class = 'NavTopUL_lastChild';
 else 
-{
-  $class = '';
-}
+  	$class = '';
 
 ?><div class="fbTopNavigation_core_outer">
   <div class="fbTopNavigation_core clearfix">

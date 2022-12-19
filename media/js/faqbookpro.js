@@ -456,15 +456,31 @@
     document.addEventListener("DOMContentLoaded", function () {
         getStaticNodes();
 
-        // Remove lastchild class from section li
-        if (!leftnav && nodes.fbTopNavigation_root) {
-            nodes.fbTopNavigation_root
-                .querySelector("li.NavTopUL_section")
-                .classList.remove("NavTopUL_firstChild");
+        // Topic / Question view
+        if (!leftnav && (page_view == "topic" || page_view == "question")) {
+            // Add topic to top navigation
+            if (nodes.fbTopNavigation_wrap) {
+                if (page_view == "topic")
+                    var this_title = query("#fbTopic_" + topicId).getAttribute(
+                        "data-topic-title"
+                    );
+                else if (page_view == "question")
+                    var this_title =
+                        query(".fbQuestion").getAttribute("data-topic-title");
 
-            nodes.fbTopNavigation_root
-                .querySelector("li.NavTopUL_section")
-                .classList.add("NavTopUL_lastChild");
+                if (this_title) {
+                    let li = document.createElement("li");
+                    li.id = "top_" + topicId;
+                    li.classList =
+                        "NavTopUL_item NavTopUL_topic NavTopUL_lastChild";
+
+                    li.innerHTML =
+                        '<a class="NavTopUL_link" href="#" onclick="return false;"><i class="fas fa-caret-right"></i>' +
+                        this_title +
+                        "</a>";
+                    nodes.fbTopNavigation_root.appendChild(li);
+                }
+            }
         }
 
         // Topic / Question view
