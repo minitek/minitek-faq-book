@@ -67,6 +67,113 @@ class com_faqbookproInstallerScript
 			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.1.2', '<')) {
 				self::update412($parent);
 			}
+
+			// Run update script if old version is older than 4.3.0
+			if (isset($this->installed_version) && $this->installed_version && version_compare($this->installed_version, '4.3.0', '<')) {
+				self::update430($parent);
+			}
+		}
+	}
+
+	/*
+	 * $parent is the class calling this method.
+	 * update runs if old version is < 4.3.0
+	 */
+	function update430($parent)
+	{
+		$db = Factory::getDbo();
+
+		#__minitek_faqbook_answer_templates
+		$answer_templates_columns = $db->getTableColumns('#__minitek_faqbook_answer_templates');
+
+		// Delete column 'asset_id'
+		if (isset($answer_templates_columns['asset_id']))
+		{
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_answer_templates` ";
+			$query .= " DROP COLUMN `asset_id` ";
+			$db->setQuery($query);
+
+			if (!$result = $db->execute())
+			{
+				throw new GenericDataException('Error 4.3.0-1: Could not delete column asset_id.', 500);
+
+				return false;
+			}
+		}
+
+		#__minitek_faqbook_customfields
+		$customfields_columns = $db->getTableColumns('#__minitek_faqbook_customfields');
+
+		// Delete column 'asset_id'
+		if (isset($customfields_columns['asset_id']))
+		{
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_customfields` ";
+			$query .= " DROP COLUMN `asset_id` ";
+			$db->setQuery($query);
+
+			if (!$result = $db->execute())
+			{
+				throw new GenericDataException('Error 4.3.0-2: Could not delete column asset_id.', 500);
+
+				return false;
+			}
+		}
+
+		#__minitek_faqbook_email_templates
+		$email_templates_columns = $db->getTableColumns('#__minitek_faqbook_email_templates');
+
+		// Delete column 'asset_id'
+		if (isset($email_templates_columns['asset_id']))
+		{
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_email_templates` ";
+			$query .= " DROP COLUMN `asset_id` ";
+			$db->setQuery($query);
+
+			if (!$result = $db->execute())
+			{
+				throw new GenericDataException('Error 4.3.0-3: Could not delete column asset_id.', 500);
+
+				return false;
+			}
+		}
+
+		#__minitek_faqbook_question_types
+		$question_types_columns = $db->getTableColumns('#__minitek_faqbook_question_types');
+
+		// Delete column 'asset_id'
+		if (isset($question_types_columns['asset_id']))
+		{
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_question_types` ";
+			$query .= " DROP COLUMN `asset_id` ";
+			$db->setQuery($query);
+
+			if (!$result = $db->execute())
+			{
+				throw new GenericDataException('Error 4.3.0-4: Could not delete column asset_id.', 500);
+
+				return false;
+			}
+		}
+
+		#__minitek_faqbook_questions
+		$questions_columns = $db->getTableColumns('#__minitek_faqbook_questions');
+
+		// Add column 'hash'
+		if (!isset($questions_columns['hash'])) {
+			$query = $db->getQuery(true);
+			$query = " ALTER TABLE `#__minitek_faqbook_questions` ";
+			$query .= " ADD COLUMN `hash` varchar(500) NOT NULL DEFAULT '' ";
+			$db->setQuery($query);
+			$result = $db->execute();
+
+			if (!$result) {
+				throw new GenericDataException('Error 4.3.0-5: Could not update __minitek_faqbook_questions table.', 500);
+				return false;
+			}
 		}
 	}
 
