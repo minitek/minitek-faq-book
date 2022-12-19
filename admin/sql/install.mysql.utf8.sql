@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_attachments` (
 
 CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_question_types` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `asset_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
   `color` varchar(10) DEFAULT '#5bc0de',
@@ -26,7 +25,6 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_question_types` (
 
 CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_customfields` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `asset_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
   `description` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -75,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_answers` (
 
 CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_email_templates` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
  `template_key` varchar(255) NOT NULL DEFAULT '',
  `title` varchar(255) NOT NULL DEFAULT '',
  `subject` varchar(500) NOT NULL DEFAULT '',
@@ -205,7 +202,6 @@ CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_votes` (
 
 CREATE TABLE IF NOT EXISTS `#__minitek_faqbook_answer_templates` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
  `title` varchar(255) NOT NULL DEFAULT '',
  `content` mediumtext NOT NULL,
  `state` tinyint(3) NOT NULL DEFAULT '0',
