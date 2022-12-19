@@ -135,8 +135,8 @@
 			name="created"
 			type="calendar"
 			label="JGLOBAL_CREATED_DATE"
-			size="22"
-			format="%Y-%m-%d %H:%M:%S"
+			translateformat="true"
+			showtime="true"
 			filter="user_utc"
 		/>
 
@@ -151,9 +151,9 @@
 			type="calendar"
 			class="readonly"
 			label="JGLOBAL_FIELD_MODIFIED_LABEL"
-			size="22"
 			readonly="true"
-			format="%Y-%m-%d %H:%M:%S"
+			translateformat="true"
+			showtime="true"
 			filter="user_utc"
 		/>
 
@@ -239,7 +239,6 @@
 			description="COM_FAQBOOKPRO_FIELD_PUBLISH_UP_DESC"
 			translateformat="true"
 			showtime="true"
-			size="22"
 			filter="user_utc"
 		/>
 
@@ -250,7 +249,6 @@
 			description="COM_FAQBOOKPRO_FIELD_PUBLISH_DOWN_DESC"
 			translateformat="true"
 			showtime="true"
-			size="22"
 			filter="user_utc"
 		/>
 
