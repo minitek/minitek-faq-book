@@ -206,7 +206,6 @@
 			size="0"
 			label="COM_FAQBOOKPRO_FIELD_TOPIC_QUESTIONS_VISIBILITY_LABEL"
 			description="COM_FAQBOOKPRO_FIELD_TOPIC_QUESTIONS_VISIBILITY_DESC"
-			title="COM_FAQBOOKPRO_FIELD_TOPIC_QUESTIONS_VISIBILITY_TITLE"
 		/>
 
 		<field
@@ -269,7 +268,7 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_NOTIFY_MODERATORS_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_NOTIFY_MODERATORS_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_NOTIFY_MODERATORS_DESC"
 				default="global"
 			/>
 
@@ -322,7 +321,7 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_DESC"
 				default=""
 				showon="enable_questions:1"
 			/>
@@ -332,7 +331,7 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_DESC"
 				default=""
 				showon="enable_questions:1"
 			/>
