@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -38,6 +38,7 @@ class HtmlView extends BaseHtmlView
 
 		// Get Params & Attribs
 		$this->params = UtilitiesHelper::getParams('com_faqbookpro');
+		$layout = $this->params->get('sections_layout', 'columns');
 
 		// Get Sections
 		$specific_sections = $this->params->get('fb_sections', '');
@@ -50,41 +51,67 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Extra Section data
-		foreach ($this->sections as $key => $section) {
-			$section->q_count = $this->model->getSectionQuestionsCount($section->id);
-			$section->topics = $sectionModel->getSectionTopics($section->id);
+		foreach ($this->sections as $key => $section) 
+		{
+			if (($layout == 'columns' && $this->params->get('sections_section_count', 1))
+				|| ($layout == 'forum' && $this->params->get('sections_forum_section_count', 1))
+			)
+				$section->q_count = $this->model->getSectionQuestionsCount($section->id);
 
-			foreach ($section->topics as $topic) {
-				$topic->q_count = $this->model->getTopicQuestionsCount($topic->id);
-				$topic->children = $this->model->getChildrenTopics($topic);
-				$topic->lastpost = $this->model->getTopicLastQuestion($topic->id);
-				if ($topic->lastpost) {
-					$topic->lastpost->time_since = UtilitiesHelper::getTimeSince($topic->lastpost->created);
+			if (($layout == 'columns' && $this->params->get('sections_topics', 1))
+			|| ($layout == 'forum' && $this->params->get('sections_forum_topics', 1))
+			)
+			{
+				$section->topics = $sectionModel->getSectionTopics($section->id);
 
-					// Author name
-					if ($topic->lastpost->created_by) {
-						// Check whether user exists
-						$userExists = UtilitiesHelper::userExists($topic->lastpost->created_by);
-						$topic->lastpost->created_by = $userExists ? $topic->lastpost->created_by : false;
+				foreach ($section->topics as $topic) 
+				{
+					if (($layout == 'columns' && $this->params->get('sections_topics_count', 1))
+						|| ($layout == 'forum' && $this->params->get('sections_forum_topics_count', 1))
+					)
+						$topic->q_count = $this->model->getTopicQuestionsCount($topic->id);
+				
+					if ($layout == 'forum' && $this->params->get('sections_forum_topics_children', 1))
+					{
+						$topic->children = $this->model->getChildrenTopics($topic);
 
-						if ($this->params->get('questions_author_name', 'username') === 'name') {
-							$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->name;
-						} else if ($this->params->get('questions_author_name', 'username') === 'username') {
-							$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->username;
+						if ($topic->children) 
+						{
+							foreach ($topic->children as $child) 
+							{
+								$child->q_count = $this->model->getTopicQuestionsCount($child->id);
+								$childParams = new Registry($child->params);
+								$child->icon_class = $childParams->get('topic_icon_class', '');
+							}
 						}
 					}
-				}
 
-				if ($topic->children) {
-					foreach ($topic->children as $child) {
-						$child->q_count = $this->model->getTopicQuestionsCount($child->id);
-						$childParams = new Registry($child->params);
-						$child->icon_class = $childParams->get('topic_icon_class', '');
+					if ($layout == 'forum' && $this->params->get('sections_forum_last_question', 1))
+					{
+						$topic->lastpost = $this->model->getTopicLastQuestion($topic->id);
+
+						if ($topic->lastpost) 
+						{
+							$topic->lastpost->time_since = UtilitiesHelper::getTimeSince($topic->lastpost->created);
+
+							// Author name
+							if ($topic->lastpost->created_by) 
+							{
+								// Check whether user exists
+								$userExists = UtilitiesHelper::userExists($topic->lastpost->created_by);
+								$topic->lastpost->created_by = $userExists ? $topic->lastpost->created_by : false;
+
+								if ($this->params->get('questions_author_name', 'username') === 'name')
+									$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->name;
+								else if ($this->params->get('questions_author_name', 'username') === 'username')
+									$topic->lastpost->author_name = Factory::getUser($topic->lastpost->created_by)->username;
+							}
+						}
 					}
-				}
 
-				$topicParams = new Registry($topic->params);
-				$topic->icon_class = $topicParams->get('topic_icon_class', '');
+					$topicParams = new Registry($topic->params);
+					$topic->icon_class = $topicParams->get('topic_icon_class', '');
+				}
 			}
 		}
 
