@@ -244,7 +244,7 @@
 				class="info"
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_LEFTNAV_TYPE_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_LEFTNAV_TYPE_DESC"
+				description="COM_FAQBOOKPRO_FIELD_LEFTNAV_TYPE_DESC"
 			/>
 
 			<field
@@ -641,7 +641,7 @@
 				class="info"
 				default="0"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_GROUP_METHOD_DESC"
 			/>
 
 		</fieldset>
@@ -725,7 +725,7 @@
 				type="profeature"
 				class="info"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ORDERING_TYPE_DESC"
 				default="static"
 			/>
 
@@ -772,8 +772,9 @@
 				name="active_tab"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_LABEL"
 				default="recent"
+				label="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_ACTIVE_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -783,6 +784,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_RECENT_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -792,6 +794,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_TOP_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -801,6 +804,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_FEATURED_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -810,6 +814,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_UNANSWERED_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -819,6 +824,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_RESOLVED_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -828,6 +834,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_UNRESOLVED_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -837,6 +844,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_OPEN_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -846,6 +854,7 @@
 				class="info"
 				default="1"
 				label="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_PENDING_QUESTIONS_TAB_DESC"
 				showon="questions_ordering_type:dynamic"
 			/>
 
@@ -859,16 +868,16 @@
 				class="info"
 				default="faq"
 				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_TITLE"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_THEME_DESC"
 			/>
 
 			<field
 				name="section_questions_opened"
 				type="radio"
 				layout="joomla.form.field.radio.switcher"
+				default="0"
 				label="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_SECTION_QUESTIONS_OPENED_DESC"
-				default="0"
 			>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -878,36 +887,36 @@
 				name="questions_votes"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_TITLE"
 				default="1"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VOTES_DESC"
 			/>
 
 			<field
 				name="questions_link"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_TITLE"
 				default="1"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_LINK_DESC"
 			/>
 
 			<field
 				name="questions_answers"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_TITLE"
 				default="1"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_ANSWERS_DESC"
 			/>
 
 			<field
 				name="questions_state_labels"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_TITLE"
 				default="1"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_STATE_LABELS_DESC"
 			/>
 
 			<field
@@ -949,9 +958,9 @@
 				name="questions_views"
 				type="profeature"
 				class="info"
-				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_LABEL"
-				title="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_TITLE"
 				default="1"
+				label="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_LABEL"
+				description="COM_FAQBOOKPRO_FIELD_QUESTIONS_VIEWS_DESC"
 			/>
 
 			<field

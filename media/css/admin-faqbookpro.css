@@ -67,6 +67,13 @@ label[id^="jform_attribs_separator_"] {
   font-size: 15px;
 }
 
+/* Pro features */
+
+.com_faqbookpro.view-section .alert,
+.com_faqbookpro.view-topic .alert {
+  margin: 0;
+}
+
 /* Questions */
 
 body.com_faqbookpro.view-questions .itemList tr.pinned td,
