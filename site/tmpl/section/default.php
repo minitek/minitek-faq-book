@@ -17,8 +17,10 @@ if ($this->params->get('show_page_title')):
 	?></h1><?php
 endif;
 
-?><div id="fbExtended" class="fbSectionExtended"><?php
-
+?><div id="fbExtended" class="fbSectionExtended<?php
+	echo (!$this->leftnavigation) ? ' noleftnav' : '';	
+	?>"><?php
+	
 	if ($this->topnavigation)
 	{
 		$data = array();

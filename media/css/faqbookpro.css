@@ -6,15 +6,18 @@
   flex-wrap: wrap;
 }
 
-#fbExtended > * {
-  flex-shrink: 0;
+#fbExtended.fbFormExtended,
+#fbExtended.noleftnav {
+  flex-direction: column;
 }
 
 /* Main Content */
 
 .fbContent_core {
-  flex: 1 0 0%;
+  flex: 1 1 0;
   padding-top: 20px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .fbContent_root a:not([class]) {
@@ -24,7 +27,7 @@
 /* Top Navigation */
 
 .fbTopNavigation_core_outer {
-  width: 100%;
+  flex: 1 0 100%;
 }
 
 .fbTopNavigation_core {
