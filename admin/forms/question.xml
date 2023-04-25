@@ -9,7 +9,6 @@
 			class="readonly"
 			label="JGLOBAL_FIELD_ID_LABEL"
 			description="JGLOBAL_FIELD_ID_DESC"
-			size="10"
 			default="0"
 			readonly="true"
 		/>
@@ -36,7 +35,6 @@
 			label="JFIELD_ALIAS_LABEL"
 			description="JFIELD_ALIAS_DESC"
 			hint="JFIELD_ALIAS_PLACEHOLDER"
-			size="40"
 		/>
 
 		<field
@@ -183,7 +181,6 @@
 			type="text"
 			label="JFIELD_ORDERING_LABEL"
 			description="JFIELD_ORDERING_DESC"
-			size="6"
 			default="0"
 		/>
 
@@ -210,7 +207,6 @@
 			type="accesslevel"
 			label="JFIELD_ACCESS_LABEL"
 			description="JFIELD_ACCESS_DESC"
-			size="1"
 		/>
 
 		<field
@@ -218,7 +214,6 @@
 			type="text"
 			label="JGLOBAL_HITS"
 			class="readonly"
-			size="6"
 			readonly="true"
 			filter="unset"
 		/>
@@ -270,7 +265,6 @@
 				type="text"
 				label="COM_FAQBOOKPRO_FIELD_IMAGE_ALT_LABEL"
 				description="COM_FAQBOOKPRO_FIELD_IMAGE_ALT_DESC"
-				size="20"
 			/>
 
 		</fieldset>
@@ -299,7 +293,6 @@
 				type="text"
 				label="JAUTHOR"
 				description="JFIELD_METADATA_AUTHOR_DESC"
-				size="20"
 			/>
 
 		</fieldset>
