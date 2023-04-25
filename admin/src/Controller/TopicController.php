@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -15,7 +15,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\Registry\Registry;
 use Joomla\CMS\Session\Session;
 
 /**
@@ -151,7 +150,7 @@ class TopicController extends FormController
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = array())
 	{
 		$id = $validData['id'];
-		
+
 		if (!$id)
 			return;
 

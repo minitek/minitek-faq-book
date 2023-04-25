@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -108,14 +108,20 @@ class SectionModel extends AdminModel
 		if ($item = parent::getItem($pk))
 		{
 			// Convert the metadata field to an array.
-			$registry = new Registry;
-			$registry->loadString($item->metadata);
-			$item->metadata = $registry->toArray();
+			if (!empty($item->metadata))
+			{
+				$registry = new Registry;
+				$registry->loadString($item->metadata);
+				$item->metadata = $registry->toArray();
+			}
 
 			// Convert the params field to an array.
-			$registry = new Registry;
-			$registry->loadString($item->attribs);
-			$item->attribs = $registry->toArray();
+			if (!empty($item->attribs))
+			{
+				$registry = new Registry;
+				$registry->loadString($item->attribs);
+				$item->attribs = $registry->toArray();
+			}
 		}
 
 		return $item;
@@ -135,7 +141,7 @@ class SectionModel extends AdminModel
 	{
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.section', 'section', array('control' => 'jform', 'load_data' => $loadData));
-		
+
 		if (empty($form))
 		{
 			return false;
