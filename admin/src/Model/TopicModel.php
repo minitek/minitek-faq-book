@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -161,9 +161,12 @@ class TopicModel extends AdminModel
 			}
 
 			// Convert the metadata field to an array.
-			$registry = new Registry;
-			$registry->loadString($result->metadata);
-			$result->metadata = $registry->toArray();
+			if (!empty($result->metadata))
+			{
+				$registry = new Registry;
+				$registry->loadString($result->metadata);
+				$result->metadata = $registry->toArray();
+			}
 
 			// Convert the created and modified dates to local user time for display in the form.
 			$tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
@@ -520,7 +523,7 @@ class TopicModel extends AdminModel
 	{
 		// $value comes as {section_id}.{topic_id}
 		$parts = explode('.', $value);
-		
+
 		$sectionId = (int) $parts[0];
 
 		// We have section and topic
@@ -529,11 +532,11 @@ class TopicModel extends AdminModel
 			$parentId = (int) $parts[1];
 		}
 		// We only have section, therefore the new parent_id = 1 (root topic)
-		else 
+		else
 		{
 			$parentId = 1;
 		}
-		
+
 		$type = new UCMType;
 		$this->type = $type->getTypeByAlias($this->typeAlias);
 
@@ -764,7 +767,7 @@ class TopicModel extends AdminModel
 	{
 		// $value comes as {section_id}.{topic_id}
 		$parts = explode('.', $value);
-		
+
 		$sectionId = (int) $parts[0];
 
 		// We have section and topic
@@ -773,22 +776,22 @@ class TopicModel extends AdminModel
 			$parentId = (int) $parts[1];
 		}
 		// We only have section, therefore the new parent_id = 1 (root topic)
-		else 
+		else
 		{
 			$parentId = 1;
 		}
-		
+
 		$type = new UCMType;
 		$this->type = $type->getTypeByAlias($this->typeAlias);
 
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-	
+
 		// Check that the parent exists
 		if ($parentId)
 		{
 			PluginHelper::importPlugin('content');
-			
+
 			if (!$this->table->load($parentId))
 			{
 				if ($error = $this->table->getError())
@@ -805,7 +808,7 @@ class TopicModel extends AdminModel
 					$parentId = 0;
 				}
 			}
-	
+
 			// Check that user has create permission for parent topic
 			if ($parentId == $this->table->getRootId())
 			{
@@ -815,7 +818,7 @@ class TopicModel extends AdminModel
 			{
 				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro.topic.' . $parentId);
 			}
-			
+
 			if (!$canCreate)
 			{
 				// Error since user cannot create in parent topic
@@ -823,7 +826,7 @@ class TopicModel extends AdminModel
 
 				return false;
 			}
-		
+
 			// Check that user has edit permission for every topic being moved
 			// Note that the entire batch operation fails if any topic lacks edit permission
 			foreach ($pks as $pk)
@@ -867,7 +870,7 @@ class TopicModel extends AdminModel
 
 			// Set the new section_id
 			$this->table->section_id = $sectionId;
-			
+
 			// Get children
 			$lft = (int) $this->table->lft;
 			$rgt = (int) $this->table->rgt;
@@ -913,7 +916,7 @@ class TopicModel extends AdminModel
 			{
 				$this->table->reset();
 				$this->table->load($id);
-				
+
 				// Set the new section_id
 				$this->table->section_id = $sectionId;
 
@@ -1022,7 +1025,7 @@ class TopicModel extends AdminModel
 				{
 					$this->table->reset();
 					$this->table->load($id);
-					
+
 					// Set the new language
 					$this->table->language = $value;
 
@@ -1133,7 +1136,7 @@ class TopicModel extends AdminModel
 				{
 					$this->table->reset();
 					$this->table->load($id);
-					
+
 					// Set the new access
 					$this->table->access = $value;
 

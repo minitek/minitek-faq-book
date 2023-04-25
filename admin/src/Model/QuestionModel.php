@@ -1,7 +1,7 @@
 <?php
 /**
 * @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
 * @license		GNU General Public License version 3 or later.
 * @author url	https://www.minitek.gr/
 * @developers	Minitek.gr
@@ -399,14 +399,20 @@ class QuestionModel extends AdminModel
 		if ($item = parent::getItem($pk))
 		{
 			// Convert the images group to an array.
-			$registry = new Registry;
-			$registry->loadString($item->images);
-			$item->images = $registry->toArray();
+			if (!empty($item->images))
+			{
+				$registry = new Registry;
+				$registry->loadString($item->images);
+				$item->images = $registry->toArray();
+			}
 
 			// Convert the metadata group to an array.
-			$registry = new Registry;
-			$registry->loadString($item->metadata);
-			$item->metadata = $registry->toArray();
+			if (!empty($item->metadata))
+			{
+				$registry = new Registry;
+				$registry->loadString($item->metadata);
+				$item->metadata = $registry->toArray();
+			}
 		}
 
 		return $item;
@@ -426,7 +432,7 @@ class QuestionModel extends AdminModel
 	{
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.question', 'question', array('control' => 'jform', 'load_data' => $loadData));
-		
+
 		if (empty($form))
 		{
 			return false;
