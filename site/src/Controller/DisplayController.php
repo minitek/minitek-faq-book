@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Site\Controller;
 
@@ -51,23 +52,30 @@ class DisplayController extends \Joomla\CMS\MVC\Controller\BaseController
 	 * @since   4.0.0
 	 */
 	public function display($cachable = false, $urlparams = false)
- 	{
- 		$cachable = true;
+	{
+		$cachable = true;
 
- 		/**
- 		 * Set the default view name and format from the Request.
- 		 */
- 		$id    = $this->input->getInt('id');
- 		$vName = $this->input->getCmd('view', 'section');
- 		$this->input->set('view', $vName);
+		/**
+		 * Set the default view name and format from the Request.
+		 */
+		$id    = $this->input->getInt('id');
+		$vName = $this->input->getCmd('view', 'section');
+		$this->input->set('view', $vName);
 
- 		$safeurlparams = array(
- 			'id' => 'INT',
- 			'lang' => 'CMD',
- 			'Itemid' => 'INT');
+		$user = $this->app->getIdentity();
 
- 		parent::display($cachable, $safeurlparams);
+		if ($user->get('id')) {
+			$cachable = false;
+		}
 
- 		return $this;
- 	}
+		$safeurlparams = array(
+			'id' => 'INT',
+			'lang' => 'CMD',
+			'Itemid' => 'INT'
+		);
+
+		parent::display($cachable, $safeurlparams);
+
+		return $this;
+	}
 }
