@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Helper;
 
@@ -38,10 +39,8 @@ class FAQBookProHelper
 		$allTopics = $db->loadObjectList('id');
 		$allowedTopics = array();
 
-		foreach ($allTopics as $topic)
-		{
-			if (\JFactory::getUser()->authorise($action, $topic->asset_name))
-			{
+		foreach ($allTopics as $topic) {
+			if (\JFactory::getUser()->authorise($action, $topic->asset_name)) {
 				$allowedTopics[] = (int) $topic->id;
 			}
 		}
@@ -63,18 +62,15 @@ class FAQBookProHelper
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');
 
-		if ($xml_file)
-		{
+		if ($xml_file) {
 			$updates = new \SimpleXMLElement($xml_file);
 
-			foreach ($updates as $key => $update)
-			{
+			foreach ($updates as $key => $update) {
 				$platform = (array)$update->targetplatform->attributes()->version;
 
-				if ($platform[0] == '4.*')
-				{
+				if ($platform[0] == '5.*') {
 					$version = (string)$update->version;
-					
+
 					break;
 				}
 			}
@@ -92,7 +88,7 @@ class FAQBookProHelper
 	 */
 	public static function localVersion()
 	{
-		$xml = simplexml_load_file(JPATH_ADMINISTRATOR .'/components/com_faqbookpro/faqbookpro.xml');
+		$xml = simplexml_load_file(JPATH_ADMINISTRATOR . '/components/com_faqbookpro/faqbookpro.xml');
 		$version = (string)$xml->version;
 
 		return $version;
@@ -112,16 +108,13 @@ class FAQBookProHelper
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');
 
-		if ($xml_file)
-		{
+		if ($xml_file) {
 			$updates = new \SimpleXMLElement($xml_file);
 
-			foreach ($updates as $key => $update)
-			{
+			foreach ($updates as $key => $update) {
 				$platform = (array)$update->targetplatform->attributes()->version;
 
-				if ($platform[0] == '4.*')
-				{
+				if ($platform[0] == '5.*') {
 					$message = (string)$update->message;
 
 					break;
@@ -146,16 +139,13 @@ class FAQBookProHelper
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');
 
-		if ($xml_file)
-		{
+		if ($xml_file) {
 			$updates = new \SimpleXMLElement($xml_file);
 
-			foreach ($updates as $key => $update)
-			{
+			foreach ($updates as $key => $update) {
 				$platform = (array)$update->targetplatform->attributes()->version;
 
-				if ($platform[0] == '4.*')
-				{
+				if ($platform[0] == '5.*') {
 					$version = (string)$update->showmessage;
 
 					break;
