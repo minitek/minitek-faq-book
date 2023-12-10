@@ -22,6 +22,9 @@ jimport('joomla.filesystem.folder');
 
 class com_faqbookproInstallerScript
 {
+	var $new_version = null;
+	var $installed_version = null;
+
 	/*
 	 * $parent is the class calling this method.
 	 * $type is the type of change (install, update or discover_install, not uninstall).
@@ -87,15 +90,13 @@ class com_faqbookproInstallerScript
 		$answer_templates_columns = $db->getTableColumns('#__minitek_faqbook_answer_templates');
 
 		// Delete column 'asset_id'
-		if (isset($answer_templates_columns['asset_id']))
-		{
+		if (isset($answer_templates_columns['asset_id'])) {
 			$query = $db->getQuery(true);
 			$query = " ALTER TABLE `#__minitek_faqbook_answer_templates` ";
 			$query .= " DROP COLUMN `asset_id` ";
 			$db->setQuery($query);
 
-			if (!$result = $db->execute())
-			{
+			if (!$result = $db->execute()) {
 				throw new GenericDataException('Error 4.3.0-1: Could not delete column asset_id.', 500);
 
 				return false;
@@ -106,15 +107,13 @@ class com_faqbookproInstallerScript
 		$customfields_columns = $db->getTableColumns('#__minitek_faqbook_customfields');
 
 		// Delete column 'asset_id'
-		if (isset($customfields_columns['asset_id']))
-		{
+		if (isset($customfields_columns['asset_id'])) {
 			$query = $db->getQuery(true);
 			$query = " ALTER TABLE `#__minitek_faqbook_customfields` ";
 			$query .= " DROP COLUMN `asset_id` ";
 			$db->setQuery($query);
 
-			if (!$result = $db->execute())
-			{
+			if (!$result = $db->execute()) {
 				throw new GenericDataException('Error 4.3.0-2: Could not delete column asset_id.', 500);
 
 				return false;
@@ -125,15 +124,13 @@ class com_faqbookproInstallerScript
 		$email_templates_columns = $db->getTableColumns('#__minitek_faqbook_email_templates');
 
 		// Delete column 'asset_id'
-		if (isset($email_templates_columns['asset_id']))
-		{
+		if (isset($email_templates_columns['asset_id'])) {
 			$query = $db->getQuery(true);
 			$query = " ALTER TABLE `#__minitek_faqbook_email_templates` ";
 			$query .= " DROP COLUMN `asset_id` ";
 			$db->setQuery($query);
 
-			if (!$result = $db->execute())
-			{
+			if (!$result = $db->execute()) {
 				throw new GenericDataException('Error 4.3.0-3: Could not delete column asset_id.', 500);
 
 				return false;
@@ -144,15 +141,13 @@ class com_faqbookproInstallerScript
 		$question_types_columns = $db->getTableColumns('#__minitek_faqbook_question_types');
 
 		// Delete column 'asset_id'
-		if (isset($question_types_columns['asset_id']))
-		{
+		if (isset($question_types_columns['asset_id'])) {
 			$query = $db->getQuery(true);
 			$query = " ALTER TABLE `#__minitek_faqbook_question_types` ";
 			$query .= " DROP COLUMN `asset_id` ";
 			$db->setQuery($query);
 
-			if (!$result = $db->execute())
-			{
+			if (!$result = $db->execute()) {
 				throw new GenericDataException('Error 4.3.0-4: Could not delete column asset_id.', 500);
 
 				return false;
@@ -225,7 +220,7 @@ class com_faqbookproInstallerScript
 
 		if ($columns) {
 			$query = $db->getQuery(true);
-			$query ='RENAME TABLE ' . $db->quoteName('#__minitek_faqbook_customstates') . ' TO ' . $db->quoteName('#__minitek_faqbook_question_types');
+			$query = 'RENAME TABLE ' . $db->quoteName('#__minitek_faqbook_customstates') . ' TO ' . $db->quoteName('#__minitek_faqbook_question_types');
 			$db->setQuery($query);
 			$result = $db->execute();
 
@@ -255,30 +250,25 @@ class com_faqbookproInstallerScript
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__minitek_faqbook_questions'));
-		$query->where($db->quoteName('resolved').' NOT REGEXP \'^[0-9]+$\'');
+		$query->where($db->quoteName('resolved') . ' NOT REGEXP \'^[0-9]+$\'');
 		$db->setQuery($query);
 
-		try 
-		{
+		try {
 			$questions = $db->loadObjectList();
-		}
-		catch (\Exception $e)
-		{
+		} catch (\Exception $e) {
 			throw new GenericDataException('Error 411-3: Could not read questions.', 500);
 
 			return false;
 		}
-		
-		if ($questions)
-		{	
-			foreach ($questions as $question)
-			{
-				// Copy resolved to question_type	
+
+		if ($questions) {
+			foreach ($questions as $question) {
+				// Copy resolved to question_type
 				$query = $db->getQuery(true);
 				$query
 					->update($db->quoteName('#__minitek_faqbook_questions'))
-					->set($db->quoteName('question_type').' = '.$db->quote($question->resolved))
-					->where($db->quoteName('id').' = '.$db->quote($question->id));			
+					->set($db->quoteName('question_type') . ' = ' . $db->quote($question->resolved))
+					->where($db->quoteName('id') . ' = ' . $db->quote($question->id));
 				$db->setQuery($query);
 				$db->execute();
 
@@ -286,8 +276,8 @@ class com_faqbookproInstallerScript
 				$query = $db->getQuery(true);
 				$query
 					->update($db->quoteName('#__minitek_faqbook_questions'))
-					->set($db->quoteName('resolved').' = '.$db->quote(0))
-					->where($db->quoteName('id').' = '.$db->quote($question->id));			
+					->set($db->quoteName('resolved') . ' = ' . $db->quote(0))
+					->where($db->quoteName('id') . ' = ' . $db->quote($question->id));
 				$db->setQuery($query);
 				$db->execute();
 			}
