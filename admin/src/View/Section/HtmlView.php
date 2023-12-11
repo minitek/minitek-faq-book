@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\View\Section;
 
@@ -16,6 +17,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * View to edit a section.
@@ -45,8 +47,7 @@ class HtmlView extends BaseHtmlView
 		$this->canDo = ContentHelper::getActions('com_faqbookpro', 'section', $this->item->id);
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
+		if (count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
@@ -74,40 +75,33 @@ class HtmlView extends BaseHtmlView
 		$canDo = $this->canDo;
 
 		ToolbarHelper::title(
-			\JText::_('COM_FAQBOOKPRO_SECTION_TITLE_'.($checkedOut ? 'VIEW_SECTION' : ($isNew ? 'ADD_SECTION' : 'EDIT_SECTION'))),
+			Text::_('COM_FAQBOOKPRO_SECTION_TITLE_' . ($checkedOut ? 'VIEW_SECTION' : ($isNew ? 'ADD_SECTION' : 'EDIT_SECTION'))),
 			'pencil-2 article-add'
 		);
 
 		// For new records, check the create permission.
-		if ($canDo->get('core.create') && $isNew)
-		{
+		if ($canDo->get('core.create') && $isNew) {
 			ToolbarHelper::apply('section.apply');
 			ToolbarHelper::save('section.save');
 			ToolbarHelper::save2new('section.save2new');
 			ToolbarHelper::cancel('section.cancel');
-		}
-		else
-		{
+		} else {
 			// Can't save the record if it's checked out.
-			if (!$checkedOut)
-			{
+			if (!$checkedOut) {
 				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
-				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId))
-				{
+				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId)) {
 					ToolbarHelper::apply('section.apply');
 					ToolbarHelper::save('section.save');
 
 					// We can save this record, but check the create permission to see if we can return to make a new one.
-					if ($canDo->get('core.create'))
-					{
+					if ($canDo->get('core.create')) {
 						ToolbarHelper::save2new('section.save2new');
 					}
 				}
 			}
 
 			// If checked out, we can still save
-			if ($canDo->get('core.create'))
-			{
+			if ($canDo->get('core.create')) {
 				ToolbarHelper::save2copy('section.save2copy');
 			}
 

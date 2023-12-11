@@ -197,7 +197,7 @@ if ($saveOrder && !empty($this->items)) {
 
 					<?php echo $this->pagination->getListFooter(); ?>
 
-					<?php // Load the batch processing form. 
+					<?php // Load the batch processing form.
 					?>
 					<?php if (
 						$user->authorise('core.create', 'com_faqbookpro')

@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Site\Model;
 
@@ -52,8 +53,7 @@ class TopicModel extends BaseDatabaseModel
 		// If $pk is set then authorise on complete asset, else on component only
 		$asset = empty($pk) ? 'com_faqbookpro' : 'com_faqbookpro.topic.' . $pk;
 
-		if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset)))
-		{
+		if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset))) {
 			$this->setState('filter.published', 1);
 			$this->setState('filter.archived', 2);
 		}
@@ -74,15 +74,12 @@ class TopicModel extends BaseDatabaseModel
 
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('topic.id');
 
-		if ($this->_item === null)
-		{
+		if ($this->_item === null) {
 			$this->_item = array();
 		}
 
-		if (!isset($this->_item[$pk]))
-		{
-			try
-			{
+		if (!isset($this->_item[$pk])) {
+			try {
 				$db = $this->getDbo();
 				$query = $db->getQuery(true)
 					->select('a.*');
@@ -90,8 +87,7 @@ class TopicModel extends BaseDatabaseModel
 					->where('a.id = ' . (int) $pk);
 
 				// Filter by language
-				if ($this->getState('filter.language'))
-				{
+				if ($this->getState('filter.language')) {
 					$query->where('a.language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 				}
 
@@ -99,8 +95,7 @@ class TopicModel extends BaseDatabaseModel
 				$published = $this->getState('filter.published');
 				$archived = $this->getState('filter.archived');
 
-				if (is_numeric($published))
-				{
+				if (is_numeric($published)) {
 					$query->where('(a.published = ' . (int) $published . ' OR a.published =' . (int) $archived . ')');
 				}
 
@@ -108,14 +103,12 @@ class TopicModel extends BaseDatabaseModel
 
 				$data = $db->loadObject();
 
-				if (empty($data))
-				{
+				if (empty($data)) {
 					throw new GenericDataException(Text::_('COM_FAQBOOKPRO_ERROR_TOPIC_NOT_FOUND'), 404);
 				}
 
 				// Check for published state if filter set.
-				if ((is_numeric($published) || is_numeric($archived)) && (($data->published != $published) && ($data->published != $archived)))
-				{
+				if ((is_numeric($published) || is_numeric($archived)) && (($data->published != $published) && ($data->published != $archived))) {
 					throw new GenericDataException(Text::_('COM_FAQBOOKPRO_ERROR_TOPIC_NOT_FOUND'), 404);
 				}
 
@@ -125,16 +118,11 @@ class TopicModel extends BaseDatabaseModel
 				$data->access_view = in_array($data->access, $groups);
 
 				$this->_item[$pk] = $data;
-			}
-			catch (\Exception $e)
-			{
-				if ($e->getCode() == 404)
-				{
+			} catch (\Exception $e) {
+				if ($e->getCode() == 404) {
 					// Need to go thru the error handler to allow Redirect to work.
 					throw new GenericDataException($e->getMessage(), 404);
-				}
-				else
-				{
+				} else {
 					$this->setError($e);
 					$this->_item[$pk] = false;
 				}
@@ -149,13 +137,14 @@ class TopicModel extends BaseDatabaseModel
 		$db = Factory::getDbo();
 		$user = Factory::getUser();
 		$query = $db->getQuery(true);
-		$query->select('a.id, a.title, a.alias, a.content, a.answers, a.checked_out, a.checked_out_time, a.state,
+		$query->select(
+			'a.id, a.title, a.alias, a.content, a.answers, a.checked_out, a.checked_out_time, a.state,
 			a.topicid, a.created, a.created_by, a.created_by_name, a.created_by_email, a.created_by_alias, a.assigned_to, ' .
-			// Use created if modified is 0
-			'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
-			'a.modified_by,' .
-			'a.images, a.attribs, a.metadata, a.metakey, a.metadesc, a.access, ' .
-			'a.hits, a.featured, a.locked, a.pinned, a.private, a.publish_up, a.publish_down'
+				// Use created if modified is 0
+				'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
+				'a.modified_by,' .
+				'a.images, a.attribs, a.metadata, a.metakey, a.metadesc, a.access, ' .
+				'a.hits, a.featured, a.locked, a.pinned, a.private, a.publish_up, a.publish_down'
 		);
 		$query->from('#__minitek_faqbook_questions AS a');
 
@@ -176,21 +165,15 @@ class TopicModel extends BaseDatabaseModel
 		// Filter by state
 		$editStateAuthorizedTopics = UtilitiesHelper::getAuthorisedTopics('core.edit.state');
 
-		if (count($editStateAuthorizedTopics))
-		{
+		if (count($editStateAuthorizedTopics)) {
 			$editStateAuthorizedTopics = implode(',', $editStateAuthorizedTopics);
 			$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
 				OR (a.state IN (-2,0,1,2) AND a.topicid IN (' . $editStateAuthorizedTopics . ')))');
-		}
-		else
-		{
-			if ($user->id)
-			{
+		} else {
+			if ($user->id) {
 				$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
-					OR (a.state IN (-2,0,1,2) AND a.created_by = ' . $db->quote($user->id).'))');
-			}
-			else
-			{
+					OR (a.state IN (-2,0,1,2) AND a.created_by = ' . $db->quote($user->id) . '))');
+			} else {
 				$query->where('a.state = 1');
 				$query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
 			}
@@ -200,27 +183,20 @@ class TopicModel extends BaseDatabaseModel
 		$query->where('c.published = 1');
 
 		// Filter by private
-		if ($user->id)
-		{
+		if ($user->id) {
 			$authorizedTopics = UtilitiesHelper::getAuthorisedTopics('core.private.see');
 
-			if (count($authorizedTopics))
-			{
+			if (count($authorizedTopics)) {
 				$authorizedTopics = implode(',', $authorizedTopics);
-				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id).') OR (a.private = 1 AND a.topicid IN (' . $authorizedTopics . ')))');
+				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id) . ') OR (a.private = 1 AND a.topicid IN (' . $authorizedTopics . ')))');
+			} else {
+				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id) . '))');
 			}
-			else
-			{
-				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id).'))');
-			}
-		}
-		else
-		{
+		} else {
 			$query->where('a.private = 0');
 		}
 
-		if ($merge)
-		{
+		if ($merge) {
 			// Filter by topic (including children topics)
 			$topic_tbl = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 			$topic_tbl->load($topicId);
@@ -229,47 +205,41 @@ class TopicModel extends BaseDatabaseModel
 			$baselevel = (int) $topic_tbl->level;
 			$query->where('c.lft >= ' . (int) $lft)
 				->where('c.rgt <= ' . (int) $rgt);
-		}
-		else
-		{
+		} else {
 			// Filter by topic (excluding children topics)
-			$query->where('a.topicid = '.$db->quote($topicId).'');
+			$query->where('a.topicid = ' . $db->quote($topicId) . '');
 		}
 
 		// Filter by featured
-		if ($ordering == 'featured')
-		{
+		if ($ordering == 'featured') {
 			$query->where('a.featured = 1');
 		}
 
 		// Filter by unanswered
-		if ($ordering == 'unanswered')
-		{
+		if ($ordering == 'unanswered') {
 			$query->having('answers = 0');
 		}
 
 		// Get ordering
-		switch ($ordering)
-		{
+		switch ($ordering) {
 			case 'recent':
-				$order = 'a.pinned '.$ordering_dir.', a.created '.$ordering_dir.'';
+				$order = 'a.pinned ' . $ordering_dir . ', a.created ' . $ordering_dir . '';
 				break;
 			case 'featured':
 			case 'unanswered':
 			case 'open':
 			case 'pending':
-				$order = 'a.created '.$ordering_dir.'';
+				$order = 'a.created ' . $ordering_dir . '';
 				break;
-			// Static ordering
+				// Static ordering
 			default:
-				$order = 'a.pinned DESC, a.'.$ordering.' '.$ordering_dir.'';
+				$order = 'a.pinned DESC, a.' . $ordering . ' ' . $ordering_dir . '';
 		}
 
 		$query->order($order);
 
 		// Page limit
-		jimport( 'joomla.application.component.helper' );
-		$params  = ComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$limitstart = $params->get('pagination_limit', 20);
 		$db->setQuery($query, ($page - 1) * $limitstart, $limitstart + 1); // get 1 extra item to see if we need pagination
 
@@ -282,9 +252,9 @@ class TopicModel extends BaseDatabaseModel
 	public static function addHit($id)
 	{
 		$db = Factory::getDBO();
-			$query = " UPDATE `#__minitek_faqbook_topics` "
-				." SET hits = hits + 1 "
-				." WHERE id = ".$db->Quote($id)." ";
+		$query = " UPDATE `#__minitek_faqbook_topics` "
+			. " SET hits = hits + 1 "
+			. " WHERE id = " . $db->Quote($id) . " ";
 		$db->setQuery($query);
 		$db->execute();
 	}
@@ -321,9 +291,9 @@ class TopicModel extends BaseDatabaseModel
 		$section_table = Table::getInstance('SectionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 		$section_table->load($sectionId);
 		$sectionParams = new Registry($section_table->attribs);
-		$ordering = 'c.'.$sectionParams->get('topics_ordering', 'lft');
+		$ordering = 'c.' . $sectionParams->get('topics_ordering', 'lft');
 		$ordering_dir = $sectionParams->get('topics_ordering_dir', 'ASC');
-		$query->order($ordering.' '.$ordering_dir);
+		$query->order($ordering . ' ' . $ordering_dir);
 
 		// Get the results
 		$db->setQuery($query);
@@ -335,15 +305,13 @@ class TopicModel extends BaseDatabaseModel
 	public function getTopicParentTopics($id, $topics)
 	{
 		$db = Factory::getDBO();
-		$query = 'SELECT * FROM '. $db->quoteName( '#__minitek_faqbook_topics' );
-		$query .= ' WHERE ' . $db->quoteName( 'id' ) . ' = '. $db->quote($id).' ';
+		$query = 'SELECT * FROM ' . $db->quoteName('#__minitek_faqbook_topics');
+		$query .= ' WHERE ' . $db->quoteName('id') . ' = ' . $db->quote($id) . ' ';
 		$db->setQuery($query);
 		$row = $db->loadObject();
 
-		if ($row)
-		{
-			if ($row->parent_id > 1)
-			{
+		if ($row) {
+			if ($row->parent_id > 1) {
 				$topics[] = $row->parent_id;
 				$topics = self::getTopicParentTopics($row->parent_id, $topics);
 			}

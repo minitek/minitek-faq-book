@@ -1,17 +1,20 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 
 class DisplayController extends BaseController
 {
@@ -31,16 +34,15 @@ class DisplayController extends BaseController
 	 */
 	public function checkForUpdate()
 	{
-		$app = \JFactory::getApplication();
+		$app = Factory::getApplication();
 		$input = $app->input;
 
 		$type = $input->get('type', 'auto');
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$version_check = $params->get('version_check', 1);
 
 		// Don't allow auto if version checking is disabled
-		if ($type == 'auto' && !$version_check)
-		{
+		if ($type == 'auto' && !$version_check) {
 			$app->close();
 		}
 

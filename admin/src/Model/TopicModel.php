@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -21,6 +22,7 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Event\Model\BeforeBatchEvent;
 use Joomla\String\StringHelper;
+use Joomla\CMS\Date\Date;
 
 /**
  * Model for a Topic.
@@ -68,10 +70,8 @@ class TopicModel extends AdminModel
 	 */
 	protected function canDelete($record)
 	{
-		if (!empty($record->id))
-		{
-			if ($record->published != -2)
-			{
+		if (!empty($record->id)) {
+			if ($record->published != -2) {
 				return;
 			}
 
@@ -95,18 +95,15 @@ class TopicModel extends AdminModel
 		$user = Factory::getUser();
 
 		// Check for existing topic.
-		if (!empty($record->id))
-		{
+		if (!empty($record->id)) {
 			return $user->authorise('core.edit.state', 'com_faqbookpro.topic.' . (int) $record->id);
 		}
 		// New topic, so check against the parent.
-		elseif (!empty($record->parent_id))
-		{
+		elseif (!empty($record->parent_id)) {
 			return $user->authorise('core.edit.state', 'com_faqbookpro.topic.' . (int) $record->parent_id);
 		}
 		// Default to component settings if neither topic nor parent known.
-		else
-		{
+		else {
 			return $user->authorise('core.edit.state', 'com_faqbookpro');
 		}
 	}
@@ -139,7 +136,7 @@ class TopicModel extends AdminModel
 		$this->setState($this->getName() . '.id', $pk);
 
 		// Load the parameters.
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$this->setState('params', $params);
 	}
 
@@ -152,17 +149,14 @@ class TopicModel extends AdminModel
 	 */
 	public function getItem($pk = null)
 	{
-		if ($result = parent::getItem($pk))
-		{
+		if ($result = parent::getItem($pk)) {
 			// Prime required properties.
-			if (empty($result->id))
-			{
+			if (empty($result->id)) {
 				$result->parent_id = $this->getState('topic.parent_id');
 			}
 
 			// Convert the metadata field to an array.
-			if (!empty($result->metadata))
-			{
+			if (!empty($result->metadata)) {
 				$registry = new Registry;
 				$registry->loadString($result->metadata);
 				$result->metadata = $registry->toArray();
@@ -171,28 +165,21 @@ class TopicModel extends AdminModel
 			// Convert the created and modified dates to local user time for display in the form.
 			$tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
 
-			if ((int) $result->created_time)
-			{
-				$date = new \JDate($result->created_time);
+			if ((int) $result->created_time) {
+				$date = new Date($result->created_time);
 				$date->setTimezone($tz);
 				$result->created_time = $date->toSql(true);
-			}
-			else
-			{
+			} else {
 				$result->created_time = null;
 			}
 
-			if ((int) $result->modified_time)
-			{
-				$date = new \JDate($result->modified_time);
+			if ((int) $result->modified_time) {
+				$date = new Date($result->modified_time);
 				$date->setTimezone($tz);
 				$result->modified_time = $date->toSql(true);
-			}
-			else
-			{
+			} else {
 				$result->modified_time = null;
 			}
-
 		}
 
 		return $result;
@@ -204,7 +191,7 @@ class TopicModel extends AdminModel
 	 * @param   array    $data      Data for the form.
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  \JForm|boolean  A \JForm object on success, false on failure
+	 * @return  Form|boolean  A Form object on success, false on failure
 	 *
 	 * @since   4.0.0
 	 */
@@ -215,15 +202,13 @@ class TopicModel extends AdminModel
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.topic', 'topic', array('control' => 'jform', 'load_data' => $loadData));
 
-		if (empty($form))
-		{
+		if (empty($form)) {
 			return false;
 		}
 
 		$user = Factory::getUser();
 
-		if (!$user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $jinput->get('id')))
-		{
+		if (!$user->authorise('core.edit.state', 'com_faqbookpro.topic.' . $jinput->get('id'))) {
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');
 			$form->setFieldAttribute('published', 'disabled', 'true');
@@ -250,13 +235,11 @@ class TopicModel extends AdminModel
 		$app = Factory::getApplication();
 		$data = $app->getUserState('com_faqbookpro.edit.' . $this->getName() . '.data', array());
 
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 
 			// Pre-select some filters (Status, Language, Access) in edit form if those have been selected in Topics
-			if (!$data->id)
-			{
+			if (!$data->id) {
 				// Check for selected fields
 				$filters = (array) $app->getUserState('com_faqbookpro.topics.' . 'faqbookpro' . '.filter');
 
@@ -278,9 +261,9 @@ class TopicModel extends AdminModel
 	}
 
 	/**
-	 * Allows preprocessing of the \JForm object.
+	 * Allows preprocessing of the Form object.
 	 *
-	 * @param   \JForm  $form   The form object
+	 * @param   Form    $form   The form object
 	 * @param   array   $data   The data to be merged into the form object
 	 * @param   string  $group  The plugin group to be executed
 	 *
@@ -288,7 +271,7 @@ class TopicModel extends AdminModel
 	 *
 	 * @since   4.0.0
 	 */
-	protected function preprocessForm(\JForm $form, $data, $group = 'faqbookpro')
+	protected function preprocessForm(Form $form, $data, $group = 'faqbookpro')
 	{
 		// Set the access control rules field component value.
 		$form->setFieldAttribute('rules', 'component', 'com_faqbookpro');
@@ -319,39 +302,32 @@ class TopicModel extends AdminModel
 		PluginHelper::importPlugin($this->events_map['save']);
 
 		// Load the row if saving an existing topic.
-		if ($pk > 0)
-		{
+		if ($pk > 0) {
 			$table->load($pk);
 			$isNew = false;
 		}
 
 		// If there is no parent topic, parent_id has the format 'section.section_id.1'
 		// We must clean this up and set it to '1'
-		if (substr( $data['parent_id'], 0, 7 ) === "section")
+		if (substr($data['parent_id'], 0, 7) === "section")
 			$data['parent_id'] = 1;
 
 		// Set the new parent id if parent id not matched OR while New/Save as Copy .
-		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0)
-		{
+		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
 			$table->setLocation($data['parent_id'], 'last-child');
 		}
 
 		// Alter the title for save as copy
-		if ($input->get('task') == 'save2copy')
-		{
+		if ($input->get('task') == 'save2copy') {
 			$origTable = clone $this->getTable();
 			$origTable->load($input->getInt('id'));
 
-			if ($data['title'] == $origTable->title)
-			{
+			if ($data['title'] == $origTable->title) {
 				list($title, $alias) = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
 				$data['title'] = $title;
 				$data['alias'] = $alias;
-			}
-			else
-			{
-				if ($data['alias'] == $origTable->alias)
-				{
+			} else {
+				if ($data['alias'] == $origTable->alias) {
 					$data['alias'] = '';
 				}
 			}
@@ -360,23 +336,20 @@ class TopicModel extends AdminModel
 		}
 
 		// Bind the data.
-		if (!$table->bind($data))
-		{
+		if (!$table->bind($data)) {
 			$this->setError($table->getError());
 
 			return false;
 		}
 
 		// Bind the rules.
-		if (isset($data['rules']))
-		{
+		if (isset($data['rules'])) {
 			$rules = new Rules($data['rules']);
 			$table->setRules($rules);
 		}
 
 		// Check the data.
-		if (!$table->check())
-		{
+		if (!$table->check()) {
 			$this->setError($table->getError());
 
 			return false;
@@ -385,16 +358,14 @@ class TopicModel extends AdminModel
 		// Trigger the before save event.
 		$result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
 
-		if (in_array(false, $result, true))
-		{
+		if (in_array(false, $result, true)) {
 			$this->setError($table->getError());
 
 			return false;
 		}
 
 		// Store the data.
-		if (!$table->store())
-		{
+		if (!$table->store()) {
 			$this->setError($table->getError());
 
 			return false;
@@ -404,16 +375,14 @@ class TopicModel extends AdminModel
 		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
 
 		// Rebuild the path for the topic:
-		if (!$table->rebuildPath($table->id))
-		{
+		if (!$table->rebuildPath($table->id)) {
 			$this->setError($table->getError());
 
 			return false;
 		}
 
 		// Rebuild the paths of the topic's children:
-		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
-		{
+		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path)) {
 			$this->setError($table->getError());
 
 			return false;
@@ -439,8 +408,7 @@ class TopicModel extends AdminModel
 		// Get an instance of the table object.
 		$table = $this->getTable();
 
-		if (!$table->rebuild())
-		{
+		if (!$table->rebuild()) {
 			$this->setError($table->getError());
 
 			return false;
@@ -464,12 +432,11 @@ class TopicModel extends AdminModel
 	 */
 	public function publish(&$pks, $value = 1)
 	{
-		if (parent::publish($pks, $value))
-		{
+		if (parent::publish($pks, $value)) {
 			$extension = 'com_faqbookpro';
 
 			// Include the content plugins for the change of topic state event.
-			\JPluginHelper::importPlugin('content');
+			PluginHelper::importPlugin('content');
 
 			// Trigger the onCategoryChangeState event.
 			Factory::getApplication()->triggerEvent('onCategoryChangeState', array($extension, $pks, $value));
@@ -495,8 +462,7 @@ class TopicModel extends AdminModel
 		// Get an instance of the table object.
 		$table = $this->getTable();
 
-		if (!$table->saveorder($idArray, $lft_array))
-		{
+		if (!$table->saveorder($idArray, $lft_array)) {
 			$this->setError($table->getError());
 
 			return false;
@@ -527,13 +493,11 @@ class TopicModel extends AdminModel
 		$sectionId = (int) $parts[0];
 
 		// We have section and topic
-		if (count($parts) > 1)
-		{
+		if (count($parts) > 1) {
 			$parentId = (int) $parts[1];
 		}
 		// We only have section, therefore the new parent_id = 1 (root topic)
-		else
-		{
+		else {
 			$parentId = 1;
 		}
 
@@ -544,19 +508,14 @@ class TopicModel extends AdminModel
 		$newIds = array();
 
 		// Check that the parent exists
-		if ($parentId)
-		{
-			if (!$this->table->load($parentId))
-			{
-				if ($error = $this->table->getError())
-				{
+		if ($parentId) {
+			if (!$this->table->load($parentId)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Non-fatal error
 					$this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
 					$parentId = 0;
@@ -564,17 +523,13 @@ class TopicModel extends AdminModel
 			}
 
 			// Check that user has create permission for parent topic
-			if ($parentId == $this->table->getRootId())
-			{
+			if ($parentId == $this->table->getRootId()) {
 				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro');
-			}
-			else
-			{
+			} else {
 				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro.topic.' . $parentId);
 			}
 
-			if (!$canCreate)
-			{
+			if (!$canCreate) {
 				// Error since user cannot create in parent topic
 				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
 
@@ -583,17 +538,14 @@ class TopicModel extends AdminModel
 		}
 
 		// If the parent is 0, set it to the ID of the root item in the tree
-		if (empty($parentId))
-		{
-			if (!$parentId = $this->table->getRootId())
-			{
+		if (empty($parentId)) {
+			if (!$parentId = $this->table->getRootId()) {
 				$this->setError($this->table->getError());
 
 				return false;
 			}
 			// Make sure we can create in root
-			elseif (!$this->user->authorise('core.create', 'com_faqbookpro'))
-			{
+			elseif (!$this->user->authorise('core.create', 'com_faqbookpro')) {
 				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
 
 				return false;
@@ -609,37 +561,29 @@ class TopicModel extends AdminModel
 			->from($db->quoteName('#__minitek_faqbook_topics'));
 		$db->setQuery($query);
 
-		try
-		{
+		try {
 			$count = $db->loadResult();
-		}
-		catch (\RuntimeException $e)
-		{
+		} catch (\RuntimeException $e) {
 			$this->setError($e->getMessage());
 
 			return false;
 		}
 
 		// Parent exists so let's proceed
-		while (!empty($pks) && $count > 0)
-		{
+		while (!empty($pks) && $count > 0) {
 			// Pop the first id off the stack
 			$pk = array_shift($pks);
 
 			$this->table->reset();
 
 			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
+			if (!$this->table->load($pk)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Not fatal error
 					$this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
@@ -660,10 +604,8 @@ class TopicModel extends AdminModel
 			$childIds = $db->loadColumn();
 
 			// Add child ID's to the array only if they aren't already there.
-			foreach ($childIds as $childId)
-			{
-				if (!\in_array($childId, $pks))
-				{
+			foreach ($childIds as $childId) {
+				if (!\in_array($childId, $pks)) {
 					$pks[] = $childId;
 				}
 			}
@@ -702,8 +644,7 @@ class TopicModel extends AdminModel
 			$this->table->published = 0;
 
 			// Store the row.
-			if (!$this->table->store())
-			{
+			if (!$this->table->store()) {
 				$this->setError($this->table->getError());
 
 				return false;
@@ -718,7 +659,8 @@ class TopicModel extends AdminModel
 			// Copy rules
 			$query->clear()
 				->update($db->quoteName('#__assets', 't'))
-				->join('INNER',
+				->join(
+					'INNER',
 					$db->quoteName('#__assets', 's'),
 					$db->quoteName('s.id') . ' = :oldid'
 				)
@@ -734,16 +676,14 @@ class TopicModel extends AdminModel
 		}
 
 		// Rebuild the hierarchy.
-		if (!$this->table->rebuild())
-		{
+		if (!$this->table->rebuild()) {
 			$this->setError($this->table->getError());
 
 			return false;
 		}
 
 		// Rebuild the tree path.
-		if (!$this->table->rebuildPath($this->table->id))
-		{
+		if (!$this->table->rebuildPath($this->table->id)) {
 			$this->setError($this->table->getError());
 
 			return false;
@@ -771,13 +711,11 @@ class TopicModel extends AdminModel
 		$sectionId = (int) $parts[0];
 
 		// We have section and topic
-		if (count($parts) > 1)
-		{
+		if (count($parts) > 1) {
 			$parentId = (int) $parts[1];
 		}
 		// We only have section, therefore the new parent_id = 1 (root topic)
-		else
-		{
+		else {
 			$parentId = 1;
 		}
 
@@ -788,21 +726,16 @@ class TopicModel extends AdminModel
 		$query = $db->getQuery(true);
 
 		// Check that the parent exists
-		if ($parentId)
-		{
+		if ($parentId) {
 			PluginHelper::importPlugin('content');
 
-			if (!$this->table->load($parentId))
-			{
-				if ($error = $this->table->getError())
-				{
+			if (!$this->table->load($parentId)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Non-fatal error
 					$this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
 					$parentId = 0;
@@ -810,17 +743,13 @@ class TopicModel extends AdminModel
 			}
 
 			// Check that user has create permission for parent topic
-			if ($parentId == $this->table->getRootId())
-			{
+			if ($parentId == $this->table->getRootId()) {
 				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro');
-			}
-			else
-			{
+			} else {
 				$canCreate = $this->user->authorise('core.create', 'com_faqbookpro.topic.' . $parentId);
 			}
 
-			if (!$canCreate)
-			{
+			if (!$canCreate) {
 				// Error since user cannot create in parent topic
 				$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_CREATE'));
 
@@ -829,10 +758,8 @@ class TopicModel extends AdminModel
 
 			// Check that user has edit permission for every topic being moved
 			// Note that the entire batch operation fails if any topic lacks edit permission
-			foreach ($pks as $pk)
-			{
-				if (!$this->user->authorise('core.edit', 'com_faqbookpro.topic.' . $pk))
-				{
+			foreach ($pks as $pk) {
+				if (!$this->user->authorise('core.edit', 'com_faqbookpro.topic.' . $pk)) {
 					// Error since user cannot edit this topic
 					$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_BATCH_CANNOT_EDIT'));
 
@@ -845,20 +772,15 @@ class TopicModel extends AdminModel
 		$children = array();
 
 		// Parent exists so let's proceed
-		foreach ($pks as $pk)
-		{
+		foreach ($pks as $pk) {
 			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
+			if (!$this->table->load($pk)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Not fatal error
 					$this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
@@ -884,36 +806,30 @@ class TopicModel extends AdminModel
 				->bind(':rgt', $rgt, ParameterType::INTEGER);
 			$db->setQuery($query);
 
-			try
-			{
+			try {
 				$children = array_merge($children, (array) $db->loadColumn());
-			}
-			catch (\RuntimeException $e)
-			{
+			} catch (\RuntimeException $e) {
 				$this->setError($e->getMessage());
 
 				return false;
 			}
 
 			// Store the row
-			if (!$this->table->store())
-			{
+			if (!$this->table->store()) {
 				$this->setError($this->table->getError());
 
 				return false;
 			}
 
 			// Rebuild the tree path
-			if (!$this->table->rebuildPath())
-			{
+			if (!$this->table->rebuildPath()) {
 				$this->setError($this->table->getError());
 
 				return false;
 			}
 
 			// Run event for each child
-			foreach ($children as $id)
-			{
+			foreach ($children as $id) {
 				$this->table->reset();
 				$this->table->load($id);
 
@@ -921,8 +837,7 @@ class TopicModel extends AdminModel
 				$this->table->section_id = $sectionId;
 
 				// Store the row
-				if (!$this->table->store())
-				{
+				if (!$this->table->store()) {
 					$this->setError($this->table->getError());
 
 					return false;
@@ -933,8 +848,7 @@ class TopicModel extends AdminModel
 		}
 
 		// Process the child rows
-		if (!empty($children))
-		{
+		if (!empty($children)) {
 			// Remove any duplicates and sanitize ids
 			$children = array_unique($children);
 			$children = ArrayHelper::toInteger($children);
@@ -966,10 +880,8 @@ class TopicModel extends AdminModel
 		// Get all the children to change their language
 		$children = array();
 
-		foreach ($pks as $pk)
-		{
-			if ($this->user->authorise('core.edit', $contexts[$pk]))
-			{
+		foreach ($pks as $pk) {
+			if ($this->user->authorise('core.edit', $contexts[$pk])) {
 				$this->table->reset();
 				$this->table->load($pk);
 				$this->table->language = $value;
@@ -981,8 +893,7 @@ class TopicModel extends AdminModel
 				$this->dispatchEvent($event);
 
 				// Check the row.
-				if (!$this->table->check())
-				{
+				if (!$this->table->check()) {
 					$this->setError($this->table->getError());
 
 					return false;
@@ -1002,27 +913,22 @@ class TopicModel extends AdminModel
 					->bind(':rgt', $rgt, ParameterType::INTEGER);
 				$db->setQuery($query);
 
-				try
-				{
+				try {
 					$children = array_merge($children, (array) $db->loadColumn());
-				}
-				catch (\RuntimeException $e)
-				{
+				} catch (\RuntimeException $e) {
 					$this->setError($e->getMessage());
 
 					return false;
 				}
 
-				if (!$this->table->store())
-				{
+				if (!$this->table->store()) {
 					$this->setError($this->table->getError());
 
 					return false;
 				}
 
 				// Update children
-				foreach ($children as $id)
-				{
+				foreach ($children as $id) {
 					$this->table->reset();
 					$this->table->load($id);
 
@@ -1030,8 +936,7 @@ class TopicModel extends AdminModel
 					$this->table->language = $value;
 
 					// Store the row
-					if (!$this->table->store())
-					{
+					if (!$this->table->store()) {
 						$this->setError($this->table->getError());
 
 						return false;
@@ -1039,9 +944,7 @@ class TopicModel extends AdminModel
 
 					Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.topic', &$this->table, false, array()));
 				}
-			}
-			else
-			{
+			} else {
 				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
 
 				return false;
@@ -1077,10 +980,8 @@ class TopicModel extends AdminModel
 		// Get all the children to change their language
 		$children = array();
 
-		foreach ($pks as $pk)
-		{
-			if ($this->user->authorise('core.edit', $contexts[$pk]))
-			{
+		foreach ($pks as $pk) {
+			if ($this->user->authorise('core.edit', $contexts[$pk])) {
 				$this->table->reset();
 				$this->table->load($pk);
 				$this->table->access = (int) $value;
@@ -1092,8 +993,7 @@ class TopicModel extends AdminModel
 				$this->dispatchEvent($event);
 
 				// Check the row.
-				if (!$this->table->check())
-				{
+				if (!$this->table->check()) {
 					$this->setError($this->table->getError());
 
 					return false;
@@ -1113,27 +1013,22 @@ class TopicModel extends AdminModel
 					->bind(':rgt', $rgt, ParameterType::INTEGER);
 				$db->setQuery($query);
 
-				try
-				{
+				try {
 					$children = array_merge($children, (array) $db->loadColumn());
-				}
-				catch (\RuntimeException $e)
-				{
+				} catch (\RuntimeException $e) {
 					$this->setError($e->getMessage());
 
 					return false;
 				}
 
-				if (!$this->table->store())
-				{
+				if (!$this->table->store()) {
 					$this->setError($this->table->getError());
 
 					return false;
 				}
 
 				// Update children
-				foreach ($children as $id)
-				{
+				foreach ($children as $id) {
 					$this->table->reset();
 					$this->table->load($id);
 
@@ -1141,8 +1036,7 @@ class TopicModel extends AdminModel
 					$this->table->access = $value;
 
 					// Store the row
-					if (!$this->table->store())
-					{
+					if (!$this->table->store()) {
 						$this->setError($this->table->getError());
 
 						return false;
@@ -1150,9 +1044,7 @@ class TopicModel extends AdminModel
 
 					Factory::getApplication()->triggerEvent('onContentAfterSave', array('com_faqbookpro.topic', &$this->table, false, array()));
 				}
-			}
-			else
-			{
+			} else {
 				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
 
 				return false;
@@ -1196,8 +1088,7 @@ class TopicModel extends AdminModel
 		// Alter the title & alias
 		$table = $this->getTable();
 
-		while ($table->load(array('alias' => $alias, 'parent_id' => $parent_id)))
-		{
+		while ($table->load(array('alias' => $alias, 'parent_id' => $parent_id))) {
 			$title = StringHelper::increment($title);
 			$alias = StringHelper::increment($alias, 'dash');
 		}
@@ -1208,17 +1099,14 @@ class TopicModel extends AdminModel
 	public static function getTopic($id)
 	{
 		$db = Factory::getDBO();
-		$query = 'SELECT * FROM '. $db->quoteName( '#__minitek_faqbook_topics' );
-		$query .= ' WHERE ' . $db->quoteName( 'id' ) . ' = '. $db->quote($id).' ';
+		$query = 'SELECT * FROM ' . $db->quoteName('#__minitek_faqbook_topics');
+		$query .= ' WHERE ' . $db->quoteName('id') . ' = ' . $db->quote($id) . ' ';
 		$db->setQuery($query);
 		$row = $db->loadObject();
 
-		if ($row)
-		{
+		if ($row) {
 			return $row;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
@@ -1233,10 +1121,8 @@ class TopicModel extends AdminModel
 		$db->setQuery($query);
 		$children = $db->loadObjectList();
 
-		if ($children)
-		{
-			foreach ($children as $child)
-			{
+		if ($children) {
+			foreach ($children as $child) {
 				$items[] = $child;
 				$items = $this->getChildrenTopics($items, $child->id);
 			}

@@ -12,7 +12,9 @@ namespace Joomla\Component\FAQBookPro\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\URI\URI;
+use Joomla\CMS\Component\ComponentHelper;
 
 class FAQBookProHelper
 {
@@ -29,7 +31,7 @@ class FAQBookProHelper
 	{
 		// Brute force method: get all published topic rows for the component and check each one
 		// TODO: Modify the way permissions are stored in the db to allow for faster implementation and better scaling
-		$db = \JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select('t.id AS id, a.name AS asset_name')
 			->from('#__minitek_faqbook_topics AS t')
@@ -40,7 +42,7 @@ class FAQBookProHelper
 		$allowedTopics = array();
 
 		foreach ($allTopics as $topic) {
-			if (\JFactory::getUser()->authorise($action, $topic->asset_name)) {
+			if (Factory::getUser()->authorise($action, $topic->asset_name)) {
 				$allowedTopics[] = (int) $topic->id;
 			}
 		}
@@ -57,7 +59,7 @@ class FAQBookProHelper
 	 */
 	public static function latestVersion()
 	{
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$version = 0;
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');
@@ -103,7 +105,7 @@ class FAQBookProHelper
 	 */
 	public static function updateMessage()
 	{
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$message = 0;
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');
@@ -134,7 +136,7 @@ class FAQBookProHelper
 	 */
 	public static function updateMessageVersion()
 	{
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$version = 0;
 
 		$xml_file = @file_get_contents('https://update.minitek.gr/joomla-extensions/minitek_faqbook.xml');

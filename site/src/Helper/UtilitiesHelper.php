@@ -17,8 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.filesystem.folder');
-
 /**
  * FAQ Book Component Utilities Helper.
  *

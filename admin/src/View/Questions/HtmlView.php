@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\View\Questions;
 
@@ -19,6 +20,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Form\Form;
 
 /**
  * Questions view class for FAQ Book.
@@ -57,7 +59,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * Form object for search filters
 	 *
-	 * @var    \JForm
+	 * @var    Form
 	 * @since  4.0.0
 	 */
 	public $filterForm;
@@ -88,13 +90,11 @@ class HtmlView extends BaseHtmlView
 		$model = $this->getModel();
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
+		if (count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		if ($this->getLayout() !== 'modal')
-		{
+		if ($this->getLayout() !== 'modal') {
 			$this->addToolbar();
 		}
 
@@ -117,13 +117,11 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::title(Text::_('COM_FAQBOOKPRO_QUESTIONS_TITLE'), 'question-circle');
 
-		if ($canDo->get('core.create') || count(FAQBookProHelper::getAuthorisedTopics('core.create')) > 0 )
-		{
+		if ($canDo->get('core.create') || count(FAQBookProHelper::getAuthorisedTopics('core.create')) > 0) {
 			$toolbar->addNew('question.add');
 		}
 
-		if ($canDo->get('core.edit.state'))
-		{
+		if ($canDo->get('core.edit.state')) {
 			$dropdown = $toolbar->dropdownButton('status-group')
 				->text('JTOOLBAR_CHANGE_STATUS')
 				->toggleSplit(false)
@@ -138,21 +136,17 @@ class HtmlView extends BaseHtmlView
 			$childBar->checkin('questions.checkin')->listCheck(true);
 		}
 
-		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
-		{
+		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
 			$toolbar->delete('questions.delete')
 				->text('JTOOLBAR_EMPTY_TRASH')
 				->message('JGLOBAL_CONFIRM_DELETE')
 				->listCheck(true);
-		}
-		elseif ($canDo->get('core.edit.state'))
-		{
+		} elseif ($canDo->get('core.edit.state')) {
 			$childBar->trash('questions.trash')->listCheck(true);
 		}
 
 		// Add a batch button
-		if ($canDo->get('core.create') && $canDo->get('core.edit') && $canDo->get('core.edit.state'))
-		{
+		if ($canDo->get('core.create') && $canDo->get('core.edit') && $canDo->get('core.edit.state')) {
 			$childBar->popupButton('batch')
 				->text('JTOOLBAR_BATCH')
 				->selector('collapseModal')
@@ -164,8 +158,7 @@ class HtmlView extends BaseHtmlView
 			->icon('fa fa-' . (Factory::getApplication()->getLanguage()->isRtl() ? 'arrow-right' : 'arrow-left'))
 			->url('index.php?option=com_faqbookpro');
 
-		if ($canDo->get('core.admin') || $canDo->get('core.options'))
-		{
+		if ($canDo->get('core.admin') || $canDo->get('core.options')) {
 			$toolbar->preferences('com_faqbookpro');
 		}
 	}

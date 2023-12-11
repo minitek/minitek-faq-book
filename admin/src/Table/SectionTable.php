@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license	     GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Table;
 
@@ -18,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\String\StringHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * Section Table
@@ -29,11 +31,11 @@ class SectionTable extends Table
 	/**
 	 * Class constructor.
 	 *
-	 * @param   \JDatabaseDriver  $db  \JDatabaseDriver object.
+	 * @param   DatabaseDriver  $db  DatabaseDriver object.
 	 *
 	 * @since   4.0.0
 	 */
-	public function __construct(\JDatabaseDriver $db)
+	public function __construct(DatabaseDriver $db)
 	{
 		$this->typeAlias = 'com_faqbookpro.section';
 
@@ -93,8 +95,7 @@ class SectionTable extends Table
 	{
 		$assetId = null;
 
-		if ($assetId === null)
-		{
+		if ($assetId === null) {
 			// Build the query to get the asset id for the parent category.
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('id'))
@@ -104,19 +105,15 @@ class SectionTable extends Table
 			// Get the asset id from the database.
 			$this->_db->setQuery($query);
 
-			if ($result = $this->_db->loadResult())
-			{
+			if ($result = $this->_db->loadResult()) {
 				$assetId = (int) $result;
 			}
 		}
 
 		// Return the asset id.
-		if ($assetId)
-		{
+		if ($assetId) {
 			return $assetId;
-		}
-		else
-		{
+		} else {
 			return parent::_getAssetParentId($table, $id);
 		}
 	}
@@ -134,33 +131,28 @@ class SectionTable extends Table
 	 */
 	public function check()
 	{
-		if (trim($this->title) == '')
-		{
+		if (trim($this->title) == '') {
 			$this->setError(Text::_('COM_FAQBOOKPRO_WARNING_PROVIDE_VALID_TITLE'));
 			return false;
 		}
 
-		if (trim($this->alias) == '')
-		{
+		if (trim($this->alias) == '') {
 			$this->alias = $this->title;
 		}
 
 		$this->alias = ApplicationHelper::stringURLSafe($this->alias);
 
-		if (trim(str_replace('-', '', $this->alias)) == '')
-		{
+		if (trim(str_replace('-', '', $this->alias)) == '') {
 			$this->alias = Factory::getDate()->format('Y-m-d-H-i-s');
 		}
 
-		if (trim(str_replace('&nbsp;', '', $this->description)) == '')
-		{
+		if (trim(str_replace('&nbsp;', '', $this->description)) == '') {
 			$this->description = '';
 		}
 
 		// Clean up keywords -- eliminate extra spaces between phrases
 		// and cr (\r) and lf (\n) characters from string
-		if (!empty($this->metakey))
-		{
+		if (!empty($this->metakey)) {
 			// Array of characters to remove
 			$bad_characters = array("\n", "\r", "\"", "<", ">");
 
@@ -172,10 +164,8 @@ class SectionTable extends Table
 
 			$clean_keys = array();
 
-			foreach ($keys as $key)
-			{
-				if (trim($key))
-				{
+			foreach ($keys as $key) {
+				if (trim($key)) {
 					// Ignore blank keywords
 					$clean_keys[] = trim($key);
 				}
@@ -204,24 +194,21 @@ class SectionTable extends Table
 	public function bind($array, $ignore = '')
 	{
 		// Bind the attribs
-		if (isset($array['attribs']) && is_array($array['attribs']))
-		{
+		if (isset($array['attribs']) && is_array($array['attribs'])) {
 			$registry = new Registry;
 			$registry->loadArray($array['attribs']);
 			$array['attribs'] = (string) $registry;
 		}
 
 		// Bind the metadata
-		if (isset($array['metadata']) && is_array($array['metadata']))
-		{
+		if (isset($array['metadata']) && is_array($array['metadata'])) {
 			$registry = new Registry;
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
 
 		// Bind the rules.
-		if (isset($array['rules']) && is_array($array['rules']))
-		{
+		if (isset($array['rules']) && is_array($array['rules'])) {
 			$rules = new Rules($array['rules']);
 			$this->setRules($rules);
 		}
@@ -243,17 +230,14 @@ class SectionTable extends Table
 		$date = Factory::getDate();
 		$user = Factory::getUser();
 
-		if (!$this->id)
-		{
+		if (!$this->id) {
 			// New article. An article created and created_by field can be set by the user,
 			// so we don't touch either of these if they are set.
-			if (!(int) $this->created_time)
-			{
+			if (!(int) $this->created_time) {
 				$this->created_time = $date->toSql();
 			}
 
-			if (empty($this->created_user_id))
-			{
+			if (empty($this->created_user_id)) {
 				$this->created_user_id = $user->get('id');
 			}
 		}
@@ -261,8 +245,7 @@ class SectionTable extends Table
 		// Verify that the alias is unique
 		$table = Table::getInstance('SectionTable', __NAMESPACE__ . '\\');
 
-		if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
-		{
+		if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0)) {
 			$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_SECTION_UNIQUE_ALIAS'));
 
 			return false;

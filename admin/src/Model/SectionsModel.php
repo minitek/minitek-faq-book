@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -15,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
+use Joomla\Database\DatabaseQuery;
 
 /**
  * Methods supporting a list of section records.
@@ -33,8 +35,7 @@ class SectionsModel extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'title', 'a.title',
@@ -89,8 +90,7 @@ class SectionsModel extends ListModel
 
 		$access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', '', 'int');
 
-		if ($formSubmited)
-		{
+		if ($formSubmited) {
 			$access = $app->input->post->get('access');
 			$this->setState('filter.access', $access);
 		}
@@ -101,8 +101,7 @@ class SectionsModel extends ListModel
 		// force a language
 		$forcedLanguage = $app->input->get('forcedLanguage');
 
-		if (!empty($forcedLanguage))
-		{
+		if (!empty($forcedLanguage)) {
 			$this->setState('filter.language', $forcedLanguage);
 			$this->setState('filter.forcedLanguage', $forcedLanguage);
 		}
@@ -135,7 +134,7 @@ class SectionsModel extends ListModel
 	/**
 	 * Build an SQL query to load the list data.
 	 *
-	 * @return  \JDatabaseQuery
+	 * @return  DatabaseQuery
 	 *
 	 * @since   4.0.0
 	 */
@@ -197,60 +196,46 @@ class SectionsModel extends ListModel
 		// Filter by access level
 		$access = $this->getState('filter.access');
 
-		if (is_numeric($access))
-		{
+		if (is_numeric($access)) {
 			$access = (int) $access;
 			$query->where($db->quoteName('a.access') . ' = :access')
 				->bind(':access', $access, ParameterType::INTEGER);
-		}
-		elseif (is_array($access))
-		{
+		} elseif (is_array($access)) {
 			$access = ArrayHelper::toInteger($access);
 			$query->whereIn($db->quoteName('a.access'), $access);
 		}
 
 		// Implement View Level Access
-		if (!$user->authorise('core.admin'))
-		{
+		if (!$user->authorise('core.admin')) {
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 			$query->where('a.access IN (' . $groups . ')');
 		}
 
 		// Filter by published state
 		$published = $this->getState('filter.published');
-		if (is_numeric($published))
-		{
+		if (is_numeric($published)) {
 			$query->where('a.state = ' . (int) $published);
-		}
-		elseif ($published === '')
-		{
+		} elseif ($published === '') {
 			$query->where('(a.state = 0 OR a.state = 1)');
 		}
 
 		// Filter by search in title.
 		$search = $this->getState('filter.search');
 
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			elseif (stripos($search, 'author:') === 0)
-			{
+			} elseif (stripos($search, 'author:') === 0) {
 				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
 				$query->where('(ua.name LIKE ' . $search . ' OR ua.username LIKE ' . $search . ')');
-			}
-			else
-			{
+			} else {
 				$search = $db->quote('%' . $db->escape($search, true) . '%');
 				$query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
 			}
 		}
 
 		// Filter on the language.
-		if ($language = $this->getState('filter.language'))
-		{
+		if ($language = $this->getState('filter.language')) {
 			$query->where('a.language = ' . $db->quote($language));
 		}
 
@@ -259,16 +244,14 @@ class SectionsModel extends ListModel
 		$orderDirn = $db->escape($this->state->get('list.direction', 'DESC'));
 
 		//sqlsrv change
-		if ($orderCol == 'language')
-		{
+		if ($orderCol == 'language') {
 			$orderCol = 'l.title';
 		}
 
-		if ($orderCol == 'access_level')
-		{
+		if ($orderCol == 'access_level') {
 			$orderCol = 'ag.title';
 		}
-		
+
 		$query->order($db->escape($orderCol . ' ' . $orderDirn));
 
 		return $query;
@@ -287,16 +270,13 @@ class SectionsModel extends ListModel
 		$items = parent::getItems();
 		$app = Factory::getApplication();
 
-		if ($app->isClient('site'))
-		{
+		if ($app->isClient('site')) {
 			$user = Factory::getUser();
 			$groups = $user->getAuthorisedViewLevels();
 
-			for ($x = 0, $count = count($items); $x < $count; $x++)
-			{
+			for ($x = 0, $count = count($items); $x < $count; $x++) {
 				//Check the access level. Remove articles the user shouldn't see
-				if (!in_array($items[$x]->access, $groups))
-				{
+				if (!in_array($items[$x]->access, $groups)) {
 					unset($items[$x]);
 				}
 			}

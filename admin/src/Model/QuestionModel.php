@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -21,6 +22,10 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\FAQBookPro\Administrator\Model\AnswerModel;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Filter\InputFilter;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Application\ApplicationHelper;
 
 /**
  * Model for a Question.
@@ -66,15 +71,13 @@ class QuestionModel extends AdminModel
 
 	protected function checkTopicId($topicId)
 	{
-		if (empty($topicId))
-		{
+		if (empty($topicId)) {
 			$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_BATCH_MOVE_TOPIC_NOT_FOUND'));
 			return false;
 		}
 
 		// Check that the user has create permission for the component
-		if (!$this->user->authorise('core.create', 'com_faqbookpro.topic.' . $topicId))
-		{
+		if (!$this->user->authorise('core.create', 'com_faqbookpro.topic.' . $topicId)) {
 			$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_BATCH_CANNOT_CREATE'));
 
 			return false;
@@ -88,8 +91,7 @@ class QuestionModel extends AdminModel
 		// Alter the title & alias
 		$table = $this->getTable();
 
-		while ($table->load(array('alias' => $alias, 'topicid' => $topic_id)))
-		{
+		while ($table->load(array('alias' => $alias, 'topicid' => $topic_id))) {
 			$title = StringHelper::increment($title);
 			$alias = StringHelper::increment($alias, 'dash');
 		}
@@ -114,31 +116,25 @@ class QuestionModel extends AdminModel
 
 		$newIds = array();
 
-		if (!self::checkTopicId($topicId))
-		{
+		if (!self::checkTopicId($topicId)) {
 			return false;
 		}
 
 		// Parent exists so we let's proceed
-		while (!empty($pks))
-		{
+		while (!empty($pks)) {
 			// Pop the first ID off the stack
 			$pk = array_shift($pks);
 
 			$this->table->reset();
 
 			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
+			if (!$this->table->load($pk)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Not fatal error
 					$this->setError(Text::sprintf('COM_FAQBOOKPRO_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
@@ -169,15 +165,13 @@ class QuestionModel extends AdminModel
 			$featured = $this->table->featured;
 
 			// Check the row.
-			if (!$this->table->check())
-			{
+			if (!$this->table->check()) {
 				$this->setError($this->table->getError());
 				return false;
 			}
 
 			// Store the row.
-			if (!$this->table->store())
-			{
+			if (!$this->table->store()) {
 				$this->setError($this->table->getError());
 				return false;
 			}
@@ -208,8 +202,7 @@ class QuestionModel extends AdminModel
 	 */
 	protected function batchMove($value, $pks, $contexts)
 	{
-		if (empty($this->batchSet))
-		{
+		if (empty($this->batchSet)) {
 			// Set some needed variables.
 			$this->user = Factory::getUser();
 			$this->table = $this->getTable();
@@ -220,35 +213,28 @@ class QuestionModel extends AdminModel
 
 		$topicId = (int) $value;
 
-		if (!static::checkTopicId($topicId))
-		{
+		if (!static::checkTopicId($topicId)) {
 			return false;
 		}
 
 		PluginHelper::importPlugin('content');
 
 		// Parent exists so we proceed
-		foreach ($pks as $pk)
-		{
-			if (!$this->user->authorise('core.edit', $contexts[$pk]))
-			{
+		foreach ($pks as $pk) {
+			if (!$this->user->authorise('core.edit', $contexts[$pk])) {
 				$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
 
 				return false;
 			}
 
 			// Check that the row actually exists
-			if (!$this->table->load($pk))
-			{
-				if ($error = $this->table->getError())
-				{
+			if (!$this->table->load($pk)) {
+				if ($error = $this->table->getError()) {
 					// Fatal error
 					$this->setError($error);
 
 					return false;
-				}
-				else
-				{
+				} else {
 					// Not fatal error
 					$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
@@ -259,16 +245,14 @@ class QuestionModel extends AdminModel
 			$this->table->topicid = $topicId;
 
 			// Check the row.
-			if (!$this->table->check())
-			{
+			if (!$this->table->check()) {
 				$this->setError($this->table->getError());
 
 				return false;
 			}
 
 			// Store the row.
-			if (!$this->table->store())
-			{
+			if (!$this->table->store()) {
 				$this->setError($this->table->getError());
 
 				return false;
@@ -295,10 +279,8 @@ class QuestionModel extends AdminModel
 	 */
 	protected function canDelete($record)
 	{
-		if (!empty($record->id))
-		{
-			if ($record->state != -2)
-			{
+		if (!empty($record->id)) {
+			if ($record->state != -2) {
 				return false;
 			}
 
@@ -324,18 +306,15 @@ class QuestionModel extends AdminModel
 		$user = Factory::getUser();
 
 		// Check for existing question.
-		if (!empty($record->id))
-		{
+		if (!empty($record->id)) {
 			return $user->authorise('core.edit.state', 'com_faqbookpro.question.' . (int) $record->id);
 		}
 		// New question, so check against the topic.
-		elseif (!empty($record->topicid))
-		{
+		elseif (!empty($record->topicid)) {
 			return $user->authorise('core.edit.state', 'com_faqbookpro.topic.' . (int) $record->topicid);
 		}
 		// Default to component settings if neither question nor topic known.
-		else
-		{
+		else {
 			return parent::canEditState('com_faqbookpro');
 		}
 	}
@@ -354,19 +333,16 @@ class QuestionModel extends AdminModel
 		// Set the publish date to now
 		$db = $this->getDbo();
 
-		if ($table->state == 1 && (int) $table->publish_up == 0)
-		{
+		if ($table->state == 1 && (int) $table->publish_up == 0) {
 			$table->publish_up = Factory::getDate()->toSql();
 		}
 
-		if ($table->state == 1 && intval($table->publish_down) == 0)
-		{
+		if ($table->state == 1 && intval($table->publish_down) == 0) {
 			$table->publish_down = $db->getNullDate();
 		}
 
 		// Reorder the questions within the topic so the new question is first
-		if (empty($table->id))
-		{
+		if (empty($table->id)) {
 			$table->reorder('topicid = ' . (int) $table->topicid . ' AND state >= 0');
 		}
 	}
@@ -396,19 +372,16 @@ class QuestionModel extends AdminModel
 	 */
 	public function getItem($pk = null)
 	{
-		if ($item = parent::getItem($pk))
-		{
+		if ($item = parent::getItem($pk)) {
 			// Convert the images group to an array.
-			if (!empty($item->images))
-			{
+			if (!empty($item->images)) {
 				$registry = new Registry;
 				$registry->loadString($item->images);
 				$item->images = $registry->toArray();
 			}
 
 			// Convert the metadata group to an array.
-			if (!empty($item->metadata))
-			{
+			if (!empty($item->metadata)) {
 				$registry = new Registry;
 				$registry->loadString($item->metadata);
 				$item->metadata = $registry->toArray();
@@ -424,7 +397,7 @@ class QuestionModel extends AdminModel
 	 * @param   array    $data      Data for the form.
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  \JForm|boolean  A \JForm object on success, false on failure
+	 * @return  Form|boolean  A Form object on success, false on failure
 	 *
 	 * @since   4.0.0
 	 */
@@ -433,26 +406,22 @@ class QuestionModel extends AdminModel
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.question', 'question', array('control' => 'jform', 'load_data' => $loadData));
 
-		if (empty($form))
-		{
+		if (empty($form)) {
 			return false;
 		}
 
 		$jinput = Factory::getApplication()->input;
 
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
-		{
+		if ($jinput->get('a_id')) {
 			$id = $jinput->get('a_id', 0);
 		}
 		// The back end uses id so we use that the rest of the time and set it to 0 by default.
-		else
-		{
+		else {
 			$id = $jinput->get('id', 0);
 		}
 		// Determine correct permissions to check.
-		if ($this->getState('question.id'))
-		{
+		if ($this->getState('question.id')) {
 			$id = $this->getState('question.id');
 
 			// Existing record. Can only edit in selected topics.
@@ -460,9 +429,7 @@ class QuestionModel extends AdminModel
 
 			// Existing record. Can only edit own questions in selected topics.
 			$form->setFieldAttribute('topicid', 'action', 'core.edit.own');
-		}
-		else
-		{
+		} else {
 			// New record. Can only create in selected topics.
 			$form->setFieldAttribute('topicid', 'action', 'core.create');
 		}
@@ -471,9 +438,10 @@ class QuestionModel extends AdminModel
 
 		// Check for existing question.
 		// Modify the form based on Edit State access controls.
-		if ($id != 0 && (!$user->authorise('core.edit.state', 'com_faqbookpro.question.' . (int) $id))
-			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro')))
-		{
+		if (
+			$id != 0 && (!$user->authorise('core.edit.state', 'com_faqbookpro.question.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro'))
+		) {
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');
 			$form->setFieldAttribute('publish_up', 'disabled', 'true');
@@ -488,9 +456,10 @@ class QuestionModel extends AdminModel
 			$form->setFieldAttribute('state', 'filter', 'unset');
 		}
 
-		if ($id != 0 && (!$user->authorise('core.pin', 'com_faqbookpro.question.' . (int) $id))
-			|| ($id == 0 && !$user->authorise('core.pin', 'com_faqbookpro')))
-		{
+		if (
+			$id != 0 && (!$user->authorise('core.pin', 'com_faqbookpro.question.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('core.pin', 'com_faqbookpro'))
+		) {
 			// Disable fields for display.
 			$form->setFieldAttribute('pinned', 'disabled', 'true');
 
@@ -498,9 +467,10 @@ class QuestionModel extends AdminModel
 			$form->setFieldAttribute('pinned', 'filter', 'unset');
 		}
 
-		if ($id != 0 && (!$user->authorise('core.feature', 'com_faqbookpro.question.' . (int) $id))
-			|| ($id == 0 && !$user->authorise('core.feature', 'com_faqbookpro')))
-		{
+		if (
+			$id != 0 && (!$user->authorise('core.feature', 'com_faqbookpro.question.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('core.feature', 'com_faqbookpro'))
+		) {
 			// Disable fields for display.
 			$form->setFieldAttribute('featured', 'disabled', 'true');
 
@@ -508,13 +478,18 @@ class QuestionModel extends AdminModel
 			$form->setFieldAttribute('featured', 'filter', 'unset');
 		}
 
-		if ($id != 0)
-		{
+		if ($id != 0) {
 			// My question
-			if ($user->id == $form->getValue('created_by'))
-			{
-				if (!$user->authorise('core.lock.own', 'com_faqbookpro.question.' . (int) $id))
-				{
+			if ($user->id == $form->getValue('created_by')) {
+				if (!$user->authorise('core.lock.own', 'com_faqbookpro.question.' . (int) $id)) {
+					// Disable fields for display.
+					$form->setFieldAttribute('locked', 'disabled', 'true');
+
+					// Disable fields while saving.
+					$form->setFieldAttribute('locked', 'filter', 'unset');
+				}
+			} else {
+				if (!$user->authorise('core.lock', 'com_faqbookpro.question.' . (int) $id)) {
 					// Disable fields for display.
 					$form->setFieldAttribute('locked', 'disabled', 'true');
 
@@ -522,22 +497,8 @@ class QuestionModel extends AdminModel
 					$form->setFieldAttribute('locked', 'filter', 'unset');
 				}
 			}
-			else
-			{
-				if (!$user->authorise('core.lock', 'com_faqbookpro.question.' . (int) $id))
-				{
-					// Disable fields for display.
-					$form->setFieldAttribute('locked', 'disabled', 'true');
-
-					// Disable fields while saving.
-					$form->setFieldAttribute('locked', 'filter', 'unset');
-				}
-			}
-		}
-		else
-		{
-			if (!$user->authorise('core.lock', 'com_faqbookpro'))
-			{
+		} else {
+			if (!$user->authorise('core.lock', 'com_faqbookpro')) {
 				// Disable fields for display.
 				$form->setFieldAttribute('locked', 'disabled', 'true');
 
@@ -547,8 +508,7 @@ class QuestionModel extends AdminModel
 		}
 
 		// Disable topic selection if question is private and user does not have permission to create private
-		if ($form->getValue('private') && !$user->authorise('core.private.create', 'com_faqbookpro.question.' . (int) $id))
-		{
+		if ($form->getValue('private') && !$user->authorise('core.private.create', 'com_faqbookpro.question.' . (int) $id)) {
 			// Disable fields for display.
 			$form->setFieldAttribute('topicid', 'disabled', 'true');
 
@@ -572,13 +532,11 @@ class QuestionModel extends AdminModel
 		$app = Factory::getApplication();
 		$data = $app->getUserState('com_faqbookpro.edit.question.data', array());
 
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 
 			// Pre-select some filters (Status, Topic, Language, Access) in edit form if those have been selected in Question Manager
-			if ($this->getState('question.id') == 0)
-			{
+			if ($this->getState('question.id') == 0) {
 				$filters = (array) $app->getUserState('com_faqbookpro.questions.filter');
 				$data->set(
 					'state',
@@ -594,8 +552,7 @@ class QuestionModel extends AdminModel
 		}
 
 		// If there are params fieldsets in the form it will fail with a registry object
-		if (isset($data->params) && $data->params instanceof Registry)
-		{
+		if (isset($data->params) && $data->params instanceof Registry) {
 			$data->params = $data->params->toArray();
 		}
 
@@ -616,35 +573,30 @@ class QuestionModel extends AdminModel
 	public function save($data)
 	{
 		$input = Factory::getApplication()->input;
-		$filter  = \JFilterInput::getInstance();
+		$filter = InputFilter::getInstance();
 
 		// Deal with empty fields
 		$data['attribs'] = '';
 		$data['customfields'] = '';
 
-		if (isset($data['images']) && is_array($data['images']))
-		{
+		if (isset($data['images']) && is_array($data['images'])) {
 			$registry = new Registry;
 			$registry->loadArray($data['images']);
 			$data['images'] = (string) $registry;
 		}
 
-		if (isset($data['metadata']) && isset($data['metadata']['author']))
-		{
+		if (isset($data['metadata']) && isset($data['metadata']['author'])) {
 			$data['metadata']['author'] = $filter->clean($data['metadata']['author'], 'TRIM');
 		}
 
-		if (isset($data['created_by_alias']))
-		{
+		if (isset($data['created_by_alias'])) {
 			$data['created_by_alias'] = $filter->clean($data['created_by_alias'], 'TRIM');
 		}
 
 		// Handle private questions
-		if (isset($data['private']))
-		{
+		if (isset($data['private'])) {
 			// Disable pin/feature
-			if ($data['private'] == 1)
-			{
+			if ($data['private'] == 1) {
 				$data['pinned'] = 0;
 				$data['featured'] = 0;
 			}
@@ -657,14 +609,11 @@ class QuestionModel extends AdminModel
 			if ($qvisibility == 1) // Public only
 			{
 				$data['private'] = 0;
-			}
-			else if ($qvisibility == 2) // Private only
+			} else if ($qvisibility == 2) // Private only
 			{
 				$data['private'] = 1;
 			}
-		}
-		else
-		{
+		} else {
 			// Check topic qvisibility
 			$topicId = $data['topicid'];
 			$topicRow = $this->getTopic($topicId);
@@ -673,8 +622,7 @@ class QuestionModel extends AdminModel
 			if ($qvisibility == 1) // Public only
 			{
 				$data['private'] = 0;
-			}
-			else if ($qvisibility == 2) // Private only
+			} else if ($qvisibility == 2) // Private only
 			{
 				$data['private'] = 1;
 				$data['pinned'] = 0;
@@ -683,38 +631,30 @@ class QuestionModel extends AdminModel
 		}
 
 		// Automatic handling of alias for empty fields
-		if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
-		{
-			if ($data['alias'] == null)
-			{
-				if (Factory::getConfig()->get('unicodeslugs') == 1)
-				{
-					$data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['title']);
-				}
-				else
-				{
-					$data['alias'] = \JFilterOutput::stringURLSafe($data['title']);
+		if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0)) {
+			if ($data['alias'] == null) {
+				if (Factory::getConfig()->get('unicodeslugs') == 1) {
+					$data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
+				} else {
+					$data['alias'] = ApplicationHelper::stringURLSafe($data['title']);
 				}
 
 				$table = Table::getInstance('QuestionTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 
-				if ($table->load(array('alias' => $data['alias'], 'topicid' => $data['topicid'])))
-				{
+				if ($table->load(array('alias' => $data['alias'], 'topicid' => $data['topicid']))) {
 					$msg = Text::_('COM_FAQBOOKPRO_ERROR_QUESTION_UNIQUE_ALIAS');
 				}
 
 				list($title, $alias) = $this->generateNewTitle($data['topicid'], $data['alias'], $data['title']);
 				$data['alias'] = $alias;
 
-				if (isset($msg))
-				{
+				if (isset($msg)) {
 					Factory::getApplication()->enqueueMessage($msg, 'warning');
 				}
 			}
 		}
 
-		if (parent::save($data))
-		{
+		if (parent::save($data)) {
 			return true;
 		}
 
@@ -739,9 +679,9 @@ class QuestionModel extends AdminModel
 	}
 
 	/**
-	 * Allows preprocessing of the \JForm object.
+	 * Allows preprocessing of the Form object.
 	 *
-	 * @param   \JForm  $form   The form object
+	 * @param   Form    $form   The form object
 	 * @param   array   $data   The data to be merged into the form object
 	 * @param   string  $group  The plugin group to be executed
 	 *
@@ -749,7 +689,7 @@ class QuestionModel extends AdminModel
 	 *
 	 * @since   4.0.0
 	 */
-	protected function preprocessForm(\JForm $form, $data, $group = 'faqbookpro')
+	protected function preprocessForm(Form $form, $data, $group = 'faqbookpro')
 	{
 		parent::preprocessForm($form, $data, $group);
 	}
@@ -772,18 +712,15 @@ class QuestionModel extends AdminModel
 	public static function getQuestion($id)
 	{
 		$db = Factory::getDBO();
-		$query = 'SELECT * FROM '. $db->quoteName( '#__minitek_faqbook_questions' );
-		$query .= ' WHERE ' . $db->quoteName( 'id' ) . ' = '. $db->quote($id).' ';
-		$query .= ' AND ' . $db->quoteName( 'state' ) . ' = '. $db->quote(1).' ';
+		$query = 'SELECT * FROM ' . $db->quoteName('#__minitek_faqbook_questions');
+		$query .= ' WHERE ' . $db->quoteName('id') . ' = ' . $db->quote($id) . ' ';
+		$query .= ' AND ' . $db->quoteName('state') . ' = ' . $db->quote(1) . ' ';
 		$db->setQuery($query);
 		$row = $db->loadObject();
 
-		if ($row)
-		{
+		if ($row) {
 			return $row;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
@@ -791,17 +728,14 @@ class QuestionModel extends AdminModel
 	public static function getTopic($id)
 	{
 		$db = Factory::getDBO();
-		$query = 'SELECT * FROM '. $db->quoteName( '#__minitek_faqbook_topics' );
-		$query .= ' WHERE ' . $db->quoteName( 'id' ) . ' = '. $db->quote($id).' ';
+		$query = 'SELECT * FROM ' . $db->quoteName('#__minitek_faqbook_topics');
+		$query .= ' WHERE ' . $db->quoteName('id') . ' = ' . $db->quote($id) . ' ';
 		$db->setQuery($query);
 		$row = $db->loadObject();
 
-		if ($row)
-		{
+		if ($row) {
 			return $row;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

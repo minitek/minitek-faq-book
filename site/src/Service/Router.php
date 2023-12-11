@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Component\Router\RouterView;
+use Joomla\CMS\Menu\AbstractMenu;
 
 class Router extends RouterView
 {
@@ -354,7 +355,7 @@ class Router extends RouterView
 	public function parse(&$segments)
 	{
 		$vars = array();
-		$menus = \JMenu::getInstance('site');
+		$menus = AbstractMenu::getInstance('site');
 		$menu = $menus->getActive();
 
 		// Count route segments

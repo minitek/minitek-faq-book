@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\View\Topic;
 
@@ -17,6 +18,9 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\URI\URI;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
 /**
  * View to edit a topic.
@@ -46,15 +50,14 @@ class HtmlView extends BaseHtmlView
 		$this->canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $this->item->id);
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
+		if (count($errors = $this->get('Errors'))) {
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		// Add script options 
+		// Add script options
 		Factory::getDocument()->addScriptOptions('com_faqbookpro', array(
-			'token' => \JSession::getFormToken(),
-			'site_path' => \JURI::base(),
+			'token' => Session::getFormToken(),
+			'site_path' => URI::base(),
 		));
 
 		$this->addToolbar();
@@ -81,32 +84,27 @@ class HtmlView extends BaseHtmlView
 		$canDo = $this->canDo;
 
 		ToolbarHelper::title(
-			\JText::_('COM_FAQBOOKPRO_TOPIC_TITLE_'.($checkedOut ? 'VIEW_TOPIC' : ($isNew ? 'ADD_TOPIC' : 'EDIT_TOPIC'))),
+			Text::_('COM_FAQBOOKPRO_TOPIC_TITLE_' . ($checkedOut ? 'VIEW_TOPIC' : ($isNew ? 'ADD_TOPIC' : 'EDIT_TOPIC'))),
 			'pencil-2 article-add'
 		);
 
 		// For new records, check the create permission.
-		if ($isNew && count(FAQBookProHelper::getAuthorisedTopics('core.create')) > 0)
-		{
+		if ($isNew && count(FAQBookProHelper::getAuthorisedTopics('core.create')) > 0) {
 			ToolbarHelper::apply('topic.apply');
 			ToolbarHelper::save('topic.save');
 			ToolbarHelper::save2new('topic.save2new');
 			ToolbarHelper::cancel('topic.cancel');
 		}
 		// If not checked out, can save the item.
-		else
-		{
+		else {
 			// Can't save the record if it's checked out.
-			if (!$checkedOut)
-			{
+			if (!$checkedOut) {
 				// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
-				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId))
-				{
+				if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId)) {
 					ToolbarHelper::apply('topic.apply');
 					ToolbarHelper::save('topic.save');
 
-					if ($canDo->get('core.create'))
-					{
+					if ($canDo->get('core.create')) {
 						ToolbarHelper::save2new('topic.save2new');
 					}
 				}

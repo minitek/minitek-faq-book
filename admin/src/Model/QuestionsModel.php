@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -16,6 +17,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
+use Joomla\Database\DatabaseQuery;
 
 /**
  * Methods supporting a list of question records.
@@ -34,8 +36,7 @@ class QuestionsModel extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'title', 'a.title',
@@ -81,8 +82,7 @@ class QuestionsModel extends ListModel
 		$app = Factory::getApplication();
 
 		// Adjust the context to support modal layouts.
-		if ($layout = $app->input->get('layout'))
-		{
+		if ($layout = $app->input->get('layout')) {
 			$this->context .= '.' . $layout;
 		}
 
@@ -106,8 +106,7 @@ class QuestionsModel extends ListModel
 		$access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access');
 		$topicId = $this->getUserStateFromRequest($this->context . '.filter.topic_id', 'filter_topic_id');
 
-		if ($formSubmited)
-		{
+		if ($formSubmited) {
 			$access = $app->input->post->get('access');
 			$this->setState('filter.access', $access);
 
@@ -121,8 +120,7 @@ class QuestionsModel extends ListModel
 		// Force a language
 		$forcedLanguage = $app->input->get('forcedLanguage');
 
-		if (!empty($forcedLanguage))
-		{
+		if (!empty($forcedLanguage)) {
 			$this->setState('filter.language', $forcedLanguage);
 			$this->setState('filter.forcedLanguage', $forcedLanguage);
 		}
@@ -158,7 +156,7 @@ class QuestionsModel extends ListModel
 	/**
 	 * Method to get a database query to list topics.
 	 *
-	 * @return  JDatabaseQuery object.
+	 * @return  DatabaseQuery object.
 	 *
 	 * @since   4.0.0
 	 */
@@ -208,21 +206,17 @@ class QuestionsModel extends ListModel
 		// Filter by access level
 		$access = $this->getState('filter.access');
 
-		if (is_numeric($access))
-		{
+		if (is_numeric($access)) {
 			$access = (int) $access;
 			$query->where($db->quoteName('a.access') . ' = :access')
 				->bind(':access', $access, ParameterType::INTEGER);
-		}
-		elseif (is_array($access))
-		{
+		} elseif (is_array($access)) {
 			$access = ArrayHelper::toInteger($access);
 			$query->whereIn($db->quoteName('a.access'), $access);
 		}
 
 		// Filter by access level on topics
-		if (!$user->authorise('core.admin'))
-		{
+		if (!$user->authorise('core.admin')) {
 			$groups = $user->getAuthorisedViewLevels();
 			$query->whereIn($db->quoteName('a.access'), $groups);
 			$query->whereIn($db->quoteName('c.access'), $groups);
@@ -231,20 +225,16 @@ class QuestionsModel extends ListModel
 		// Filter by published state
 		$published = $this->getState('filter.published');
 
-		if (is_numeric($published))
-		{
+		if (is_numeric($published)) {
 			$query->where('a.state = ' . (int) $published);
-		}
-		elseif ($published === '')
-		{
+		} elseif ($published === '') {
 			$query->where('(a.state = 0 OR a.state = 1)');
 		}
 
 		// Filter by pinned state
 		$pinned = $this->getState('filter.pinned');
 
-		if ($pinned != '')
-		{
+		if ($pinned != '') {
 			$query->where('a.pinned = ' . $db->quote($pinned));
 		}
 
@@ -252,25 +242,21 @@ class QuestionsModel extends ListModel
 		$topicId = $this->getState('filter.topic_id', array());
 		$level = $this->getState('filter.level');
 
-		if (!is_array($topicId))
-		{
+		if (!is_array($topicId)) {
 			$topicId = $topicId ? array($topicId) : array();
 		}
 
 		// Case: Using both topics filter and by level filter
-		if (count($topicId))
-		{
+		if (count($topicId)) {
 			$topicId = ArrayHelper::toInteger($topicId);
 			$topicTable = Table::getInstance('TopicTable', 'Joomla\Component\FAQBookPro\Administrator\Table\\');
 			$subTopicItemsWhere = array();
 
-			foreach ($topicId as $key => $filter_topicid)
-			{
+			foreach ($topicId as $key => $filter_topicid) {
 				$topicTable->load($filter_topicid);
 				$topicWhere = '';
 
-				if ($level)
-				{
+				if ($level) {
 					$topicLevel = (int) $level + (int) $topicTable->level - 1;
 					$topicWhere = $db->quoteName('c.level') . ' <= :level' . $key . ' AND ';
 					$query->bind(':level' . $key, $topicLevel, ParameterType::INTEGER);
@@ -287,35 +273,27 @@ class QuestionsModel extends ListModel
 		}
 
 		// Case: Using only the by level filter
-		elseif ($level = (int) $level)
-		{
+		elseif ($level = (int) $level) {
 			$query->where($db->quoteName('c.level') . ' <= :level')
 				->bind(':level', $level, ParameterType::INTEGER);
 		}
 
 		// Filter by section
 		$sectionId = $this->getState('filter.sectionid');
-		if (is_numeric($sectionId))
-		{
+		if (is_numeric($sectionId)) {
 			$query->where('s.id = ' . $db->quote($sectionId));
 		}
 
 		// Filter by search in title.
 		$search = $this->getState('filter.search');
 
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			elseif (stripos($search, 'author:') === 0)
-			{
+			} elseif (stripos($search, 'author:') === 0) {
 				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
 				$query->where('(ua.name LIKE ' . $search . ' OR ua.username LIKE ' . $search . ')');
-			}
-			else
-			{
+			} else {
 				$search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
 				$query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
 			}
@@ -325,13 +303,11 @@ class QuestionsModel extends ListModel
 		$orderCol = $this->state->get('list.ordering', 'a.id');
 		$orderDirn = $this->state->get('list.direction', 'desc');
 
-		if ($orderCol == 'a.ordering' || $orderCol == 'topic_title')
-		{
+		if ($orderCol == 'a.ordering' || $orderCol == 'topic_title') {
 			$orderCol = 'c.title ' . $orderDirn . ', a.ordering';
 		}
 
-		if ($orderCol == 'access_level')
-		{
+		if ($orderCol == 'access_level') {
 			$orderCol = 'ag.title';
 		}
 
@@ -352,16 +328,13 @@ class QuestionsModel extends ListModel
 	{
 		$items = parent::getItems();
 
-		if (Factory::getApplication()->isClient('site'))
-		{
+		if (Factory::getApplication()->isClient('site')) {
 			$user = Factory::getUser();
 			$groups = $user->getAuthorisedViewLevels();
 
-			for ($x = 0, $count = count($items); $x < $count; $x++)
-			{
+			for ($x = 0, $count = count($items); $x < $count; $x++) {
 				// Check the access level. Remove articles the user shouldn't see
-				if (!in_array($items[$x]->access, $groups))
-				{
+				if (!in_array($items[$x]->access, $groups)) {
 					unset($items[$x]);
 				}
 			}

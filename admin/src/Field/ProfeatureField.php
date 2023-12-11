@@ -1,17 +1,21 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Field;
 
 defined('_JEXEC') or die;
 
-class ProFeatureField extends \JFormField
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+
+class ProFeatureField extends FormField
 {
 	public $type = 'profeature';
 	private $params = null;
@@ -23,10 +27,10 @@ class ProFeatureField extends \JFormField
 		$title = $this->get('title');
 		$class = $this->get('class');
 
-		$html = '<div class="alert alert-'.$class.'">
-		<i class="fa fa-lock"></i>&nbsp;&nbsp;'.\JText::_($title).'
+		$html = '<div class="alert alert-' . $class . '">
+		<i class="fa fa-lock"></i>&nbsp;&nbsp;' . Text::_($title) . '
 		<a href="https://www.minitek.gr/joomla/extensions/minitek-faq-book#subscriptionPlans">
-		'.\JText::_('COM_FAQBOOKPRO_DASHBOARD_UPGRADE_TO_PRO').'
+		' . Text::_('COM_FAQBOOKPRO_DASHBOARD_UPGRADE_TO_PRO') . '
 		</a>
 		</div>';
 

@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2022 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Site\Model;
 
@@ -50,8 +51,7 @@ class SectionModel extends BaseDatabaseModel
 		// If $pk is set then authorise on complete asset, else on component only
 		$asset = empty($pk) ? 'com_faqbookpro' : 'com_faqbookpro.section.' . $pk;
 
-		if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset)))
-		{
+		if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset))) {
 			$this->setState('filter.published', 1);
 			$this->setState('filter.archived', 2);
 		}
@@ -72,15 +72,12 @@ class SectionModel extends BaseDatabaseModel
 
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('section.id');
 
-		if ($this->_item === null)
-		{
+		if ($this->_item === null) {
 			$this->_item = array();
 		}
 
-		if (!isset($this->_item[$pk]))
-		{
-			try
-			{
+		if (!isset($this->_item[$pk])) {
+			try {
 				$db = $this->getDbo();
 				$query = $db->getQuery(true)
 					->select('a.*');
@@ -88,8 +85,7 @@ class SectionModel extends BaseDatabaseModel
 					->where('a.id = ' . (int) $pk);
 
 				// Filter by language
-				if ($this->getState('filter.language'))
-				{
+				if ($this->getState('filter.language')) {
 					$query->where('a.language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 				}
 
@@ -97,8 +93,7 @@ class SectionModel extends BaseDatabaseModel
 				$published = $this->getState('filter.published');
 				$archived = $this->getState('filter.archived');
 
-				if (is_numeric($published))
-				{
+				if (is_numeric($published)) {
 					$query->where('(a.state = ' . (int) $published . ' OR a.state =' . (int) $archived . ')');
 				}
 
@@ -106,14 +101,12 @@ class SectionModel extends BaseDatabaseModel
 
 				$data = $db->loadObject();
 
-				if (empty($data))
-				{
+				if (empty($data)) {
 					throw new \Exception(Text::_('COM_FAQBOOKPRO_ERROR_SECTION_NOT_FOUND'), 404);
 				}
 
 				// Check for published state if filter set.
-				if ((is_numeric($published) || is_numeric($archived)) && (($data->state != $published) && ($data->state != $archived)))
-				{
+				if ((is_numeric($published) || is_numeric($archived)) && (($data->state != $published) && ($data->state != $archived))) {
 					throw new \Exception(Text::_('COM_FAQBOOKPRO_ERROR_SECTION_NOT_FOUND'), 404);
 				}
 
@@ -123,16 +116,11 @@ class SectionModel extends BaseDatabaseModel
 				$data->access_view = in_array($data->access, $groups);
 
 				$this->_item[$pk] = $data;
-			}
-			catch (\Exception $e)
-			{
-				if ($e->getCode() == 404)
-				{
+			} catch (\Exception $e) {
+				if ($e->getCode() == 404) {
 					// Need to go thru the error handler to allow Redirect to work.
 					throw new \Exception($e->getMessage(), 404);
-				}
-				else
-				{
+				} else {
 					$this->setError($e);
 					$this->_item[$pk] = false;
 				}
@@ -174,7 +162,7 @@ class SectionModel extends BaseDatabaseModel
 		// Ordering
 		$section = $this->getItem($sectionId);
 		$sectionParams = new Registry($section->attribs);
-		$ordering = 'c.'.$sectionParams->get('topics_ordering', 'lft');
+		$ordering = 'c.' . $sectionParams->get('topics_ordering', 'lft');
 		$ordering_dir = $sectionParams->get('topics_ordering_dir', 'ASC');
 
 		// Get the results
@@ -190,13 +178,14 @@ class SectionModel extends BaseDatabaseModel
 		$user = Factory::getUser();
 		$query = $db->getQuery(true);
 
-		$query->select('a.id, a.title, a.alias, a.content, a.answers, a.checked_out, a.checked_out_time, a.state,
+		$query->select(
+			'a.id, a.title, a.alias, a.content, a.answers, a.checked_out, a.checked_out_time, a.state,
 			a.topicid, a.created, a.created_by, a.created_by_name, a.created_by_email, a.created_by_alias, a.assigned_to, ' .
-			// Use created if modified is 0
-			'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
-			'a.modified_by,' .
-			'a.images, a.attribs, a.metadata, a.metakey, a.metadesc, a.access, ' .
-			'a.hits, a.featured, a.locked, a.pinned, a.private, a.publish_up, a.publish_down'
+				// Use created if modified is 0
+				'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
+				'a.modified_by,' .
+				'a.images, a.attribs, a.metadata, a.metakey, a.metadesc, a.access, ' .
+				'a.hits, a.featured, a.locked, a.pinned, a.private, a.publish_up, a.publish_down'
 		);
 		$query->from('#__minitek_faqbook_questions AS a');
 
@@ -225,21 +214,15 @@ class SectionModel extends BaseDatabaseModel
 		// Filter by state
 		$editStateAuthorizedTopics = UtilitiesHelper::getAuthorisedTopics('core.edit.state');
 
-		if (count($editStateAuthorizedTopics))
-		{
+		if (count($editStateAuthorizedTopics)) {
 			$editStateAuthorizedTopics = implode(',', $editStateAuthorizedTopics);
 			$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
 				OR (a.state IN (-2,0,1,2) AND a.topicid IN (' . $editStateAuthorizedTopics . ')))');
-		}
-		else
-		{
-			if ($user->id)
-			{
+		} else {
+			if ($user->id) {
 				$query->where('((a.state = 1 AND (a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . '))
-					OR (a.state IN (-2,0,1,2) AND a.created_by = ' . $db->quote($user->id).'))');
-			}
-			else
-			{
+					OR (a.state IN (-2,0,1,2) AND a.created_by = ' . $db->quote($user->id) . '))');
+			} else {
 				$query->where('a.state = 1');
 				$query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ') AND (a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
 			}
@@ -249,22 +232,16 @@ class SectionModel extends BaseDatabaseModel
 		$query->where('c.published = 1');
 
 		// Filter by private
-		if ($user->id)
-		{
+		if ($user->id) {
 			$authorizedTopics = UtilitiesHelper::getAuthorisedTopics('core.private.see');
 
-			if (count($authorizedTopics))
-			{
+			if (count($authorizedTopics)) {
 				$authorizedTopics = implode(',', $authorizedTopics);
-				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id).') OR (a.private = 1 AND a.topicid IN (' . $authorizedTopics . ')))');
+				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id) . ') OR (a.private = 1 AND a.topicid IN (' . $authorizedTopics . ')))');
+			} else {
+				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id) . '))');
 			}
-			else
-			{
-				$query->where('(a.private = 0 OR (a.private = 1 AND a.created_by = ' . $db->quote($user->id).'))');
-			}
-		}
-		else
-		{
+		} else {
 			$query->where('a.private = 0');
 		}
 
@@ -272,39 +249,35 @@ class SectionModel extends BaseDatabaseModel
 		$query->where('section.id = ' . $db->quote($sectionId));
 
 		// Filter by featured
-		if ($ordering == 'featured')
-		{
+		if ($ordering == 'featured') {
 			$query->where('a.featured = 1');
 		}
 
 		// Filter by unanswered
-		if ($ordering == 'unanswered')
-		{
+		if ($ordering == 'unanswered') {
 			$query->having('answers = 0');
 		}
 
 		// Get ordering
-		switch ($ordering)
-		{
+		switch ($ordering) {
 			case 'recent':
-				$order = 'a.pinned '.$ordering_dir.', a.created '.$ordering_dir.'';
+				$order = 'a.pinned ' . $ordering_dir . ', a.created ' . $ordering_dir . '';
 				break;
 			case 'featured':
 			case 'unanswered':
 			case 'open':
 			case 'pending':
-				$order = 'a.created '.$ordering_dir.'';
+				$order = 'a.created ' . $ordering_dir . '';
 				break;
-			// Static ordering
+				// Static ordering
 			default:
-				$order = 'a.pinned DESC, a.'.$ordering.' '.$ordering_dir.'';
+				$order = 'a.pinned DESC, a.' . $ordering . ' ' . $ordering_dir . '';
 		}
 
 		$query->order($order);
 
 		// Page limit
-		jimport( 'joomla.application.component.helper' );
-		$params  = ComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$limitstart = $params->get('pagination_limit', 20);
 		$db->setQuery($query, ($page - 1) * $limitstart, $limitstart + 1); // get 1 extra item to see if we need pagination
 
@@ -358,14 +331,15 @@ class SectionModel extends BaseDatabaseModel
 
 		$query = $db->getQuery(true);
 
-		$query->select('a.id, a.title, a.alias, a.content,
+		$query->select(
+			'a.id, a.title, a.alias, a.content,
 			a.topicid, a.created, a.created_by, ' .
-			// Use created if modified is 0
-			'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
-			'a.modified_by,' .
-			// Use created if publish_up is 0
-			'CASE WHEN a.publish_up = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.publish_up END as publish_up,' .
-			'a.publish_down, a.access, a.hits, a.featured'
+				// Use created if modified is 0
+				'CASE WHEN a.modified = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.modified END as modified, ' .
+				'a.modified_by,' .
+				// Use created if publish_up is 0
+				'CASE WHEN a.publish_up = ' . $db->quote($db->getNullDate()) . ' THEN a.created ELSE a.publish_up END as publish_up,' .
+				'a.publish_down, a.access, a.hits, a.featured'
 		);
 		$query->from('#__minitek_faqbook_questions AS a');
 
@@ -452,7 +426,7 @@ class SectionModel extends BaseDatabaseModel
 			->select('COUNT(*)')
 			->from('#__menu')
 			->where('published = 1')
-			->where('link='.$db->quote('index.php?option=com_faqbookpro&view=section&id='.$sectionid));
+			->where('link=' . $db->quote('index.php?option=com_faqbookpro&view=section&id=' . $sectionid));
 		$db->setQuery($query);
 		$count = $db->loadResult();
 

@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
-$input = JFactory::getApplication()->input;
+$input = Factory::getApplication()->input;
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_faqbookpro&layout=edit&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
@@ -29,7 +29,7 @@ $input = JFactory::getApplication()->input;
 	<div class="main-card">
 		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'general')); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', JText::_('COM_FAQBOOKPRO_FIELDSET_GENERAL', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_FAQBOOKPRO_FIELDSET_GENERAL', true)); ?>
 		<div class="row">
 			<div class="col-lg-9">
 				<div>
@@ -49,7 +49,7 @@ $input = JFactory::getApplication()->input;
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'navigation', JText::_('COM_FAQBOOKPRO_FIELDSET_NAVIGATION', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'navigation', Text::_('COM_FAQBOOKPRO_FIELDSET_NAVIGATION', true)); ?>
 		<div class="row">
 			<div class="col-12">
 				<?php echo $this->form->renderFieldset('navigation'); ?>
@@ -57,7 +57,7 @@ $input = JFactory::getApplication()->input;
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'options', JText::_('COM_FAQBOOKPRO_FIELDSET_OPTIONS', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'options', Text::_('COM_FAQBOOKPRO_FIELDSET_OPTIONS', true)); ?>
 		<div class="row">
 			<div class="col-12">
 				<?php echo $this->form->renderFieldset('options'); ?>
@@ -65,7 +65,7 @@ $input = JFactory::getApplication()->input;
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'topic', JText::_('COM_FAQBOOKPRO_FIELDSET_TOPIC', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'topic', Text::_('COM_FAQBOOKPRO_FIELDSET_TOPIC', true)); ?>
 		<div class="row">
 			<div class="col-12">
 				<?php echo $this->form->renderFieldset('section_topics'); ?>
@@ -83,7 +83,7 @@ $input = JFactory::getApplication()->input;
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'questions', JText::_('COM_FAQBOOKPRO_FIELDSET_QUESTIONS', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'questions', Text::_('COM_FAQBOOKPRO_FIELDSET_QUESTIONS', true)); ?>
 		<div class="row">
 			<div class="col-12">
 				<?php echo $this->form->renderFieldset('section_questions'); ?>
@@ -91,7 +91,7 @@ $input = JFactory::getApplication()->input;
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', JText::_('COM_FAQBOOKPRO_FIELDSET_PUBLISHING', true)); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('COM_FAQBOOKPRO_FIELDSET_PUBLISHING', true)); ?>
 		<div class="row">
 			<div class="col-12 col-lg-6">
 				<?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
@@ -103,7 +103,7 @@ $input = JFactory::getApplication()->input;
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
 		<?php if ($this->canDo->get('core.admin')) : ?>
-			<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rules', JText::_('COM_FAQBOOKPRO_FIELDSET_RULES', true)); ?>
+			<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rules', Text::_('COM_FAQBOOKPRO_FIELDSET_RULES', true)); ?>
 			<?php echo $this->form->getInput('rules'); ?>
 			<?php echo HTMLHelper::_('uitab.endTab'); ?>
 		<?php endif; ?>

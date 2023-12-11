@@ -14,12 +14,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
-
-?><div id="fbExtended" class="fbSectionExtended noleftnav clearfix"><?php
-
-	if ($this->params->get('sections_top_navigation', true)) 
-	{
-		?><div class="fbTopNavigation_core_outer">
+?>
+<div id="fbExtended" class="fbSectionExtended noleftnav clearfix">
+	<?php if ($this->params->get('sections_top_navigation', true)) { ?>
+		<div class="fbTopNavigation_core_outer">
 			<div class="fbTopNavigation_core">
 				<div class="fbTopNavigation_wrap">
 					<ul class="fbTopNavigation_root">
@@ -32,19 +30,15 @@ use Joomla\Component\FAQBookPro\Site\Helper\RouteHelper;
 				</div>
 			</div>
 			<div class="clearfix"> </div>
-		</div><?php
-	}
-
-	?><div class="fbContent_core">
-		<div class="fbContent_root"><?php
-			if ($this->params->get('sections_layout', 'columns') == 'columns') 
-			{
+		</div>
+	<?php } ?>
+	<div class="fbContent_core">
+		<div class="fbContent_root">
+			<?php if ($this->params->get('sections_layout', 'columns') == 'columns') {
 				echo $this->loadTemplate('columns');
-			} 
-			else 
-			{
+			} else {
 				echo $this->loadTemplate('forum');
-			}
-		?></div>
+			} ?>
+		</div>
 	</div>
 </div>

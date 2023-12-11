@@ -2,7 +2,7 @@
 
 /**
  * @title		Minitek FAQ Book
- * @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
  * @license		GNU General Public License version 3 or later.
  * @author url	https://www.minitek.gr/
  * @developers	Minitek.gr
@@ -14,11 +14,10 @@ if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
 }
 
+use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\Component\Installer\Administrator\Model\InstallModel;
-
-jimport('joomla.filesystem.folder');
 
 class com_faqbookproInstallerScript
 {
@@ -37,7 +36,7 @@ class com_faqbookproInstallerScript
 		$this->new_version = $parent->manifest->version;
 
 		// Get Joomla version
-		$version = new \JVersion();
+		$version = new Version();
 		$sversion = $version->getShortVersion();
 
 		if (is_object($this->getInstalledVersion())) {

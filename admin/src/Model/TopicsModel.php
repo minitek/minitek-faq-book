@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -15,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseQuery;
 
 /**
  * Methods supporting a list of topic records.
@@ -33,8 +35,7 @@ class TopicsModel extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		if (empty($config['filter_fields']))
-		{
+		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'section_id', 'a.section_id', 'section_title',
@@ -95,8 +96,7 @@ class TopicsModel extends ListModel
 
 		$access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', '', 'int');
 
-		if ($formSubmited)
-		{
+		if ($formSubmited) {
 			$access = $app->input->post->get('access');
 			$this->setState('filter.access', $access);
 		}
@@ -107,8 +107,7 @@ class TopicsModel extends ListModel
 		// Force a language
 		$forcedLanguage = $app->input->get('forcedLanguage');
 
-		if (!empty($forcedLanguage))
-		{
+		if (!empty($forcedLanguage)) {
 			$this->setState('filter.language', $forcedLanguage);
 			$this->setState('filter.forcedLanguage', $forcedLanguage);
 		}
@@ -142,7 +141,7 @@ class TopicsModel extends ListModel
 	/**
 	 * Method to get a database query to list topics.
 	 *
-	 * @return  JDatabaseQuery object.
+	 * @return  DatabaseQuery object.
 	 *
 	 * @since   4.0.0
 	 */
@@ -158,12 +157,12 @@ class TopicsModel extends ListModel
 			$this->getState(
 				'list.select',
 				'a.id, a.section_id, a.parent_id, a.title, a.alias, a.published, a.access' .
-				', a.checked_out, a.checked_out_time, a.created_user_id' .
-				', a.path, a.parent_id, a.level, a.lft, a.rgt' .
-				', a.language'
+					', a.checked_out, a.checked_out_time, a.created_user_id' .
+					', a.path, a.parent_id, a.level, a.lft, a.rgt' .
+					', a.language'
 			)
 		);
-		
+
 		$query->from('#__minitek_faqbook_topics AS a');
 
 		// Join over the section
@@ -194,28 +193,23 @@ class TopicsModel extends ListModel
 		// Filter by access level
 		$access = $this->getState('filter.access');
 
-		if (is_numeric($access))
-		{
+		if (is_numeric($access)) {
 			$access = (int) $access;
 			$query->where($db->quoteName('a.access') . ' = :access')
 				->bind(':access', $access, ParameterType::INTEGER);
-		}
-		elseif (is_array($access))
-		{
+		} elseif (is_array($access)) {
 			$access = ArrayHelper::toInteger($access);
 			$query->whereIn($db->quoteName('a.access'), $access);
 		}
 
 		// Implement View Level Access
-		if (!$user->authorise('core.admin'))
-		{
+		if (!$user->authorise('core.admin')) {
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 			$query->where('a.access IN (' . $groups . ')');
 		}
 
 		// Filter by section
-		if ($section_id = $this->getState('filter.section_id'))
-		{
+		if ($section_id = $this->getState('filter.section_id')) {
 			$query->where('a.section_id = ' . $db->quote($section_id));
 		}
 
@@ -223,47 +217,36 @@ class TopicsModel extends ListModel
 		$query->where('a.id > 1');
 
 		// Filter on the level.
-		if ($level = $this->getState('filter.level'))
-		{
+		if ($level = $this->getState('filter.level')) {
 			$query->where('a.level <= ' . (int) $level);
 		}
 
 		// Filter by published state
 		$published = $this->getState('filter.published');
 
-		if (is_numeric($published))
-		{
+		if (is_numeric($published)) {
 			$query->where('a.published = ' . (int) $published);
-		}
-		elseif ($published === '')
-		{
+		} elseif ($published === '') {
 			$query->where('(a.published IN (0, 1))');
 		}
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
 				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			elseif (stripos($search, 'author:') === 0)
-			{
+			} elseif (stripos($search, 'author:') === 0) {
 				$search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
 				$query->where('(ua.name LIKE ' . $search . ' OR ua.username LIKE ' . $search . ')');
-			}
-			else
-			{
+			} else {
 				$search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
 				$query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
 			}
 		}
 
 		// Filter on the language.
-		if ($language = $this->getState('filter.language'))
-		{
+		if ($language = $this->getState('filter.language')) {
 			$query->where('a.language = ' . $db->quote($language));
 		}
 
@@ -271,12 +254,9 @@ class TopicsModel extends ListModel
 		$listOrdering = $this->getState('list.ordering', 'a.lft');
 		$listDirn = $db->escape($this->getState('list.direction', 'ASC'));
 
-		if ($listOrdering == 'a.access')
-		{
+		if ($listOrdering == 'a.access') {
 			$query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
-		}
-		else
-		{
+		} else {
 			$query->order($db->escape($listOrdering) . ' ' . $listDirn);
 		}
 

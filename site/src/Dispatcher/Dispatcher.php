@@ -1,21 +1,25 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2021 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Site\Dispatcher;
 
 defined('JPATH_PLATFORM') or die;
 
-if(!defined('DS')){ define('DS',DIRECTORY_SEPARATOR); }
+if (!defined('DS')) {
+	define('DS', DIRECTORY_SEPARATOR);
+}
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\URI\URI;
 
 /**
  * ComponentDispatcher class for com_faqbookpro
@@ -34,13 +38,13 @@ class Dispatcher extends ComponentDispatcher
 	public function dispatch()
 	{
 		// Get component params
-		$params = \JComponentHelper::getParams('com_faqbookpro');
+		$params = ComponentHelper::getParams('com_faqbookpro');
 		$document = Factory::getDocument();
 		$wa = $document->getWebAssetManager();
 
 		// Fix relative links
 		if ($params->get('fix_relative', false))
-			$document->base = \JURI::root();
+			$document->base = URI::root();
 
 		// Load Bootstrap css
 		if ($params->get('load_bootstrap', 0))

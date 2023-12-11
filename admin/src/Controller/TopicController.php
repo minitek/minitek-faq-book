@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Controller;
 
@@ -16,6 +17,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Input\Input;
 
 /**
  * The topic controller
@@ -32,7 +34,7 @@ class TopicController extends FormController
 	 * 'view_path' (this list is not meant to be comprehensive).
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CmsApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param   Input              $input    Input
 	 *
 	 * @since   4.0.0
 	 */
@@ -74,31 +76,26 @@ class TopicController extends FormController
 		$userId = $user->get('id');
 
 		// Check general edit permission first.
-		if ($user->authorise('core.edit', 'com_faqbookpro'))
-		{
+		if ($user->authorise('core.edit', 'com_faqbookpro')) {
 			return true;
 		}
 
 		// Check specific edit permission.
-		if ($user->authorise('core.edit', 'com_faqbookpro.topic.' . $recordId))
-		{
+		if ($user->authorise('core.edit', 'com_faqbookpro.topic.' . $recordId)) {
 			return true;
 		}
 
 		// Fallback on edit.own.
 		// First test if the permission is available.
-		if ($user->authorise('core.edit.own', 'com_faqbookpro.topic.' . $recordId))
-		{
+		if ($user->authorise('core.edit.own', 'com_faqbookpro.topic.' . $recordId)) {
 			// Now test the owner is the user.
 			$ownerId = (int) isset($data['created_user_id']) ? $data['created_user_id'] : 0;
 
-			if (empty($ownerId) && $recordId)
-			{
+			if (empty($ownerId) && $recordId) {
 				// Need to do a lookup from the model.
 				$record = $this->getModel()->getItem($recordId);
 
-				if (empty($record))
-				{
+				if (empty($record)) {
 					return false;
 				}
 
@@ -106,8 +103,7 @@ class TopicController extends FormController
 			}
 
 			// If the owner matches 'me' then do the test.
-			if ($ownerId == $userId)
-			{
+			if ($ownerId == $userId) {
 				return true;
 			}
 		}
@@ -158,8 +154,7 @@ class TopicController extends FormController
 		$children = $model->getChildrenTopics($items = array(), $id);
 
 		// Change parent section for all children topics
-		foreach ($children as $child)
-		{
+		foreach ($children as $child) {
 			$db = Factory::getDbo();
 			$query = $db->getQuery(true);
 			$fields = array(

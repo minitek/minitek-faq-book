@@ -1,16 +1,18 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Table;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Nested;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Access\Rules;
 use Joomla\Registry\Registry;
@@ -25,12 +27,12 @@ use Joomla\Database\DatabaseDriver;
  *
  * @since  4.0.0
  */
-class TopicTable extends \JTableNested
+class TopicTable extends Nested
 {
 	/**
 	 * Class constructor.
 	 *
-	 * @param   \JDatabaseDriver  $db  \JDatabaseDriver object.
+	 * @param   DatabaseDriver  $db  DatabaseDriver object.
 	 *
 	 * @since   4.0.0
 	 */
@@ -91,8 +93,7 @@ class TopicTable extends \JTableNested
 		$assetId = null;
 
 		// This is a topic under a topic.
-		if ($this->parent_id > 1)
-		{
+		if ($this->parent_id > 1) {
 			// Build the query to get the asset id for the parent topic.
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('asset_id'))
@@ -102,14 +103,12 @@ class TopicTable extends \JTableNested
 			// Get the asset id from the database.
 			$this->_db->setQuery($query);
 
-			if ($result = $this->_db->loadResult())
-			{
+			if ($result = $this->_db->loadResult()) {
 				$assetId = (int) $result;
 			}
 		}
 		// This is a topic that needs to parent with the parent section.
-		elseif ($assetId === null)
-		{
+		elseif ($assetId === null) {
 			// Build the query to get the asset id for the parent section.
 			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('asset_id'))
@@ -119,19 +118,15 @@ class TopicTable extends \JTableNested
 			// Get the asset id from the database.
 			$this->_db->setQuery($query);
 
-			if ($result = $this->_db->loadResult())
-			{
+			if ($result = $this->_db->loadResult()) {
 				$assetId = (int) $result;
 			}
 		}
 
 		// Return the asset id.
-		if ($assetId)
-		{
+		if ($assetId) {
 			return $assetId;
-		}
-		else
-		{
+		} else {
 			return parent::_getAssetParentId($table, $id);
 		}
 	}
@@ -150,8 +145,7 @@ class TopicTable extends \JTableNested
 	public function check()
 	{
 		// Check for a title.
-		if (trim($this->title) == '')
-		{
+		if (trim($this->title) == '') {
 			$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_TOPIC_MUST_HAVE_A_TITLE'));
 
 			return false;
@@ -159,15 +153,13 @@ class TopicTable extends \JTableNested
 
 		$this->alias = trim($this->alias);
 
-		if (empty($this->alias))
-		{
+		if (empty($this->alias)) {
 			$this->alias = $this->title;
 		}
 
 		$this->alias = ApplicationHelper::stringURLSafe($this->alias);
 
-		if (trim(str_replace('-', '', $this->alias)) == '')
-		{
+		if (trim(str_replace('-', '', $this->alias)) == '') {
 			$this->alias = Factory::getDate()->format('Y-m-d-H-i-s');
 		}
 
@@ -189,23 +181,20 @@ class TopicTable extends \JTableNested
 	 */
 	public function bind($array, $ignore = '')
 	{
-		if (isset($array['params']) && is_array($array['params']))
-		{
+		if (isset($array['params']) && is_array($array['params'])) {
 			$registry = new Registry;
 			$registry->loadArray($array['params']);
 			$array['params'] = (string) $registry;
 		}
 
-		if (isset($array['metadata']) && is_array($array['metadata']))
-		{
+		if (isset($array['metadata']) && is_array($array['metadata'])) {
 			$registry = new Registry;
 			$registry->loadArray($array['metadata']);
 			$array['metadata'] = (string) $registry;
 		}
 
 		// Bind the rules.
-		if (isset($array['rules']) && is_array($array['rules']))
-		{
+		if (isset($array['rules']) && is_array($array['rules'])) {
 			$rules = new Rules($array['rules']);
 			$this->setRules($rules);
 		}
@@ -227,14 +216,11 @@ class TopicTable extends \JTableNested
 		$date = Factory::getDate();
 		$user = Factory::getUser();
 
-		if ($this->id)
-		{
+		if ($this->id) {
 			// Existing topic
 			$this->modified_time = $date->toSql();
 			$this->modified_user_id = $user->get('id');
-		}
-		else
-		{
+		} else {
 			// New topic
 			$this->created_time = $date->toSql();
 			$this->created_user_id = $user->get('id');
@@ -243,9 +229,10 @@ class TopicTable extends \JTableNested
 		// Verify that the alias is unique within this section and parent topic
 		$table = Table::getInstance('TopicTable', __NAMESPACE__ . '\\');
 
-		if ($table->load(array('alias' => $this->alias, 'parent_id' => $this->parent_id, 'section_id' => $this->section_id))
-			&& ($table->id != $this->id || $this->id == 0))
-		{
+		if (
+			$table->load(array('alias' => $this->alias, 'parent_id' => $this->parent_id, 'section_id' => $this->section_id))
+			&& ($table->id != $this->id || $this->id == 0)
+		) {
 			$this->setError(Text::_('COM_FAQBOOKPRO_ERROR_TOPIC_UNIQUE_ALIAS'));
 
 			return false;

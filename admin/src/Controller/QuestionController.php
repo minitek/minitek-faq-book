@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Controller;
 
@@ -21,6 +22,8 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Site\Helper\UtilitiesHelper;
+use Joomla\CMS\URI\URI;
+use Joomla\CMS\Input\Input;
 
 /**
  * The question controller
@@ -37,7 +40,7 @@ class QuestionController extends FormController
 	 * 'view_path' (this list is not meant to be comprehensive).
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CmsApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param   Input                $input    Input
 	 *
 	 * @since   4.0.0
 	 */
@@ -61,19 +64,15 @@ class QuestionController extends FormController
 		$topicId = ArrayHelper::getValue($data, 'topicid', $this->input->getInt('filter_topic_id'), 'int');
 		$allow = null;
 
-		if ($topicId)
-		{
+		if ($topicId) {
 			// If the topic has been passed in the data or URL check it.
 			$allow = $user->authorise('core.create', 'com_faqbookpro.topic.' . $topicId);
 		}
 
-		if ($allow === null)
-		{
+		if ($allow === null) {
 			// In the absense of better information, revert to the component permissions.
 			return parent::allowAdd();
-		}
-		else
-		{
+		} else {
 			return $allow;
 		}
 	}
@@ -95,25 +94,21 @@ class QuestionController extends FormController
 		$userId = $user->get('id');
 
 		// Check general edit permission first.
-		if ($user->authorise('core.edit', 'com_faqbookpro.question.' . $recordId))
-		{
+		if ($user->authorise('core.edit', 'com_faqbookpro.question.' . $recordId)) {
 			return true;
 		}
 
 		// Fallback on edit.own.
 		// First test if the permission is available.
-		if ($user->authorise('core.edit.own', 'com_faqbookpro.question.' . $recordId))
-		{
+		if ($user->authorise('core.edit.own', 'com_faqbookpro.question.' . $recordId)) {
 			// Now test the owner is the user.
 			$ownerId = (int) isset($data['created_by']) ? $data['created_by'] : 0;
-			
-			if (empty($ownerId) && $recordId)
-			{
+
+			if (empty($ownerId) && $recordId) {
 				// Need to do a lookup from the model.
 				$record = $this->getModel()->getItem($recordId);
 
-				if (empty($record))
-				{
+				if (empty($record)) {
 					return false;
 				}
 
@@ -121,8 +116,7 @@ class QuestionController extends FormController
 			}
 
 			// If the owner matches 'me' then do the test.
-			if ($ownerId == $userId)
-			{
+			if ($ownerId == $userId) {
 				return true;
 			}
 		}
@@ -174,14 +168,12 @@ class QuestionController extends FormController
 		$user = Factory::getUser();
 
 		// Determine the name of the primary key for the data.
-		if (empty($key))
-		{
+		if (empty($key)) {
 			$key = $table->getKeyName();
 		}
 
 		// To avoid data collisions the urlVar may be different from the primary key.
-		if (empty($urlVar))
-		{
+		if (empty($urlVar)) {
 			$urlVar = $key;
 		}
 
@@ -190,15 +182,15 @@ class QuestionController extends FormController
 		$checkin = property_exists($table, 'checked_out');
 
 		// Access check.
-		if (!$this->allowEdit(array($key => $recordId), $key))
-		{
+		if (!$this->allowEdit(array($key => $recordId), $key)) {
 			$this->setError(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 			$this->setMessage($this->getError(), 'error');
 
 			$this->setRedirect(
 				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
-					. $this->getRedirectToListAppend(), false
+						. $this->getRedirectToListAppend(),
+					false
 				)
 			);
 
@@ -206,8 +198,7 @@ class QuestionController extends FormController
 		}
 
 		// Attempt to check-out the new record for editing and redirect.
-		if ($checkin && !$model->checkout($recordId))
-		{
+		if ($checkin && !$model->checkout($recordId)) {
 			// Check-out failed, display a notice but allow the user to see the record.
 			$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_CHECKOUT_FAILED', $model->getError()));
 			$this->setMessage($this->getError(), 'error');
@@ -215,14 +206,13 @@ class QuestionController extends FormController
 			$this->setRedirect(
 				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-					. $this->getRedirectToItemAppend($recordId, $urlVar), false
+						. $this->getRedirectToItemAppend($recordId, $urlVar),
+					false
 				)
 			);
 
 			return false;
-		}
-		else
-		{
+		} else {
 			// Check-out succeeded, push the new record id into the session.
 			$this->holdEditId($context, $recordId);
 			$app->setUserState($context . '.data', null);
@@ -230,7 +220,8 @@ class QuestionController extends FormController
 			$this->setRedirect(
 				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-					. $this->getRedirectToItemAppend($recordId, $urlVar), false
+						. $this->getRedirectToItemAppend($recordId, $urlVar),
+					false
 				)
 			);
 
@@ -255,16 +246,14 @@ class QuestionController extends FormController
 		$table = $model->getTable();
 		$context = "$this->option.edit.$this->context";
 
-		if (empty($key))
-		{
+		if (empty($key)) {
 			$key = $table->getKeyName();
 		}
 
 		$recordId = $this->input->getInt($key);
 
 		// Attempt to check-in the current record.
-		if ($recordId && property_exists($table, 'checked_out') && $model->checkin($recordId) === false)
-		{
+		if ($recordId && property_exists($table, 'checked_out') && $model->checkin($recordId) === false) {
 			// Check-in failed, go back to the record and display a notice.
 			$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError()));
 			$this->setMessage($this->getError(), 'error');
@@ -272,7 +261,8 @@ class QuestionController extends FormController
 			$this->setRedirect(
 				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
-					. $this->getRedirectToItemAppend($recordId, $key), false
+						. $this->getRedirectToItemAppend($recordId, $key),
+					false
 				)
 			);
 
@@ -289,8 +279,7 @@ class QuestionController extends FormController
 		// Check if there is a return value
 		$return = $this->input->get('return', null, 'base64');
 
-		if (!is_null($return) && \JUri::isInternal(base64_decode($return)))
-		{
+		if (!is_null($return) && URI::isInternal(base64_decode($return))) {
 			$url = base64_decode($return);
 		}
 

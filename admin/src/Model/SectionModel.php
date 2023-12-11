@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Model;
 
@@ -15,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
+use Joomla\CMS\Form\Form;
 
 /**
  * Model for a Section.
@@ -42,10 +44,8 @@ class SectionModel extends AdminModel
 	 */
 	protected function canDelete($record)
 	{
-		if (!empty($record->id))
-		{
-			if ($record->state != -2)
-			{
+		if (!empty($record->id)) {
+			if ($record->state != -2) {
 				return;
 			}
 
@@ -69,13 +69,11 @@ class SectionModel extends AdminModel
 		$user = Factory::getUser();
 
 		// Check for existing article.
-		if (!empty($record->id))
-		{
+		if (!empty($record->id)) {
 			return $user->authorise('core.edit.state', 'com_faqbookpro.section.' . (int) $record->id);
 		}
 		// Default to component settings if section unknown.
-		else
-		{
+		else {
 			return parent::canEditState('com_faqbookpro');
 		}
 	}
@@ -105,19 +103,16 @@ class SectionModel extends AdminModel
 	 */
 	public function getItem($pk = null)
 	{
-		if ($item = parent::getItem($pk))
-		{
+		if ($item = parent::getItem($pk)) {
 			// Convert the metadata field to an array.
-			if (!empty($item->metadata))
-			{
+			if (!empty($item->metadata)) {
 				$registry = new Registry;
 				$registry->loadString($item->metadata);
 				$item->metadata = $registry->toArray();
 			}
 
 			// Convert the params field to an array.
-			if (!empty($item->attribs))
-			{
+			if (!empty($item->attribs)) {
 				$registry = new Registry;
 				$registry->loadString($item->attribs);
 				$item->attribs = $registry->toArray();
@@ -133,7 +128,7 @@ class SectionModel extends AdminModel
 	 * @param   array    $data      Data for the form.
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  \JForm|boolean  A \JForm object on success, false on failure
+	 * @return  Form|boolean  A Form object on success, false on failure
 	 *
 	 * @since   4.0.0
 	 */
@@ -142,27 +137,23 @@ class SectionModel extends AdminModel
 		// Get the form.
 		$form = $this->loadForm('com_faqbookpro.section', 'section', array('control' => 'jform', 'load_data' => $loadData));
 
-		if (empty($form))
-		{
+		if (empty($form)) {
 			return false;
 		}
 
 		$jinput = Factory::getApplication()->input;
 
 		// The front end calls this model and uses a_id to avoid id clashes so we need to check for that first.
-		if ($jinput->get('a_id'))
-		{
+		if ($jinput->get('a_id')) {
 			$id = $jinput->get('a_id', 0);
 		}
 		// The back end uses id so we use that the rest of the time and set it to 0 by default.
-		else
-		{
+		else {
 			$id = $jinput->get('id', 0);
 		}
 
 		// Determine correct permissions to check.
-		if ($this->getState('section.id'))
-		{
+		if ($this->getState('section.id')) {
 			$id = $this->getState('section.id');
 		}
 
@@ -170,9 +161,10 @@ class SectionModel extends AdminModel
 
 		// Check for existing section.
 		// Modify the form based on Edit State access controls.
-		if ($id != 0 && (!$user->authorise('core.edit.state', 'com_faqbookpro.section.' . (int) $id))
-			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro')))
-		{
+		if (
+			$id != 0 && (!$user->authorise('core.edit.state', 'com_faqbookpro.section.' . (int) $id))
+			|| ($id == 0 && !$user->authorise('core.edit.state', 'com_faqbookpro'))
+		) {
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');
 			$form->setFieldAttribute('state', 'disabled', 'true');
@@ -199,14 +191,12 @@ class SectionModel extends AdminModel
 		$app = Factory::getApplication();
 		$data = $app->getUserState('com_faqbookpro.edit.section.data', array());
 
-		if (empty($data))
-		{
+		if (empty($data)) {
 			$data = $this->getItem();
 		}
 
 		// If there are params fieldsets in the form it will fail with a registry object
-		if (isset($data->params) && $data->params instanceof Registry)
-		{
+		if (isset($data->params) && $data->params instanceof Registry) {
 			$data->params = $data->params->toArray();
 		}
 
@@ -229,21 +219,16 @@ class SectionModel extends AdminModel
 		$app = Factory::getApplication();
 
 		// Alter the title for save as copy
-		if ($app->input->get('task') == 'save2copy')
-		{
+		if ($app->input->get('task') == 'save2copy') {
 			$origTable = clone $this->getTable();
 			$origTable->load($app->input->getInt('id'));
 
-			if ($data['title'] == $origTable->title)
-			{
+			if ($data['title'] == $origTable->title) {
 				list($title, $alias) = $this->generateNewTitle(null, $data['alias'], $data['title']);
 				$data['title'] = $title;
 				$data['alias'] = $alias;
-			}
-			else
-			{
-				if ($data['alias'] == $origTable->alias)
-				{
+			} else {
+				if ($data['alias'] == $origTable->alias) {
 					$data['alias'] = '';
 				}
 			}
@@ -251,10 +236,8 @@ class SectionModel extends AdminModel
 			$data['state'] = 0;
 		}
 
-		if (parent::save($data))
-		{
-			if (isset($data['featured']))
-			{
+		if (parent::save($data)) {
+			if (isset($data['featured'])) {
 				$this->featured($this->getState($this->getName() . '.id'), $data['featured']);
 			}
 
@@ -269,8 +252,7 @@ class SectionModel extends AdminModel
 		// Alter the title & alias
 		$table = $this->getTable();
 
-		while ($table->load(array('alias' => $alias)))
-		{
+		while ($table->load(array('alias' => $alias))) {
 			$title = StringHelper::increment($title);
 			$alias = StringHelper::increment($alias, 'dash');
 		}
@@ -279,9 +261,9 @@ class SectionModel extends AdminModel
 	}
 
 	/**
-	 * Allows preprocessing of the \JForm object.
+	 * Allows preprocessing of the Form object.
 	 *
-	 * @param   \JForm  $form   The form object
+	 * @param   Form    $form   The form object
 	 * @param   array   $data   The data to be merged into the form object
 	 * @param   string  $group  The plugin group to be executed
 	 *
@@ -289,7 +271,7 @@ class SectionModel extends AdminModel
 	 *
 	 * @since   4.0.0
 	 */
-	protected function preprocessForm(\JForm $form, $data, $group = 'faqbookpro')
+	protected function preprocessForm(Form $form, $data, $group = 'faqbookpro')
 	{
 		// Set the access control rules field component value.
 		$form->setFieldAttribute('rules', 'component', 'com_faqbookpro');

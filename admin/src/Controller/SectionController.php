@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title		Minitek FAQ Book
-* @copyright	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license		GNU General Public License version 3 or later.
-* @author url	https://www.minitek.gr/
-* @developers	Minitek.gr
-*/
+ * @title		Minitek FAQ Book
+ * @copyright	Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license		GNU General Public License version 3 or later.
+ * @author url	https://www.minitek.gr/
+ * @developers	Minitek.gr
+ */
 
 namespace Joomla\Component\FAQBookPro\Administrator\Controller;
 
@@ -13,6 +14,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Input\Input;
+use Joomla\CMS\Factory;
 
 /**
  * The section controller
@@ -29,7 +32,7 @@ class SectionController extends FormController
 	 * 'view_path' (this list is not meant to be comprehensive).
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 * @param   CmsApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param   Input                $input    Input
 	 *
 	 * @since   4.0.0
 	 */
@@ -51,13 +54,10 @@ class SectionController extends FormController
 	{
 		$allow = null;
 
-		if ($allow === null)
-		{
+		if ($allow === null) {
 			// In the absense of better information, revert to the component permissions.
 			return parent::allowAdd();
-		}
-		else
-		{
+		} else {
 			return $allow;
 		}
 	}
@@ -75,28 +75,24 @@ class SectionController extends FormController
 	protected function allowEdit($data = array(), $key = 'id')
 	{
 		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
-		$user = \JFactory::getUser();
+		$user = Factory::getUser();
 
 		// Zero record (id:0), return component edit permission by calling parent controller method
-		if (!$recordId)
-		{
+		if (!$recordId) {
 			return parent::allowEdit($data, $key);
 		}
 
 		// Check edit on the record asset (explicit or inherited)
-		if ($user->authorise('core.edit', 'com_faqbookpro.section.' . $recordId))
-		{
+		if ($user->authorise('core.edit', 'com_faqbookpro.section.' . $recordId)) {
 			return true;
 		}
 
 		// Check edit own on the record asset (explicit or inherited)
-		if ($user->authorise('core.edit.own', 'com_faqbookpro.section.' . $recordId))
-		{
+		if ($user->authorise('core.edit.own', 'com_faqbookpro.section.' . $recordId)) {
 			// Existing record already has an owner, get it
 			$record = $this->getModel()->getItem($recordId);
 
-			if (empty($record))
-			{
+			if (empty($record)) {
 				return false;
 			}
 

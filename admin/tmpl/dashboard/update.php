@@ -2,12 +2,13 @@
 
 /**
  * @title        Minitek FAQ Book
- * @copyright    Copyright (C) 2011-2021 Minitek, All rights reserved.
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
  * @license      GNU General Public License version 3 or later.
  * @author url   https://www.minitek.gr/
  * @developers   Minitek.gr
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\FAQBookPro\Administrator\Helper\FAQBookProHelper;
@@ -18,7 +19,7 @@ $localVersion = FAQBookProHelper::localVersion();
 $latestVersion = FAQBookProHelper::latestVersion();
 $message = FAQBookProHelper::updateMessage();
 $message_version = FAQBookProHelper::updateMessageVersion();
-$type = \JFactory::getApplication()->input->get('type', 'auto');
+$type = Factory::getApplication()->input->get('type', 'auto');
 
 if ($latestVersion && version_compare($latestVersion, $localVersion, '>')) { ?>
   <joomla-alert type="success" dismiss="true" class="p-3 text-center" style="animation-name: joomla-alert-fade-in;" role="alert">
@@ -40,8 +41,8 @@ if ($latestVersion && version_compare($latestVersion, $localVersion, '>')) { ?>
       <div class="alert-wrapper">
         <div class="alert-message">
           <div class="update-info">
-              <p><?php echo $message; ?></p>
-              <p><small><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_DISABLE_MESSAGE'); ?></small></p>
+            <p><?php echo $message; ?></p>
+            <p><small><?php echo Text::_('COM_FAQBOOKPRO_DASHBOARD_DISABLE_MESSAGE'); ?></small></p>
           </div>
         </div>
       </div>

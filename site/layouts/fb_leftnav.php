@@ -1,11 +1,12 @@
 <?php
+
 /**
-* @title				Minitek FAQ Book
-* @copyright   	Copyright (C) 2011-2020 Minitek, All rights reserved.
-* @license   		GNU General Public License version 3 or later.
-* @author url   https://www.minitek.gr/
-* @developers   Minitek.gr
-*/
+ * @title        Minitek FAQ Book
+ * @copyright    Copyright (C) 2011-2023 Minitek, All rights reserved.
+ * @license      GNU General Public License version 3 or later.
+ * @author url   https://www.minitek.gr/
+ * @developers   Minitek.gr
+ */
 
 defined('_JEXEC') or die;
 
@@ -31,102 +32,87 @@ $sectionModel = new SectionModel;
 $topics = $sectionModel->getSectionTopics($sectionId);
 $app = Factory::getApplication();
 
-if ($topics)
-{	
-	foreach ($topics as $topic)
-	{
+if ($topics) {
+	foreach ($topics as $topic) {
 		$items[] = NavigationHelper::getTopicsSlider($topic, $show_icons);
 	}
 }
 
 // Is the left nav minimized?
-$is_minimized = $app->getUserState( 'com_faqbookpro.minimized_leftnav', false );
+$is_minimized = $app->getUserState('com_faqbookpro.minimized_leftnav', false);
 $fb_minimized = '';
 $minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-left"></i></a>';
 $section_title_html = '';
 
-if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized == 'on')
-{
+if ((!$is_minimized && $sectionParams->get('leftnav', 1) == 2) || $is_minimized == 'on') {
 	$fb_minimized = 'fb-minimized';
 	$minimized_icon = '<a class="NavLeftUL_toggle" href="#"><i class="fas fa-angle-double-right"></i></a>';
-}
-
-?><div class="fbLeftNavigation_core fb-hidden <?php echo $fb_minimized; ?>"><?php
-
+} ?>
+<div class="fbLeftNavigation_core fb-hidden <?php echo $fb_minimized; ?>">
+	<?php
 	// Toggle left navigation
-	?><div class="fbLeftNavigation_toggle">
+	?>
+	<div class="fbLeftNavigation_toggle">
 		<ul class="NavLeftUL_wrap">
-			<li class="NavLeftUL_item"><?php
-				echo $minimized_icon;
-			?></li>
+			<li class="NavLeftUL_item">
+				<?php echo $minimized_icon; ?>
+			</li>
 		</ul>
-	</div><?php
-
+	</div>
+	<?php
 	// Module position fb-nav-top
 	$modules_top = ModuleHelper::getModules('fb-nav-top');
 
-	if (count($modules_top))
-	{
-		?><div class="fbLeftNavigation_top"><?php
-			foreach ($modules_top as $module_top)
-			{
+	if (count($modules_top)) { ?>
+		<div class="fbLeftNavigation_top">
+			<?php foreach ($modules_top as $module_top) {
 				echo ModuleHelper::renderModule($module_top);
-			}
-		?></div><?php
-	}
-
-	?><div class="fbLeftNavigation_topics">
-		<ul class="NavLeftUL_wrap"><?php
-
+			} ?>
+		</div>
+	<?php } ?>
+	<div class="fbLeftNavigation_topics">
+		<ul class="NavLeftUL_wrap">
+			<?php
 			// Browse Topics
-			if ($sectionParams->get('browse_topics', 1) && !empty($items))
-			{
+			if ($sectionParams->get('browse_topics', 1) && !empty($items)) {
 				$browse_topics_class = '';
 
-				if ($app->input->get('view', '') == 'section' && $app->input->get('tab', '') == 'topics')
-				{
+				if ($app->input->get('view', '') == 'section' && $app->input->get('tab', '') == 'topics') {
 					$browse_topics_class = 'li_selected';
-				}
-
-				?><li class="NavLeftUL_item NavLeftUL_tab <?php echo $browse_topics_class; ?>" data-tab="topics" data-text="<?php echo Text::_('COM_FAQBOOKPRO_BROWSE_TOPICS'); ?>">
+				} ?>
+				<li class="NavLeftUL_item NavLeftUL_tab <?php echo $browse_topics_class; ?>" data-tab="topics" data-text="<?php echo Text::_('COM_FAQBOOKPRO_BROWSE_TOPICS'); ?>">
 					<a href="<?php echo Route::_(RouteHelper::getSectionRoute($sectionId, 'topics')); ?>" id="NavLeftUL_browseTopics" class="NavLeftUL_anchor">
-						<i class="fas fa-folder-open"></i><?php
-						?><span class="NavLeftUL_text"><?php echo Text::_('COM_FAQBOOKPRO_BROWSE_TOPICS'); ?></span>
+						<i class="fas fa-folder-open"></i>
+						<span class="NavLeftUL_text"><?php echo Text::_('COM_FAQBOOKPRO_BROWSE_TOPICS'); ?></span>
 						<div class="NavLeftUL_endpointIcon">
 							<div class="spinner-border spinner-border-sm" role="status">
 								<span class="visually-hidden">Loading...</span>
 							</div>
 						</div>
 					</a>
-				</li><?php
-			}
-
-		?></ul>
+				</li>
+			<?php } ?>
+		</ul>
 
 		<div class="fbLeftNavigation_wrap">
-			<ul id="NavLeftUL" class="NavLeftUL_wrap level0"><?php
-				if (!empty($items))
-				{
-					foreach ($items as $item)
-					{
+			<ul id="NavLeftUL" class="NavLeftUL_wrap level0">
+				<?php if (!empty($items)) {
+					foreach ($items as $item) {
 						echo $item;
 					}
-				}
-			?></ul>
+				} ?>
+			</ul>
 		</div>
-	</div><?php
-
+	</div>
+	<?php
 	// Module position fb-nav-bottom
 	$modules_bottom = ModuleHelper::getModules('fb-nav-bottom');
 
-	if (count($modules_bottom))
-	{
-		?><div class="fbLeftNavigation_bottom"><?php
-			foreach ($modules_bottom as $module_bottom)
-			{
+	if (count($modules_bottom)) { ?>
+		<div class="fbLeftNavigation_bottom">
+			<?php foreach ($modules_bottom as $module_bottom) {
 				echo ModuleHelper::renderModule($module_bottom);
-			}
-		?></div><?php
-	}
-
-?></div>
+			} ?>
+		</div>
+	<?php } ?>
+</div>
