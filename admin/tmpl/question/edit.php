@@ -42,7 +42,7 @@ $params = $this->state->get('params');
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="bg-white px-3">
+				<div class="px-3">
 					<fieldset>
 						<div class="control-group">
 							<div class="control-label">

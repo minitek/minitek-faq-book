@@ -42,7 +42,7 @@ $input = Factory::getApplication()->input;
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="bg-white px-3">
+				<div class="px-3">
 					<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 				</div>
 			</div>
