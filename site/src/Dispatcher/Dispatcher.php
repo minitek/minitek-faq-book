@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\URI\URI;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * ComponentDispatcher class for com_faqbookpro

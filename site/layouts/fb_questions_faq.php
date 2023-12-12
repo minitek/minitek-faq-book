@@ -20,20 +20,20 @@ use Joomla\CMS\Helper\ContentHelper;
 
 $app = Factory::getApplication();
 $user = Factory::getUser();
-$this->sectionId = $displayData['sectionId'];
-$this->topic = $displayData['topic'];
-$this->questions_params = $displayData['questions_params'];
+$this->options = [];
+$this->options['topic'] = $displayData['topic'];
+$this->options['questions_params'] = $displayData['questions_params'];
 $final_page = $displayData['final_page'];
 
-if (isset($this->topic->questions) && $this->topic->questions) {
+if (isset($this->options['topic']->questions) && $this->options['topic']->questions) {
 	$faq_open = '';
 	$fa_class = 'fa-caret-right';
-	if ($this->questions_params->questions_opened) {
+	if ($this->options['questions_params']->questions_opened) {
 		$faq_open = 'faq_open';
 		$fa_class = 'fa-caret-down';
 	}
 
-	foreach ($this->topic->questions as $key => $question) {
+	foreach ($this->options['topic']->questions as $key => $question) {
 		$canDo = ContentHelper::getActions('com_faqbookpro', 'topic', $question->topicid); ?>
 		<div class="fbContent_qListItem <?php echo $question->qListItem_class; ?>">
 			<?php $nowDate = Factory::getDate()->toSql();
@@ -70,7 +70,7 @@ if (isset($this->topic->questions) && $this->topic->questions) {
 							<span><?php echo $question->title; ?></span>
 						</a>
 					</h3>
-					<?php if ($this->questions_params->questions_introtext && $question->introtext) { ?>
+					<?php if ($this->options['questions_params']->questions_introtext && $question->introtext) { ?>
 						<div class="qFaqItem_introtext">
 							<?php echo $question->introtext; ?>
 						</div>
@@ -79,20 +79,20 @@ if (isset($this->topic->questions) && $this->topic->questions) {
 
 				<div id="a_w_<?php echo $question->id; ?>">
 					<div class="qFaqItem_answer">
-						<?php if ($this->questions_params->questions_image && $question->image) { ?>
+						<?php if ($this->options['questions_params']->questions_image && $question->image) { ?>
 							<img src="<?php echo Uri::root() . $question->image; ?>" alt="<?php echo $question->image_alt; ?>" />
 						<?php } ?>
 						<div class="qListItem_introtext">
 							<?php echo HTMLHelper::_('content.prepare', $question->content); ?>
 						</div>
 						<div class="qListItem_info">
-							<?php if ($this->questions_params->questions_views) { ?>
+							<?php if ($this->options['questions_params']->questions_views) { ?>
 								<span>
 									<?php echo (int)$question->hits . ' ';
 									echo (int)$question->hits == 1 ? Text::_('COM_FAQBOOKPRO_VIEW') : Text::_('COM_FAQBOOKPRO_VIEWS'); ?>
 								</span>
 							<?php }
-							if ($this->questions_params->questions_date) { ?>
+							if ($this->options['questions_params']->questions_date) { ?>
 								<span class="qListItem_date" title="<?php echo $question->created; ?>">
 									<?php echo Text::_('COM_FAQBOOKPRO_ASKED'); ?>&nbsp;
 									<?php echo $question->time_since; ?>&nbsp;
@@ -100,7 +100,7 @@ if (isset($this->topic->questions) && $this->topic->questions) {
 								</span>
 								<?php
 							}
-							if ($this->questions_params->questions_author) {
+							if ($this->options['questions_params']->questions_author) {
 								if ($question->created_by) { ?>
 									<span>
 										<?php echo Text::_('COM_FAQBOOKPRO_BY'); ?>&nbsp;
@@ -118,12 +118,12 @@ if (isset($this->topic->questions) && $this->topic->questions) {
 								}
 							} ?>
 						</div>
-						<?php if ($this->questions_params->questions_topic) { ?>
+						<?php if ($this->options['questions_params']->questions_topic) { ?>
 							<div class="qListItem_topic">
-								<a href="<?php echo Route::_(RouteHelper::getTopicRoute($question->topicid, false, false, $this->topic->language)); ?>">
+								<a href="<?php echo Route::_(RouteHelper::getTopicRoute($question->topicid, false, false, $this->options['topic']->language)); ?>">
 									<span><?php echo $question->topic_title; ?></span>
 								</a>
-								<?php if ($this->questions_params->questions_topic == 2) {
+								<?php if ($this->options['questions_params']->questions_topic == 2) {
 									if ($question->parents) {
 										foreach ($question->parents as $parent) { ?>
 											<a href="<?php echo Route::_(RouteHelper::getTopicRoute($parent['id'])); ?>">

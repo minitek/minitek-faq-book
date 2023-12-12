@@ -22,6 +22,9 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Event\Model\BeforeBatchEvent;
 use Joomla\String\StringHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Date\Date;
 
 /**
