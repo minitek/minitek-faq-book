@@ -78,9 +78,9 @@
 				<option value="forum">COM_FAQBOOKPRO_CONFIG_OPTION_FORUM</option>
 			</field>
 
-			<field 
-				type="separator" 
-				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR" 
+			<field
+				type="separator"
+				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_COLUMNS_LAYOUT_SEPARATOR"
 				showon="sections_layout:columns"
 			/>
 
@@ -186,14 +186,14 @@
 				class="inputbox"
 				label="COM_FAQBOOKPRO_CONFIG_SECTIONS_CUSTOM_CONTENT_LABEL"
 				description="COM_FAQBOOKPRO_CONFIG_SECTIONS_CUSTOM_CONTENT_DESC"
-				filter="JComponentHelper::filterText"
+				filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 				buttons="false"
 				showon="sections_layout:columns"
 			/>
 
-			<field 
-				type="separator" 
-				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_FORUM_LAYOUT_SEPARATOR" 
+			<field
+				type="separator"
+				text="COM_FAQBOOKPRO_CONFIG_SECTIONS_FORUM_LAYOUT_SEPARATOR"
 				showon="sections_layout:forum"
 			/>
 

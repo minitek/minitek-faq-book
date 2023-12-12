@@ -40,7 +40,7 @@
 		<field
 			name="content"
 			type="editor"
-			filter="JComponentHelper::filterText"
+			filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 			buttons="true"
 		/>
 
